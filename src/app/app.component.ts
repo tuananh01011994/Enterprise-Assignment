@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-frontend';
+  isAuthenticated = false;
+  show = true;
+  
+  async logout(): Promise<void> {
+    // todo
+  }
 }
