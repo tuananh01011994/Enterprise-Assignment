@@ -3,22 +3,22 @@ package com.ecommerce.backend.service.errors;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public final class UserNotExistException extends RuntimeException {
+public final class EmailNotExists extends RuntimeException {
 
 
-    public UserNotExistException() {
+    public EmailNotExists() {
         super();
     }
 
-    public UserNotExistException(final String message, final Throwable cause) {
+    public EmailNotExists(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public UserNotExistException(final String message) {
+    public EmailNotExists(final String message) {
         super(message);
     }
 
-    public UserNotExistException(final Throwable cause) {
+    public EmailNotExists(final Throwable cause) {
         super(cause);
     }
 

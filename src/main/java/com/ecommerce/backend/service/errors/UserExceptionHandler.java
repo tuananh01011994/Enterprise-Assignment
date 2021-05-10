@@ -19,6 +19,13 @@ public class UserExceptionHandler {
         return new ResponseEntity<>(map, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(value = EmailNotExists.class)
+    public ResponseEntity<Object> exception( EmailNotExists exception) {
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Email is  not  register!");
+        return new ResponseEntity<>(map, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(value = NoSuchElementException.class)
     public ResponseEntity<Object> exception( NoSuchElementException exception) {
         Map<String,String> map = new HashMap<>();

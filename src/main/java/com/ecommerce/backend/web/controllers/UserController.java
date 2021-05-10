@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.util.*;
 
 @RestController
@@ -42,8 +43,10 @@ public class UserController {
         return ResponseEntity.accepted().body(userRepository.findAll());
     }
 
+    //todo: validate email
     @PostMapping("/regular/user")
     public ResponseEntity<Map<String,String>> registerNewRegularUser(@Valid @RequestBody User account, final HttpServletRequest request) {
+        userService.isValidEmail(account.getEmail());
         userService.registerNewRegularUserAccount(account);
         Map<String,String> map = new HashMap<>();
         map.put("message","Register successfully");
@@ -60,7 +63,7 @@ public class UserController {
     }
 
     //todo: validate email
-    @PutMapping("/users/{id}")
+    @PutMapping("/changeemail/{id}")
     public  ResponseEntity<Map<String,String>> updateUserEmail(@PathVariable("id") long userID,@RequestParam("new_email") String newEmail){
         userService.isValidEmail(newEmail);
         User user = userRepository.findByID(userID);
@@ -71,9 +74,20 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @PutMapping("/changepassword/{id}")
+    public  ResponseEntity<Map<String,String>> updateUserPassword(@PathVariable("id") long userID,@RequestParam("new_password") String newPassword){
+        User user = userRepository.findByID(userID);
+        user.setPassword(newPassword);
+        userRepository.save(user);
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Change your password successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> loginUser(@RequestParam("email") final String email,
                                                         @RequestParam("password") final String password){
+
             userService.validateUser(email,password);
             Map<String,String> map = new HashMap<>();
             map.put("message","Login successfully");

@@ -1,26 +1,17 @@
 package com.ecommerce.backend.service;
 
-import com.ecommerce.backend.entity.Order;
-import com.ecommerce.backend.entity.Store;
 import com.ecommerce.backend.entity.User;
 import com.ecommerce.backend.repository.MyStoreRepository;
 import com.ecommerce.backend.repository.MyUserRepository;
 import com.ecommerce.backend.repository.RoleRepository;
-import com.ecommerce.backend.repository.StoreRepository;
 import com.ecommerce.backend.service.errors.InvalidFormatException;
-import com.ecommerce.backend.service.errors.NoSuchUserExistException;
 import com.ecommerce.backend.service.errors.UserAlreadyExistException;
+import com.ecommerce.backend.service.errors.EmailNotExists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,13 +47,15 @@ public class UserService {
 //    public Optional<User> findById(Long id) {
 //        return userRepository.findById(id);
 //    }
-
-
-
+    public void LoginRegularUserAccount(final User account) {
+        if (emailNotExists(account.getEmail())) {
+            throw new EmailNotExists();
+        }
+    }
 
 
     public User registerNewRegularUserAccount(final User account) {
-        if (emailExists(account.getEmail())){
+        if(emailExists(account.getEmail())){
             throw new UserAlreadyExistException();
         }
         final User user = new User();
@@ -98,7 +91,15 @@ public class UserService {
     }
 
     private boolean emailExists(final String email) {
-        return userRepository.findByEmail(email) != null;
+        try{userRepository.findByEmail(email);}
+        catch (EmailNotExists e){return false;}
+        return true;
+    }
+
+    private boolean emailNotExists(final String email) {
+        try{userRepository.findByEmail(email);}
+        catch (EmailNotExists e){return true;}
+        return false;
     }
 
 //    public Store registerNewStore(Store store){
