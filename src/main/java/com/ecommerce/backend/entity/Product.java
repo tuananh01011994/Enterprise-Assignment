@@ -21,6 +21,7 @@ public class Product {
 
     @Column(name ="quantity")
     private int quantity;
+
     @ManyToOne
     @JoinColumn(name="store_id")
     private Store store;
@@ -66,6 +67,14 @@ public class Product {
         this.quantity = quantity;
     }
 
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 
 
     @Override

@@ -106,7 +106,7 @@ public class UserController {
     }
 
     @PostMapping("/users/addToCart")
-    public ResponseEntity<Map<String,String>> addToCart(@RequestParam("product_id") String productId){
+    public ResponseEntity<Map<String,String>> addToCart(@RequestParam("product_id") long productId){
         String currentUsername = getCurrentUser();
         User user = userRepository.findByEmail(currentUsername);
         Product product = myProductRepository.findProductById(productId);
