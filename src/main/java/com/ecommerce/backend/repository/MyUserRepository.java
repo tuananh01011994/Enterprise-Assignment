@@ -1,6 +1,7 @@
 package com.ecommerce.backend.repository;
 
 import com.ecommerce.backend.entity.User;
+import com.ecommerce.backend.service.errors.NoSuchUserExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -22,16 +23,12 @@ public class MyUserRepository{
     }
 
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException());
     }
 
 
     public User findByEmailAndPassword(String email, String password) {
-        User user = userRepository.findByEmailAndPassword(email,password);
-        if (user == null) {
-            throw new NoSuchElementException();
-        }
-        return user;
+       return userRepository.findByEmailAndPassword(email,password).orElseThrow(() -> new NoSuchElementException());
     }
 
     public void delete(User user) {
@@ -41,6 +38,7 @@ public class MyUserRepository{
 
     public User findByID(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+
 
     }
 

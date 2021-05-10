@@ -40,6 +40,10 @@
         <mapping class="com.ecommerce.backend.entity.Role"></mapping>
         <mapping class="com.ecommerce.backend.entity.Privilege"></mapping>
         <mapping class="com.ecommerce.backend.entity.Store"></mapping>
+        <mapping class="com.ecommerce.backend.entity.Product"></mapping>
+        <mapping class="com.ecommerce.backend.entity.Order"></mapping>
+
+
 
     </session-factory>
 </hibernate-configuration>

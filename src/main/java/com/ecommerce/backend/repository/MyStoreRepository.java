@@ -1,2 +1,25 @@
-package com.ecommerce.backend.repository;public class MyStoreRepository {
+package com.ecommerce.backend.repository;
+
+import com.ecommerce.backend.entity.Store;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
+
+@Service
+public class MyStoreRepository  {
+
+    @Autowired
+    StoreRepository storeRepository;
+
+    MyStoreRepository(){}
+
+    public Store findByName(String name){
+        return storeRepository.findByStoreName(name).orElseThrow(() -> new NoSuchElementException());
+    }
+
+    public Store save(Store store){
+        return storeRepository.save(store);
+    };
+
 }

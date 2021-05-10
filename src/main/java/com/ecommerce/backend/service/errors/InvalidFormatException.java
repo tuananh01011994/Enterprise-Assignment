@@ -1,2 +1,7 @@
-package com.ecommerce.backend.service.errors;public class InvalidEmailException {
+package com.ecommerce.backend.service.errors;
+
+public class InvalidFormatException extends RuntimeException {
+    public InvalidFormatException(){
+
+    }
 }

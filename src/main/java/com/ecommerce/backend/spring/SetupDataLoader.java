@@ -39,21 +39,24 @@ public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEve
         final Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
         final Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
         final Privilege passwordPrivilege = createPrivilegeIfNotFound("CHANGE_PASSWORD_PRIVILEGE");
+        final Privilege shopPrivilege = createPrivilegeIfNotFound("SHOP_PRIVILEGE");
         // == create initial roles
         final List<Privilege> adminPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, writePrivilege, passwordPrivilege));
         final List<Privilege> userPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, passwordPrivilege));
+        final List<Privilege> sellerPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, shopPrivilege));
+
+        createRoleIfNotFound("ROLE_SELLER",sellerPrivileges);
         final Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", userPrivileges);
+        final Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
         createUserIfNotFound("test@test.com", "Test", "Test", "test", new ArrayList<>(Arrays.asList(adminRole)));
-
 
         alreadySetup = true;
     }
 
     @Transactional
     User createUserIfNotFound(final String email , final String firstName, final String lastName, final String password, final Collection<Role> roles) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email).orElse(null);
         if (user == null) {
             user = new User();
             user.setUsername(email);
@@ -66,6 +69,7 @@ public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEve
         user = userRepository.save(user);
         return user;
     }
+
 
     private Role createRoleIfNotFound(final String name, List<Privilege> adminPrivileges) {
         Role role = roleRepository.findByName(name);

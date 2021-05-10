@@ -1,17 +1,22 @@
 package com.ecommerce.backend.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name="stores")
 public class Store {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
     private Long id;
+
+    @Column(name="storename")
     private String storeName;
-    //    private Product product;
-    @OneToOne(mappedBy = "store")
+    @OneToMany(mappedBy = "store")
+    private Set<Product> product;
+    @OneToOne(mappedBy = "store",cascade = CascadeType.ALL)
     private User user;
 
     public Long getId() {

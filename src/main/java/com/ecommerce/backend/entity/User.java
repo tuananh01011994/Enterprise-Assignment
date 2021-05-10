@@ -1,6 +1,8 @@
 package com.ecommerce.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
@@ -26,8 +28,16 @@ public class User {
     private String password;
 
     @OneToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="store_id",referencedColumnName = "id")
+    @JsonIgnore
     private Store store;
+
+    @OneToOne
+    @JoinColumn(name="order_id")
+    private Order order;
+
+
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -38,12 +48,14 @@ public class User {
                     name = "role_id", referencedColumnName = "role_id"))
     private Collection<Role> roles;
 
+
     public User(String username,String password,String firstName,String lastName){
         this.username=username;
         this.password= password;
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
 
 
     public User() {
@@ -114,4 +126,17 @@ public class User {
     public void setStore(Store store) {
         this.store = store;
     }
+
+    public Order getOrder() {
+        if (order == null){
+            order = new Order();
+        }
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+
 }

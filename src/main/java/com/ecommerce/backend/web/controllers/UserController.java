@@ -1,12 +1,20 @@
 package com.ecommerce.backend.web.controllers;
 
+import com.ecommerce.backend.entity.Order;
+import com.ecommerce.backend.entity.Product;
 import com.ecommerce.backend.entity.User;
+import com.ecommerce.backend.repository.MyProductRepository;
 import com.ecommerce.backend.repository.MyUserRepository;
+import com.ecommerce.backend.repository.ProductRepository;
 import com.ecommerce.backend.repository.UserRepository;
+import com.ecommerce.backend.security.ActiveSessionList;
 import com.ecommerce.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,7 +23,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class UserController {
 
     @Autowired
@@ -24,60 +32,87 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MyProductRepository myProductRepository;
+
     @GetMapping("/users")
-    public List<User> getUsers(){
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> getUsers(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getAuthorities());
+        return ResponseEntity.accepted().body(userRepository.findAll());
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<Map<String,String>> registerNewUser(@Valid @RequestBody User account, final HttpServletRequest request) {
-        userService.registerNewUserAccount(account);
+    @PostMapping("/regular/user")
+    public ResponseEntity<Map<String,String>> registerNewRegularUser(@Valid @RequestBody User account, final HttpServletRequest request) {
+        userService.registerNewRegularUserAccount(account);
         Map<String,String> map = new HashMap<>();
         map.put("message","Register successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}")
-    public  User getUser(@PathVariable("id") long userID){
-        try {
-            return  userRepository.findByID(userID);
-        } catch (NoSuchElementException e){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "No user with such ID exists");
-        }
 
+
+
+    @GetMapping("/users/{id}")
+    public  ResponseEntity<User> getUser(@PathVariable("id") long userID){
+            User user = userRepository.findByID(userID);
+            return  ResponseEntity.accepted().body(user);
+    }
+
+    //todo: validate email
+    @PutMapping("/users/{id}")
+    public  ResponseEntity<Map<String,String>> updateUserEmail(@PathVariable("id") long userID,@RequestParam("new_email") String newEmail){
+        userService.isValidEmail(newEmail);
+        User user = userRepository.findByID(userID);
+        user.setEmail(newEmail);
+        userRepository.save(user);
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Change your email successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String,String>> loginUser(   @RequestParam("email") final String email,
-                                                           @RequestParam("password") final String password){
-        try {
+    public ResponseEntity<Map<String,String>> loginUser(@RequestParam("email") final String email,
+                                                        @RequestParam("password") final String password){
             userService.validateUser(email,password);
             Map<String,String> map = new HashMap<>();
             map.put("message","Login successfully");
             return new ResponseEntity<>(map, HttpStatus.OK);
-        } catch (NoSuchElementException e){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Invalid password/username");
-        }
     }
 
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<Map<String,String>> deleteUser(@PathVariable("id") long userID){
-        try {
-            User user = userRepository.findByID(userID);
-            userRepository.delete(user);
-            Map<String,String> map = new HashMap<>();
-            map.put("message","Delete successfully");
-            return  new ResponseEntity<>(map, HttpStatus.OK) ;
-        } catch (NoSuchElementException e){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "No user with such ID exists");
-        }
+    public ResponseEntity<Map<String,String>> deleteUser(@PathVariable("id") long userID) {
 
+        User user = userRepository.findByID(userID);
+        userRepository.delete(user);
+        Map<String, String> map = new HashMap<>();
+        map.put("message", "Delete successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @PostMapping("/users/addToCart")
+    public ResponseEntity<Map<String,String>> addToCart(@RequestParam("product_id") String productId){
+        String currentUsername = getCurrentUser();
+        User user = userRepository.findByEmail(currentUsername);
+        Product product = myProductRepository.findProductById(productId);
+        Order order = user.getOrder();
+        order.getProductList().add(product);
 
+        Map<String, String> map = new HashMap<>();
+        map.put("message", "Add to card successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    public String getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName = null;
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
 
 }
