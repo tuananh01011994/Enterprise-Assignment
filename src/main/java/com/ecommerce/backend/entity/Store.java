@@ -14,7 +14,7 @@ public class Store {
 
     @Column(name="storename")
     private String storeName;
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade=CascadeType.ALL, orphanRemoval=true)
     private Set<Product> product;
     @OneToOne(mappedBy = "store",cascade = CascadeType.ALL)
     private User user;

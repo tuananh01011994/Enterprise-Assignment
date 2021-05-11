@@ -3,10 +3,7 @@ package com.ecommerce.backend.web.controllers;
 import com.ecommerce.backend.entity.Order;
 import com.ecommerce.backend.entity.Product;
 import com.ecommerce.backend.entity.User;
-import com.ecommerce.backend.repository.MyProductRepository;
-import com.ecommerce.backend.repository.MyUserRepository;
-import com.ecommerce.backend.repository.ProductRepository;
-import com.ecommerce.backend.repository.UserRepository;
+import com.ecommerce.backend.repository.*;
 import com.ecommerce.backend.security.ActiveSessionList;
 import com.ecommerce.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Null;
 import java.util.*;
 
 @RestController
@@ -35,6 +34,12 @@ public class UserController {
     @Autowired
     private MyProductRepository myProductRepository;
 
+    @Autowired
+    private MyUserRepository myUserRepository;
+
+    @Autowired
+    private MyOrderRepository myOrderRepository;
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -42,8 +47,29 @@ public class UserController {
         return ResponseEntity.accepted().body(userRepository.findAll());
     }
 
+//    @PostMapping("/basketItemAdd")
+//    public ResponseEntity<Map<String, String>> createItemBasket(@RequestParam("uId") long userId,@RequestParam("pId") long productId){
+//        Optional<Order> order = myOrderRepository.findByUserAndProduct(userId, productId);
+//        Order data = new Order();
+//        if (order.isPresent()){
+//            data = (Order) order;
+//
+//        }
+//        Map<String,String> map = new HashMap<>();
+//        map.put("message","Add item to basket succesfully");
+//        return new ResponseEntity<>(map, HttpStatus.OK);
+//    }
+
+//    @DeleteMapping("/basketItemRemove")
+//    public ResponseEntity<Map<String, String>> removeItemBasket(@RequestParam("userId") long uId, @RequestParam("productId") long pId){
+//
+//    }
+
+
+    //todo: validate email
     @PostMapping("/regular/user")
     public ResponseEntity<Map<String,String>> registerNewRegularUser(@Valid @RequestBody User account, final HttpServletRequest request) {
+        userService.isValidEmail(account.getEmail());
         userService.registerNewRegularUserAccount(account);
         Map<String,String> map = new HashMap<>();
         map.put("message","Register successfully");
@@ -60,7 +86,7 @@ public class UserController {
     }
 
     //todo: validate email
-    @PutMapping("/users/{id}")
+    @PutMapping("/changeemail/{id}")
     public  ResponseEntity<Map<String,String>> updateUserEmail(@PathVariable("id") long userID,@RequestParam("new_email") String newEmail){
         userService.isValidEmail(newEmail);
         User user = userRepository.findByID(userID);
@@ -71,9 +97,20 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @PutMapping("/changepassword/{id}")
+    public  ResponseEntity<Map<String,String>> updateUserPassword(@PathVariable("id") long userID,@RequestParam("new_password") String newPassword){
+        User user = userRepository.findByID(userID);
+        user.setPassword(newPassword);
+        userRepository.save(user);
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Change your password successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> loginUser(@RequestParam("email") final String email,
                                                         @RequestParam("password") final String password){
+
             userService.validateUser(email,password);
             Map<String,String> map = new HashMap<>();
             map.put("message","Login successfully");
@@ -91,18 +128,8 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PostMapping("/users/addToCart")
-    public ResponseEntity<Map<String,String>> addToCart(@RequestParam("product_id") String productId){
-        String currentUsername = getCurrentUser();
-        User user = userRepository.findByEmail(currentUsername);
-        Product product = myProductRepository.findProductById(productId);
-        Order order = user.getOrder();
-        order.getProductList().add(product);
-
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "Add to card successfully");
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+//    @PostMapping("/orderCreate")
+//    public
 
     public String getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -114,5 +141,7 @@ public class UserController {
         }
         return userName;
     }
+
+
 
 }

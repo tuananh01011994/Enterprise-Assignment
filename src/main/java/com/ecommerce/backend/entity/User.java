@@ -32,10 +32,6 @@ public class User {
     @JsonIgnore
     private Store store;
 
-    @OneToOne
-    @JoinColumn(name="order_id")
-    private Order order;
-
 
 
     @JsonIgnore
@@ -125,17 +121,6 @@ public class User {
 
     public void setStore(Store store) {
         this.store = store;
-    }
-
-    public Order getOrder() {
-        if (order == null){
-            order = new Order();
-        }
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
 

@@ -1,6 +1,7 @@
 package com.ecommerce.backend.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -15,12 +16,9 @@ public class Product {
     @Column(name="productprice")
     private String productPrice;
 
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
-
     @Column(name ="quantity")
     private int quantity;
+
     @ManyToOne
     @JoinColumn(name="store_id")
     private Store store;
@@ -66,6 +64,14 @@ public class Product {
         this.quantity = quantity;
     }
 
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 
 
     @Override

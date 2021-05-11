@@ -8,7 +8,7 @@ import java.util.Collection;
 public class Privilege {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "privilege_id")
     private Long id;
 
