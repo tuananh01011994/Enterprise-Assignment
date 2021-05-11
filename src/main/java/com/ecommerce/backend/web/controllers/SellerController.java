@@ -47,9 +47,9 @@ public class SellerController {
     @PostMapping("/store/{id}")
     public ResponseEntity<Map<String,String>> addStore(@Valid @RequestParam(name="store_name") String storeName, @PathVariable("id") Long userID){
 
-        if (storeService.isStoreNameExists(storeName)){
-            throw new StoreNameAlreadyExists();
-        }
+//        if (storeService.isStoreNameExists(storeName)){
+//            throw new StoreNameAlreadyExists();
+//        }
         Store store = storeService.registerNewStore(storeName);
         User user = myUserRepository.findByID(userID);
         store.setUser(user);
@@ -61,7 +61,7 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PutMapping("/storeUpdate/{id}")
+    @PostMapping("/storeUpdate/{id}")
     public ResponseEntity<Map<String, String>> updateStore(@Valid @RequestBody Store updated, @PathVariable("id") long original){
         Store store = myStoreRepository.findByStoreId(original);
         store.setStoreName(updated.getStoreName());
@@ -72,7 +72,7 @@ public class SellerController {
     }
 
     @DeleteMapping("/storeDelete/{id}")
-    public ResponseEntity<Map<String, String>> deleteStore(@Valid @PathVariable("id") long id){
+    public ResponseEntity<Map<String, String>> updateStore(@Valid @PathVariable("id") long id){
         Store store = myStoreRepository.findByStoreId(id);
         myStoreRepository.delete(store);
         Map<String, String> map = new HashMap<>();
@@ -80,26 +80,10 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @GetMapping("/storeGet/{id}")
-    public ResponseEntity<Store> getStore(@Valid @PathVariable("id") long storeID){
-        return ResponseEntity.accepted().body(myStoreRepository.findByStoreId(storeID));
-    }
-
-    @GetMapping("/storeGetAll")
-    public ResponseEntity<List<Store>> getAllStore(){
-        return ResponseEntity.accepted().body(myStoreRepository.findAll());
-    }
-
-    @GetMapping("/storeGetName/{key}")
-    public ResponseEntity<List<Store>> getByNameStore(@Valid @PathVariable("key") String keyword){
-        return ResponseEntity.accepted().body(myStoreRepository.findByName(keyword));
-    }
-
-    @GetMapping("/storeGetByUser/{uID}")
-    public ResponseEntity<List<Store>> getByUserStore(@Valid @PathVariable("uID") long userID){
-        return ResponseEntity.accepted().body(myStoreRepository.findByUser(userID));
-    }
-
+//    @GetMapping("/storeGetAll")
+//    public ResponseEntity<List<Store>> getAllStore(){
+//        return ResponseEntity.accepted().body(myProductRepository.findStoreThatContain(""));
+//    }
 
     @PostMapping("/productAdd/{id}")
     public ResponseEntity<Map<String, String>> addProduct(@Valid @RequestBody Product inProd, @PathVariable("id") long storeID){
@@ -112,7 +96,7 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PutMapping("/productUpdate/{id}")
+    @PostMapping("/productUpdate/{id}")
     public ResponseEntity<Map<String, String>> updateProduct(@Valid @RequestBody Product updated, @PathVariable("id") long original){
         Product product = myProductRepository.findProductById(original);
         product.setProductName(updated.getProductName());
@@ -125,7 +109,7 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PutMapping("/productQuantityUpdate")
+    @PostMapping("/productQuantityUpdate")
     public ResponseEntity<Map<String, String>> updateProductQuantity(@Valid @RequestParam("id") long id, @RequestParam("quantity") int quantity){
         Product product = myProductRepository.findProductById(id);
         product.setQuantity(quantity);
