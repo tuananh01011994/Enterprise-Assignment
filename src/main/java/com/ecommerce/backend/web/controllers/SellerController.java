@@ -44,25 +44,6 @@ public class SellerController {
     @Autowired
     private MyProductRepository myProductRepository;
 
-    @GetMapping("/storeGet/{id}")
-    public ResponseEntity<Store> getStore(@Valid @PathVariable("id") long storeID){
-        return ResponseEntity.accepted().body(myStoreRepository.findByStoreId(storeID));
-    }
-
-    @GetMapping("/storeGetAll")
-    public ResponseEntity<List<Store>> getAllStore(){
-        return ResponseEntity.accepted().body(myStoreRepository.findAll());
-    }
-
-    @GetMapping("/storeGetName/{key}")
-    public ResponseEntity<List<Store>> getByNameStore(@Valid @PathVariable("key") String keyword){
-        return ResponseEntity.accepted().body(myStoreRepository.findByName(keyword));
-    }
-
-    @GetMapping("/storeGetByUser/{uID}")
-    public ResponseEntity<List<Store>> getByUserStore(@Valid @PathVariable("uID") long userID){
-        return ResponseEntity.accepted().body(myStoreRepository.findByUser(userID));
-    }
     @PostMapping("/store/{id}")
     public ResponseEntity<Map<String,String>> addStore(@Valid @RequestParam(name="store_name") String storeName, @PathVariable("id") Long userID){
 
@@ -99,10 +80,25 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-//    @GetMapping("/storeGetAll")
-//    public ResponseEntity<List<Store>> getAllStore(){
-//        return ResponseEntity.accepted().body(myProductRepository.findStoreThatContain(""));
-//    }
+    @GetMapping("/storeGet/{id}")
+    public ResponseEntity<Store> getStore(@Valid @PathVariable("id") long storeID){
+        return ResponseEntity.accepted().body(myStoreRepository.findByStoreId(storeID));
+    }
+
+    @GetMapping("/storeGetAll")
+    public ResponseEntity<List<Store>> getAllStore(){
+        return ResponseEntity.accepted().body(myStoreRepository.findAll());
+    }
+
+    @GetMapping("/storeGetName/{key}")
+    public ResponseEntity<List<Store>> getByNameStore(@Valid @PathVariable("key") String keyword){
+        return ResponseEntity.accepted().body(myStoreRepository.findByName(keyword));
+    }
+
+    @GetMapping("/storeGetByUser/{uID}")
+    public ResponseEntity<List<Store>> getByUserStore(@Valid @PathVariable("uID") long userID){
+        return ResponseEntity.accepted().body(myStoreRepository.findByUser(userID));
+    }
 
     @PostMapping("/productAdd/{id}")
     public ResponseEntity<Map<String, String>> addProduct(@Valid @RequestBody Product inProd, @PathVariable("id") long storeID){

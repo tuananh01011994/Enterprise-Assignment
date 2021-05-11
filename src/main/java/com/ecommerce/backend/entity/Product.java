@@ -16,9 +16,6 @@ public class Product {
     @Column(name="productprice")
     private String productPrice;
 
-    @OneToMany(mappedBy = "order", cascade=CascadeType.ALL, orphanRemoval = true)
-    private Set<Order> order;
-
     @Column(name ="quantity")
     private int quantity;
 

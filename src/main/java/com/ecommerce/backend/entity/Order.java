@@ -11,10 +11,11 @@ public class Order {
     @Column(name="id")
     private Long id;
 
-    @OneToOne(mappedBy = "order")
+    @ManyToOne(optional = false)
+    @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name="product_id")
     private Product product;
 

@@ -31,22 +31,6 @@ public class UserService {
     MyStoreRepository myStoreRepository;
 
 
-
-//    public User save(User user) {
-//        return userRepository.saveAndFlush(user);
-//    }
-//
-//    public User update(User user) {
-//        return userRepository.save(user);
-//    }
-//
-//    public User find(String userName) {
-//        return userRepository.findOneByUsername(userName);
-//    }
-
-//    public Optional<User> findById(Long id) {
-//        return userRepository.findById(id);
-//    }
     public void LoginRegularUserAccount(final User account) {
         if (emailNotExists(account.getEmail())) {
             throw new EmailNotExists();
@@ -102,13 +86,6 @@ public class UserService {
         return false;
     }
 
-//    public Store registerNewStore(Store store){
-//    }
-
-//    private boolean isStoreNameExists(String name){
-//        return myStoreRepository.findByName(name) != null;
-//    }
-
 
     public void saveRegisteredUser(final User user) {
         userRepository.save(user);
@@ -130,8 +107,4 @@ public class UserService {
         Matcher matcher = PATTERN.matcher(email);
         return matcher.matches();
     }
-
-
-
-
 }
