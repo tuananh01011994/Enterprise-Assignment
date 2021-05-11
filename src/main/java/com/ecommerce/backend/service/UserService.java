@@ -102,8 +102,6 @@ public class UserService {
         return false;
     }
 
-
-
 //    public Store registerNewStore(Store store){
 //    }
 
