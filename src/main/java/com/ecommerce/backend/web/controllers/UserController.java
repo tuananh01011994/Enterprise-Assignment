@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Null;
 import java.util.*;
 
 @RestController
@@ -46,16 +47,18 @@ public class UserController {
         return ResponseEntity.accepted().body(userRepository.findAll());
     }
 
-    @PostMapping("/basketItemAdd")
-    public ResponseEntity<Map<String, String>> createItemBasket(@RequestParam("uId") long userId,@RequestParam("pId") long productId){
-        Order order = new Order();
-        order.setProduct(myProductRepository.findProductById(productId));
-        order.setUser(myUserRepository.findByID(userId));
-        myOrderRepository.save(order);
-        Map<String,String> map = new HashMap<>();
-        map.put("message","Add item to basket succesfully");
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+//    @PostMapping("/basketItemAdd")
+//    public ResponseEntity<Map<String, String>> createItemBasket(@RequestParam("uId") long userId,@RequestParam("pId") long productId){
+//        Optional<Order> order = myOrderRepository.findByUserAndProduct(userId, productId);
+//        Order data = new Order();
+//        if (order.isPresent()){
+//            data = (Order) order;
+//
+//        }
+//        Map<String,String> map = new HashMap<>();
+//        map.put("message","Add item to basket succesfully");
+//        return new ResponseEntity<>(map, HttpStatus.OK);
+//    }
 
 //    @DeleteMapping("/basketItemRemove")
 //    public ResponseEntity<Map<String, String>> removeItemBasket(@RequestParam("userId") long uId, @RequestParam("productId") long pId){

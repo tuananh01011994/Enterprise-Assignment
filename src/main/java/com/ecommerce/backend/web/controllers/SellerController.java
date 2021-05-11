@@ -6,6 +6,7 @@ import com.ecommerce.backend.entity.User;
 import com.ecommerce.backend.repository.MyProductRepository;
 import com.ecommerce.backend.repository.MyStoreRepository;
 import com.ecommerce.backend.repository.MyUserRepository;
+import com.ecommerce.backend.repository.UserRepository;
 import com.ecommerce.backend.service.ProductService;
 import com.ecommerce.backend.service.StoreService;
 import com.ecommerce.backend.service.UserService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/seller")
 public class SellerController {
+
     @Autowired
     private UserService userService;
 
@@ -44,18 +47,20 @@ public class SellerController {
     @Autowired
     private MyProductRepository myProductRepository;
 
-    @PostMapping("/store/{id}")
+    @PostMapping("/storeAdd/{id}")
     public ResponseEntity<Map<String,String>> addStore(@Valid @RequestParam(name="store_name") String storeName, @PathVariable("id") Long userID){
-
-        if (storeService.isStoreNameExists(storeName)){
+        if (!storeService.isStoreNameExists(storeName)){
             throw new StoreNameAlreadyExists();
         }
-        Store store = storeService.registerNewStore(storeName);
         User user = myUserRepository.findByID(userID);
+//        if(user.getStore().getId()){
+//
+//        }
+        Store store = storeService.registerNewStore(storeName);
         store.setUser(user);
         user.setStore(store);
         myUserRepository.save(user);
-        System.out.println(user.getStore());
+        myStoreRepository.save(store);
         Map<String,String> map = new HashMap<>();
         map.put("message","Add store successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);

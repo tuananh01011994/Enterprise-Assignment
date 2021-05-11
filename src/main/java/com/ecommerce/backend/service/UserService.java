@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,7 +77,7 @@ public class UserService {
 
     private boolean emailExists(final String email) {
         try{userRepository.findByEmail(email);}
-        catch (EmailNotExists e){return false;}
+        catch (NoSuchElementException e){return false;}
         return true;
     }
 

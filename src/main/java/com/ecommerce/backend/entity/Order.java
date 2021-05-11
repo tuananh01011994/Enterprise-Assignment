@@ -54,6 +54,14 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
+
     @Column(name="totalprice")
     private double totalPrice;
 }
