@@ -1,6 +1,7 @@
 package com.ecommerce.backend.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -15,9 +16,8 @@ public class Product {
     @Column(name="productprice")
     private String productPrice;
 
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
+    @OneToMany(mappedBy = "order", cascade=CascadeType.ALL, orphanRemoval = true)
+    private Set<Order> order;
 
     @Column(name ="quantity")
     private int quantity;

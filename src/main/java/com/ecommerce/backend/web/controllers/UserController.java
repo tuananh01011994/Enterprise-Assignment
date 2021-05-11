@@ -3,10 +3,7 @@ package com.ecommerce.backend.web.controllers;
 import com.ecommerce.backend.entity.Order;
 import com.ecommerce.backend.entity.Product;
 import com.ecommerce.backend.entity.User;
-import com.ecommerce.backend.repository.MyProductRepository;
-import com.ecommerce.backend.repository.MyUserRepository;
-import com.ecommerce.backend.repository.ProductRepository;
-import com.ecommerce.backend.repository.UserRepository;
+import com.ecommerce.backend.repository.*;
 import com.ecommerce.backend.security.ActiveSessionList;
 import com.ecommerce.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +33,35 @@ public class UserController {
     @Autowired
     private MyProductRepository myProductRepository;
 
+    @Autowired
+    private MyUserRepository myUserRepository;
+
+    @Autowired
+    private MyOrderRepository myOrderRepository;
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(auth.getAuthorities());
         return ResponseEntity.accepted().body(userRepository.findAll());
     }
+
+    @PostMapping("/basketItemAdd")
+    public ResponseEntity<Map<String, String>> createItemBasket(@RequestParam("uId") long userId,@RequestParam("pId") long productId){
+        Order order = new Order();
+        order.setProduct(myProductRepository.findProductById(productId));
+        order.setUser(myUserRepository.findByID(userId));
+        myOrderRepository.save(order);
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Add item to basket succesfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+//    @DeleteMapping("/basketItemRemove")
+//    public ResponseEntity<Map<String, String>> removeItemBasket(@RequestParam("userId") long uId, @RequestParam("productId") long pId){
+//
+//    }
+
 
     //todo: validate email
     @PostMapping("/regular/user")
@@ -105,18 +125,8 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PostMapping("/users/addToCart")
-    public ResponseEntity<Map<String,String>> addToCart(@RequestParam("product_id") long productId){
-        String currentUsername = getCurrentUser();
-        User user = userRepository.findByEmail(currentUsername);
-        Product product = myProductRepository.findProductById(productId);
-        Order order = user.getOrder();
-        order.getProductList().add(product);
-
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "Add to card successfully");
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+//    @PostMapping("/orderCreate")
+//    public
 
     public String getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -128,5 +138,7 @@ public class UserController {
         }
         return userName;
     }
+
+
 
 }

@@ -14,9 +14,12 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private User user;
 
-    @Column(name="product_id")
-    @OneToMany(mappedBy = "order")
-    private List<Product> productList;
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private Product product;
+
+    @Column(name="product_count")
+    private int productCount;
 
     public Long getId() {
         return id;
@@ -34,12 +37,12 @@ public class Order {
         this.user = user;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public double getTotalPrice() {
