@@ -61,7 +61,7 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PostMapping("/storeUpdate/{id}")
+    @PutMapping("/storeUpdate/{id}")
     public ResponseEntity<Map<String, String>> updateStore(@Valid @RequestBody Store updated, @PathVariable("id") long original){
         Store store = myStoreRepository.findByStoreId(original);
         store.setStoreName(updated.getStoreName());
@@ -96,7 +96,7 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PostMapping("/productUpdate/{id}")
+    @PutMapping("/productUpdate/{id}")
     public ResponseEntity<Map<String, String>> updateProduct(@Valid @RequestBody Product updated, @PathVariable("id") long original){
         Product product = myProductRepository.findProductById(original);
         product.setProductName(updated.getProductName());
@@ -109,7 +109,7 @@ public class SellerController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PostMapping("/productQuantityUpdate")
+    @PutMapping("/productQuantityUpdate")
     public ResponseEntity<Map<String, String>> updateProductQuantity(@Valid @RequestParam("id") long id, @RequestParam("quantity") int quantity){
         Product product = myProductRepository.findProductById(id);
         product.setQuantity(quantity);
