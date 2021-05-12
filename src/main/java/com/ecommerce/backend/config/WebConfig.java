@@ -3,11 +3,14 @@ package com.ecommerce.backend.config;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class WebConfig {
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
     String dbUrl = "jdbc:postgresql://localhost:5432/backend";
     String username = "postgres";
     String password = "admin";

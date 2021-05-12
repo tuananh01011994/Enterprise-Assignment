@@ -50,11 +50,11 @@ public class SellerController {
     @PostMapping("/storeAdd/{id}")
     public ResponseEntity<Map<String,String>> addStore(@Valid @RequestParam(name="store_name") String storeName, @PathVariable("id") Long userID){
         User user = myUserRepository.findByID(userID);
-        if(user.getStore().getId() != null){
-            Map<String,String> map = new HashMap<>();
-            map.put("message","User already have a store");
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        }
+//        if(user.getStore().getId() != null){
+//            Map<String,String> map = new HashMap<>();
+//            map.put("message","User already have a store");
+//            return new ResponseEntity<>(map, HttpStatus.CONFLICT);
+//        }
         Store store = storeService.registerNewStore(storeName);
         store.setUser(user);
         user.setStore(store);

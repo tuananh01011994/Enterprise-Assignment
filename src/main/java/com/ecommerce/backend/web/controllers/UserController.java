@@ -14,13 +14,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
 import java.util.*;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/")
 public class UserController {
@@ -64,6 +65,13 @@ public class UserController {
 //    public ResponseEntity<Map<String, String>> removeItemBasket(@RequestParam("userId") long uId, @RequestParam("productId") long pId){
 //
 //    }
+
+    @GetMapping("/test")
+    public ModelAndView test(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
 
 
     //todo: validate email
