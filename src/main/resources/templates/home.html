@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="home.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Home</title>
+
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="header-container">
+            <div class="header row">
+                <div class="header-top">
+                    <div class="header-left dropdown" id="description">
+                        <button class="btn btn-default" type="button" data-toggle="dropdown" style="border: none; background: none; ">English
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Korean</a></li>
+                        </ul>
+                    </div>
+                    <div class=" header-right">
+                        <a class="active" href="#">Home</a>
+                        <a href="login.html">Login</a>
+                        <a href="register.html">Sign Up</a>
+                    </div>
+
+                    <div class="header-right-nav">
+                        <button type="button" id="nav-btn" class="btn btn-default btn-lg">
+                            <span class="glyphicon glyphicon-th-large"></span>
+                        </button>
+                    </div>
+
+                    <div class="nav-element" id="nav-ele">
+                        <a class="active" href="#">Home</a>
+                        <a href="login.html">Login</a>
+                        <a href="register.html">Sign Up</a>
+                    </div>
+                </div>
+                <div class="header-middle">
+                    <a href="#" class="logo">CompanyLogo</a>
+                    <div class="header-search">
+                        <form class="example">
+                            <input type="text" placeholder="Search.." name="search2">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="header-bottom">
+            </div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</body>
+<script src="home.js"></script>
+<script>
+    function toggleLanguage(language) {
+        let description = document.getElementById("description");
+        if (language === "Korean") {
+            description.innerHTML = "Show Korean Text";
+        }
+        else {
+            description.innerHTML = "Show English Text";
+        }
+    }
+</script>
+</html>
