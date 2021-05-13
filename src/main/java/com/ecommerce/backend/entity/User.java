@@ -27,11 +27,8 @@ public class User {
     @Column(name = "password",length = 60)
     private String password;
 
-    @OneToOne
-    @JoinColumn(name="store_id",referencedColumnName = "id")
-    @JsonIgnore
+    @OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
     private Store store;
-
 
 
     @JsonIgnore
@@ -122,6 +119,7 @@ public class User {
     public void setStore(Store store) {
         this.store = store;
     }
+
 
 
 }

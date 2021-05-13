@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
 import java.util.*;
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/")
 public class UserController {
@@ -118,10 +118,15 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> loginUser(@RequestParam("email") final String email,
                                                         @RequestParam("password") final String password){
-
-            userService.validateUser(email,password);
             Map<String,String> map = new HashMap<>();
-            map.put("message","Login successfully");
+            try {
+                userService.validateUser(email,password);
+
+                map.put("message","Login successfully");
+            } catch (NoSuchElementException e){
+                map.put("message","Validate unsuccessfully");
+                return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(map, HttpStatus.OK);
     }
 

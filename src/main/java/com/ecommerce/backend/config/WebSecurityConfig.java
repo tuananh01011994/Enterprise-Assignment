@@ -41,11 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//                .loginPage("/login.html")
 /*
                 .defaultSuccessUrl("/login.html", true)
 */
-                    .successHandler(myAuthenticationSuccessHandler)
+                .successHandler(myAuthenticationSuccessHandler)
                 .failureUrl("/login.html?error=true")
 //                .failureHandler(authenticationFailureHandler());
                 .and()

@@ -16,7 +16,8 @@ public class Store {
     private String storeName;
     @OneToMany(mappedBy = "store", cascade=CascadeType.ALL, orphanRemoval=true)
     private Set<Product> product;
-    @OneToOne(mappedBy = "store", cascade = CascadeType.PERSIST)
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Long getId() {
