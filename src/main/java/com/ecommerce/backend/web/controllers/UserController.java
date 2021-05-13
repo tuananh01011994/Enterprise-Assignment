@@ -14,13 +14,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
 import java.util.*;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/")
 public class UserController {
@@ -47,23 +48,91 @@ public class UserController {
         return ResponseEntity.accepted().body(userRepository.findAll());
     }
 
-//    @PostMapping("/basketItemAdd")
-//    public ResponseEntity<Map<String, String>> createItemBasket(@RequestParam("uId") long userId,@RequestParam("pId") long productId){
-//        Optional<Order> order = myOrderRepository.findByUserAndProduct(userId, productId);
-//        Order data = new Order();
-//        if (order.isPresent()){
-//            data = (Order) order;
-//
-//        }
-//        Map<String,String> map = new HashMap<>();
-//        map.put("message","Add item to basket succesfully");
-//        return new ResponseEntity<>(map, HttpStatus.OK);
-//    }
+    @PostMapping("/basketItemAdd")
+    public ResponseEntity<Map<String, String>> createItemBasket(@Valid @RequestParam("uId") long userId,@RequestParam("pId") long productId){
+        User user = myUserRepository.findByID(userId);
+        Product product = myProductRepository.findProductById(productId);
+        Order order = new Order();
 
-//    @DeleteMapping("/basketItemRemove")
-//    public ResponseEntity<Map<String, String>> removeItemBasket(@RequestParam("userId") long uId, @RequestParam("productId") long pId){
-//
-//    }
+        if(myOrderRepository.existByUserAndProduct(user, product)){
+            order = myOrderRepository.findByUserAndProduct(user, product);
+            order.setProductCount(order.getProductCount() + 1);
+            myOrderRepository.save(order);
+            Map<String,String> map = new HashMap<>();
+            map.put("message","Add existed item to basket succesfully");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+
+        order.setUser(user);
+        order.setProduct(product);
+        order.setProductCount(1);
+        myOrderRepository.save(order);
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Add item to basket succesfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @PutMapping("/basketItemUpdate/{oId}")
+    public ResponseEntity<Map<String, String>> updateBasketItemUpdate(@Valid @RequestParam("quantity") int quantity,
+                                                                      @PathVariable("oId") long id){
+        Order order = myOrderRepository.findById(id);
+        if(quantity == 0){
+            myOrderRepository.delete(order);
+
+            Map<String,String> map = new HashMap<>();
+            map.put("message","Bakset item remove successfully");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        order.setProductCount(quantity);
+        myOrderRepository.save(order);
+
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Bakset item quantity update successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/basketItemDelete/{oId}")
+    public ResponseEntity<Map<String, String>> deleteBasketItem(@Valid @PathVariable("oId") long id){
+        Order order = myOrderRepository.findById(id);
+        myOrderRepository.delete(order);
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Bakset item delete successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/basketDelete/{uId}")
+    public ResponseEntity<Map<String, String>> deleteBasket(@Valid @PathVariable("uId") long uId){
+        List<Order> orders = myOrderRepository.findByUser(myUserRepository.findByID(uId));
+        for (Order order: orders){
+            myOrderRepository.delete(order);
+        }
+
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Bakset delete successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("/basketGet/{uId}")
+    public ResponseEntity<List<Order>> getBasket(@Valid @PathVariable("uId") long uId){
+        return ResponseEntity.accepted().body(myOrderRepository.findByUser(myUserRepository.findByID(uId)));
+    }
+
+    @GetMapping("/basketGetAll")
+    public ResponseEntity<List<Order>> getAllBasket(){
+        return ResponseEntity.accepted().body(myOrderRepository.findAll());
+    }
+
+    @GetMapping("/basketItemGet/{oId}")
+    public ResponseEntity<Order> getBasketItem(@Valid @PathVariable("oId") long id){
+        return ResponseEntity.accepted().body(myOrderRepository.findById(id));
+    }
+
+    @GetMapping("/test")
+    public ModelAndView test(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
 
 
     //todo: validate email
@@ -110,10 +179,15 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> loginUser(@RequestParam("email") final String email,
                                                         @RequestParam("password") final String password){
-
-            userService.validateUser(email,password);
             Map<String,String> map = new HashMap<>();
-            map.put("message","Login successfully");
+            try {
+                userService.validateUser(email,password);
+
+                map.put("message","Login successfully");
+            } catch (NoSuchElementException e){
+                map.put("message","Validate unsuccessfully");
+                return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(map, HttpStatus.OK);
     }
 

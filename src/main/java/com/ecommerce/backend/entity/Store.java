@@ -1,6 +1,8 @@
 package com.ecommerce.backend.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,7 +18,8 @@ public class Store {
     private String storeName;
     @OneToMany(mappedBy = "store", cascade=CascadeType.ALL, orphanRemoval=true)
     private Set<Product> product;
-    @OneToOne(mappedBy = "store",cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Long getId() {
