@@ -1,35 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="register.css"/>
-    <link rel="stylesheet" href="dialog.css"/>
-    <link rel="stylesheet" href="home.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="login.css">
+  <link rel="stylesheet" type="text/css" href="dialog.css">
 </head>
 <body class="my-login-page">
-<div class="header">
-  <a href="#" class="logo">CompanyLogo</a>
-  <div class="header-right">
-    <a href="home.html">Home</a>
-    <a href="login.html">Login</a>
-    <a class="active" href="register.html">Sign Up</a>
-  </div>
-
-  <div class="header-right-nav">
-    <button type="button" id="nav-btn" class="btn btn-default btn-lg">
-      <span class="glyphicon glyphicon-th-large"></span>
-    </button>
-  </div>
-  <div class="nav-element" id="nav-ele">
-    <a href="home.html">Home</a>
-    <a href="login.html">Login</a>
-    <a class="active" href="register.html">Sign Up</a>
-  </div>
-</div>
 <section class="h-100">
   <div class="container h-100">
     <div class="row justify-content-md-center h-100">
@@ -68,7 +47,7 @@
               <div class="form-group">
                 <div class="custom-checkbox custom-control">
                   <input type="checkbox" name="agree" id="agree" class="custom-control-input" required="">
-                  <label for="agree" class="custom-control-label">I agree to the <span class="fake-link" id="agreement">Terms and Conditions</span></label>
+                  <label for="agree" class="custom-control-label">I agree to the <a href="#" id="agreement">Terms and Conditions</a></label>
                   <div id="myModal" class="modal">
                     <div class="modal-content">
 
@@ -80,11 +59,11 @@
 
                       <p>Group 3 (“us”, “we”, or “our”) operates localhost.com (hereinafter referred to as “Service”).</p>
 
-                        Our Privacy Policy governs your visit to localhost.com, and explains how we collect, safeguard and disclose information that results from your use of our Service.
+                      Our Privacy Policy governs your visit to localhost.com, and explains how we collect, safeguard and disclose information that results from your use of our Service.
 
-                        We use your data to provide and improve Service. By using Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our Terms and Conditions.
+                      We use your data to provide and improve Service. By using Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our Terms and Conditions.
 
-                        Our Terms and Conditions (“Terms”) govern all use of our Service and together with the Privacy Policy constitutes your agreement with us (“agreement”).</p>
+                      Our Terms and Conditions (“Terms”) govern all use of our Service and together with the Privacy Policy constitutes your agreement with us (“agreement”).</p>
 
                       <h3>Definitions</h3>
                       <p>SERVICE means the localhost.com website operated by Group 3.</p>
@@ -155,7 +134,10 @@
     </div>
   </div>
 </section>
-</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="login.js"></script>
 <script src="dialog.js"></script>
-<script src="home.js"></script>
+</body>
 </html>
