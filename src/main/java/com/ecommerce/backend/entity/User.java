@@ -28,6 +28,7 @@ public class User {
     private String password;
 
     @OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
+    @JsonIgnore
     private Store store;
 
 
