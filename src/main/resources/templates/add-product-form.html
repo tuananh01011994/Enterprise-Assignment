@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/add-store-form.css">
 </head>
 
-
-
-<body class="my-add-form-page">
+<body class="my-add-product-page">
 <section class="h-100">
     <div class="container h-100">
         <div class="row justify-content-md-center h-100">
@@ -22,23 +20,47 @@
                 <div class="card fat">
 
                     <div class = "card-body">
-                        <h4 class="card-title">Add store form</h4>
+                        <h4 class="card-title">Add product form</h4>
 
                         <form method="POST" class="my-login-validation" novalidate="">
                             <div class="form-group">
-                                <label for="name">Store name</label>
+                                <label for="name">Product name</label>
                                 <input id="name" type="text" class="form-control" name="name" required autofocus>
                                 <div class="invalid-feedback">
-                                    What's your store name?
+                                    What's your product's name?
                                 </div>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="description">Store description</label>
+                                <label for="description">Product description</label>
                                 <textarea id="description" class="form-control" name="description" required autofocus></textarea>
                                 <div class="invalid-feedback">
-                                    What's your store's description?
+                                    What's your product's description?
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="price">Product price</label>
+                                <input type="text" id="price" class="form-control" name="price" required autofocus>
+                                <div class="invalid-feedback">
+                                    What's your product's price?
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="quantity">Product quantity</label>
+                                <input type="text" id="quantity" class="form-control" name="quantity" required autofocus>
+                                <div class="invalid-feedback">
+                                    What's your product's stock?
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photo">Product photo</label>
+                                <input type="file" id="photo" name="photo" class="form-control" required autofocus>
+                                <div class="invalid-feedback">
+                                    What's your product's photo?
                                 </div>
                             </div>
 
