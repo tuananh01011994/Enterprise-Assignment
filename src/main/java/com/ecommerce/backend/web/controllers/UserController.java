@@ -6,13 +6,16 @@ import com.ecommerce.backend.entity.User;
 import com.ecommerce.backend.repository.*;
 import com.ecommerce.backend.security.ActiveSessionList;
 import com.ecommerce.backend.service.UserService;
+import com.ecommerce.backend.utility.FileUploadUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
+import java.io.IOException;
 import java.util.*;
 @CrossOrigin(origins = "*")
 @RestController
@@ -216,6 +220,26 @@ public class UserController {
         return userName;
     }
 
+    @PutMapping("/user/{id}/photo")
+    public  ResponseEntity<Map<String,String>>  saveUserPhoto(@RequestParam("image") MultipartFile multipartFile,@PathVariable("id") long userID){
+        Map<String, String> map = new HashMap<>();
 
+        User user = userRepository.findByID(userID);
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        user.setPhotos(fileName);
+        userRepository.save(user);
+        String uploadDir = "/user-photos/" + user.getId();
+        try{
+            FileUploadUtility.saveFile(uploadDir, fileName, multipartFile);
+
+        } catch (IOException e){
+            map.put("message", "Can't add photo to user");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+
+        }
+
+        map.put("message", "Add photo successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 
 }
