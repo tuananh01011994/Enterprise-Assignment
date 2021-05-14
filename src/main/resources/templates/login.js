@@ -2,12 +2,20 @@
 
 $(function() {
     $("#submit").click(function(e){
-        e.preventDefault();
+        // e.preventDefault();
+        if(!($("#email").val()==="") && !($("#password").val()==="")){
         $.post("http://localhost:8080/api/login", { email:$("#email").val(), password:$("#password").val()}, function (data) {
             alert("Data: " + JSON.stringify(data));
+
         }).fail(function(xhr, textStatus, errorThrown){
             alert(xhr.responseText);
-        })
+
+        });
+        e.preventDefault();
+        }
+
+
+
     })
 
     $("input[type='password'][data-eye]").each(function(i) {
