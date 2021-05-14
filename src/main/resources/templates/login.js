@@ -69,7 +69,7 @@ $(function() {
         });
     });
 
-    $(".my-login-validation").submit(function() {
+    $(".my-login-validation").submit(function(event) {
         var form = $(this);
         if (form[0].checkValidity() === false) {
             event.preventDefault();
