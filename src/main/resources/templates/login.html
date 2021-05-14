@@ -1,40 +1,18 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="login.css"/>
-    <link rel="stylesheet" href="home.css"/>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
+<!--    <link th:href="@{/css/login.css}" rel="stylesheet" />-->
+    <link href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/login.css" rel="stylesheet" />
 </head>
-<body class="my-login-page">
-<div class="header">
-    <a href="#" class="logo">CompanyLogo</a>
-    <div class="header-right">
-        <a href="home.html">Home</a>
-        <a class="active" href="login.html">Login</a>
-        <a href="register.html">Sign Up</a>
-    </div>
 
-    <div class="header-right-nav">
-        <button type="button" id="nav-btn" class="btn btn-default btn-lg">
-            <span class="glyphicon glyphicon-th-large"></span>
-        </button>
-    </div>
-    <div class="nav-element" id="nav-ele">
-        <a href="home.html">Home</a>
-        <a class="active" href="login.html">Login</a>
-        <a href="register.html">Sign Up</a>
-    </div>
-</div>
+<body class="my-login-page">
 <section class="h-100">
     <div class="container h-100">
-
         <div class="row justify-content-md-center h-100">
-
             <div class="card-wrapper">
                 <div class="brand">
                     <img src="img/logo.jpg" alt="logo">
@@ -42,21 +20,22 @@
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login</h4>
-                        <form class="my-login-validation">
+                        <form method="POST" class="my-login-validation" novalidate="">
                             <div class="form-group">
                                 <label for="email">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" >
+                                <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
                                 <div class="invalid-feedback">
                                     Email is invalid
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="password">Password
                                     <a href="forgot.html" class="float-right">
                                         Forgot Password?
                                     </a>
                                 </label>
-                                <input id="password" type="password" class="form-control" >
+                                <input id="password" type="password" class="form-control" name="password" required data-eye>
                                 <div class="invalid-feedback">
                                     Password is required
                                 </div>
@@ -70,7 +49,7 @@
                             </div>
 
                             <div class="form-group m-0">
-                                <button id="submit" type="submit" value="Submit" class="btn btn-primary btn-block">
+                                <button type="submit" class="btn btn-primary btn-block">
                                     Login
                                 </button>
                             </div>
@@ -88,21 +67,11 @@
     </div>
 </section>
 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/login.js"></script>
+<!--<script th:src="@{/login.js}"></script>-->
 
 </body>
-<script src="home.js"></script>
-<script>
-
-    $("#submit").click(function(e){
-        e.preventDefault();
-        $.post("http://localhost:8080/api/login", { email:$("#email").val(), password:$("#password").val()}, function (data) {
-            alert("Data: " + JSON.stringify(data));
-        }).fail(function(xhr, textStatus, errorThrown){
-            alert(xhr.responseText);
-        })
-    })
-</script>
 </html>
-
-
-

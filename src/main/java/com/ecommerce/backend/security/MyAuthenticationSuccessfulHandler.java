@@ -29,7 +29,7 @@ public class MyAuthenticationSuccessfulHandler implements AuthenticationSuccessH
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //todo: change!!
-        redirectStrategy.sendRedirect(request,response,"/homepage.html?user=" + authentication.getName());
+        redirectStrategy.sendRedirect(request,response,"/home.html");
         final HttpSession session = request.getSession(false);
         if (session != null) {
             String username;
