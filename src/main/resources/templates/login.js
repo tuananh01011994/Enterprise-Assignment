@@ -13,9 +13,6 @@ $(function() {
         });
         e.preventDefault();
         }
-
-
-
     })
 
     $("input[type='password'][data-eye]").each(function(i) {
