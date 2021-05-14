@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Add store form</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/add-store-form.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/add-product-form.css">
 </head>
 
 <body class="my-add-product-page">
@@ -22,7 +27,7 @@
                     <div class = "card-body">
                         <h4 class="card-title">Add product form</h4>
 
-                        <form method="POST" class="my-login-validation" novalidate="">
+                        <form method="POST" class="my-product-validation" novalidate="">
                             <div class="form-group">
                                 <label for="name">Product name</label>
                                 <input id="name" type="text" class="form-control" name="name" required autofocus>
@@ -66,7 +71,7 @@
 
                             <div class="form-group m-0">
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    Register store
+                                    Register product
                                 </button>
                             </div>
 
@@ -80,6 +85,14 @@
     </div>
 </section>
 </body>
-
-
+<script>
+    $(".my-product-validation").submit(function() {
+        var form = $(this);
+        if (form[0].checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.addClass('was-validated');
+    });
+</script>
 </html>
