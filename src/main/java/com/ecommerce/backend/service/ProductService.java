@@ -53,7 +53,7 @@ public class ProductService {
     public Product registerNewProduct(String productName, String price, String description, long storeId){
         validatePrice(price);
         final Product product = new Product();
-        Store store = new Store();
+
         product.setProductName(productName);
         product.setProductPrice(price);
         product.setProductDescription(description);

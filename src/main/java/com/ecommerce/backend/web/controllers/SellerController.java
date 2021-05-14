@@ -11,16 +11,20 @@ import com.ecommerce.backend.service.ProductService;
 import com.ecommerce.backend.service.StoreService;
 import com.ecommerce.backend.service.UserService;
 import com.ecommerce.backend.service.errors.StoreNameAlreadyExists;
+import com.ecommerce.backend.utility.FileUploadUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Null;
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,24 +109,51 @@ public class SellerController {
 
     @PostMapping("/productAdd/{id}")
     public ResponseEntity<Map<String, String>> addProduct(@Valid @RequestBody Product inProd, @PathVariable("id") long storeID){
+        Map<String, String> map = new HashMap<>();
+
         Store store = myStoreRepository.findByStoreId(storeID);
         Product product = productService.registerNewProduct(inProd.getProductName(), inProd.getProductPrice(), inProd.getProductDescription(), storeID);
         product.setStore(store);
+
+
         myStoreRepository.save(store);
-        Map<String, String> map = new HashMap<>();
         map.put("Message", "Add product successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+
     @PutMapping("/productUpdate/{id}")
-    public ResponseEntity<Map<String, String>> updateProduct(@Valid @RequestBody Product updated, @PathVariable("id") long original){
+    public ResponseEntity<Map<String, String>> updateProduct(@Valid @RequestBody Product updated, @PathVariable("id") long original, @RequestParam(value = "image",required = false) MultipartFile multipartFile){
+        Map<String, String> map = new HashMap<>();
+
         Product product = myProductRepository.findProductById(original);
         product.setProductName(updated.getProductName());
         product.setProductDescription(updated.getProductDescription());
         product.setQuantity(updated.getQuantity());
         product.setProductPrice(updated.getProductPrice());
+
+
         myProductRepository.save(product);
+        map.put("Message", "Update Product successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @PutMapping("/productUpdate/{id}/photo")
+    public ResponseEntity<Map<String, String>>addProductPhoto(@RequestParam(value = "image") MultipartFile multipartFile,  @PathVariable("id")Long productID) {
         Map<String, String> map = new HashMap<>();
+
+        Product product = myProductRepository.findProductById(productID);
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        product.setPhotos(fileName);
+        String uploadDir = "/product-photos/" + product.getId();
+        try{
+            FileUploadUtility.saveFile(uploadDir, fileName, multipartFile);
+
+        } catch (IOException e){
+            map.put("message", "Can't add photo to product");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+
+        }
         map.put("Message", "Update Product successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
