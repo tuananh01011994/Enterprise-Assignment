@@ -3,13 +3,12 @@
 $(function() {
     $("#submit").click(function(e){
         e.preventDefault();
-        $.post("http://localhost:8080/api/login", { email:"test@test.com", password:"test"}, function (data) {
+        $.post("http://localhost:8080/api/login", { email:$("#email").val(), password:$("#password").val()}, function (data) {
             alert("Data: " + JSON.stringify(data));
         }).fail(function(xhr, textStatus, errorThrown){
             alert(xhr.responseText);
         })
     })
-    // author badge :)
 
     $("input[type='password'][data-eye]").each(function(i) {
         var $this = $(this),
