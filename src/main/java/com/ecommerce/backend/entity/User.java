@@ -42,6 +42,8 @@ public class User {
                     name = "role_id", referencedColumnName = "role_id"))
     private Collection<Role> roles;
 
+    @Column(name="photo",nullable = true, length = 64)
+    private String photos;
 
     public User(String username,String password,String firstName,String lastName){
         this.username=username;
@@ -122,5 +124,11 @@ public class User {
     }
 
 
+    public String getPhotos() {
+        return photos;
+    }
 
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
 }

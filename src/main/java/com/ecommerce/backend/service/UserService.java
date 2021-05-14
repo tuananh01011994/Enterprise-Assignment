@@ -108,4 +108,5 @@ public class UserService {
         Matcher matcher = PATTERN.matcher(email);
         return matcher.matches();
     }
+
 }
