@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,7 @@ import java.net.URI;
 import java.security.Principal;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/login")
+@Controller
 public class LoginController {
     @Autowired
     private UserRepository userRepository;
@@ -36,5 +36,15 @@ public class LoginController {
             userName = principal.toString();
         }
         return userName;
+    }
+
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "login";
+    }
+
+    @GetMapping("/home")
+    public String getHomePage(){
+        return "home";
     }
 }

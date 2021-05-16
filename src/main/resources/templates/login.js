@@ -4,7 +4,7 @@ $(function() {
     $("#submit").click(function(e){
         // e.preventDefault();
         if(!($("#email").val()==="") && !($("#password").val()==="")){
-        $.post("http://localhost:8080/api/login", { email:$("#email").val(), password:$("#password").val()}, function (data) {
+        $.post("http://localhost:8080/login", { username:$("#email").val(), password:$("#password").val()}, function (data) {
             alert("Data: " + JSON.stringify(data));
 
         }).fail(function(xhr, textStatus, errorThrown){

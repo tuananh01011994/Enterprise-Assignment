@@ -18,7 +18,6 @@ public class ActiveSession implements HttpSessionBindingListener {
         if (!users.contains(user.getEmail())) {
             users.add(user.getEmail());
         }
-        System.out.println(activeSessionList.toString());
     }
 
     public void valueUnbound(HttpSessionBindingEvent event) {
@@ -26,7 +25,6 @@ public class ActiveSession implements HttpSessionBindingListener {
         ActiveSession user = (ActiveSession) event.getValue();
 
         users.remove(user.getEmail());
-        System.out.println(activeSessionList.toString());
     }
 
     public String getEmail() {

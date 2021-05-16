@@ -30,6 +30,7 @@
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login</h4>
+                        <div class="card-error" style="color: red"></div>
                         <form method="POST" class="my-login-validation" novalidate="">
                             <div class="form-group">
                                 <label for="email">E-Mail Address</label>
@@ -79,7 +80,7 @@
 
 
 <!--<script src="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/dialog.jshttps://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/login.js"></script>-->
-<script src="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@97370813c0bfd02fe9df69fbe9e81c5056b203e2/src/main/resources/templates/login.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@97370813c0bfd02fe9df69fbe9e81c5056b203e2/src/main/resources/templates/login.js"></script>-->
 <script>
     $(".my-login-validation").submit(function() {
         var form = $(this);
@@ -88,6 +89,83 @@
             event.stopPropagation();
         }
         form.addClass('was-validated');
+    });
+</script>
+
+
+<!--TODO: ADD THIS BACK TO CDN-->
+<script>
+    'use strict';
+
+    $(function() {
+        $("#submit").click(function(e){
+            e.preventDefault();
+            if(!($("#email").val()==="") && !($("#password").val()==="")){
+                $.post("http://localhost:8080/login", { username:$("#email").val(), password:$("#password").val()}, function (data) {
+                    window.location.href = "home.html";
+                }).fail(function(xhr, textStatus, errorThrown){
+                    $(".card-error").append("Invalid email/password");
+                });
+            }
+
+
+
+        })
+
+        $("input[type='password'][data-eye]").each(function(i) {
+            var $this = $(this),
+                id = 'eye-password-' + i,
+                el = $('#' + id);
+
+            $this.wrap($("<div/>", {
+                style: 'position:relative',
+                id: id
+            }));
+
+            $this.css({
+                paddingRight: 60
+            });
+            $this.after($("<div/>", {
+                html: 'Show',
+                class: 'btn btn-primary btn-sm',
+                id: 'passeye-toggle-'+i,
+            }).css({
+                position: 'absolute',
+                right: 10,
+                top: ($this.outerHeight() / 2) - 12,
+                padding: '2px 7px',
+                fontSize: 12,
+                cursor: 'pointer',
+            }));
+
+            $this.after($("<input/>", {
+                type: 'hidden',
+                id: 'passeye-' + i
+            }));
+
+            var invalid_feedback = $this.parent().parent().find('.invalid-feedback');
+
+            if(invalid_feedback.length) {
+                $this.after(invalid_feedback.clone());
+            }
+
+            $this.on("keyup paste", function() {
+                $("#passeye-"+i).val($(this).val());
+            });
+            $("#passeye-toggle-"+i).on("click", function() {
+                if($this.hasClass("show")) {
+                    $this.attr('type', 'password');
+                    $this.removeClass("show");
+                    $(this).removeClass("btn-outline-primary");
+                }else{
+                    $this.attr('type', 'text');
+                    $this.val($("#passeye-"+i).val());
+                    $this.addClass("show");
+                    $(this).addClass("btn-outline-primary");
+                }
+            });
+        });
+
     });
 </script>
 
