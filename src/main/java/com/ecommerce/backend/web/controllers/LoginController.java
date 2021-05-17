@@ -42,6 +42,9 @@ public class LoginController {
     @ResponseBody
     public String getCurrentUser() throws JsonProcessingException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+//        Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+
         String userName = null;
 
         String user="";
