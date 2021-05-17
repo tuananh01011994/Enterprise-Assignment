@@ -17,21 +17,15 @@ import java.lang.annotation.Annotation;
 import java.net.URI;
 import java.security.Principal;
 import java.util.Map;
+
 @Controller
-//@RestController
-//@RequestMapping("/login")
 public class LoginController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login_success_handler")
-    public String loginSuccessHandler() {
-        System.out.println("Logging user login success...");
 
-        return "home";
-    }
     @RequestMapping(value = "/username", method = RequestMethod.GET)
     public String getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -43,5 +37,14 @@ public class LoginController {
         }
         return userName;
     }
-}
 
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "login";
+    }
+
+    @GetMapping("/home")
+    public String getHomePage(){
+        return "home";
+    }
+}

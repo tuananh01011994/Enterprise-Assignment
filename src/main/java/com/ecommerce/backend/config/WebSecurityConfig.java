@@ -1,6 +1,7 @@
 package com.ecommerce.backend.config;
 
 
+import com.ecommerce.backend.security.MyAuthenticationFailureHandler;
 import com.ecommerce.backend.security.MyAuthenticationSuccessfulHandler;
 import com.ecommerce.backend.security.MyLogOutSuccessfulHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyLogOutSuccessfulHandler myLogOutSuccessfulHandler;
 
+    @Autowired
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+
     protected void configure(HttpSecurity http) throws Exception {
 
         http
@@ -44,14 +48,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-//                    .successForwardUrl("/login_success_handler")
-//                .defaultSuccessUrl("/home.html", true)
-
-                .successHandler(myAuthenticationSuccessHandler())
-//                .failureUrl("/login.html?error=true")
-//                .failureHandler(authenticationFailureHandler());
+                .permitAll()
+//                .loginPage("/home")
+/*
+                .defaultSuccessUrl("/login.html", true)
+*/
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler)
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/perform_logout")
@@ -62,10 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .failureHandler(authenticationFailureHandler)
 //                .authenticationDetailsSource(authenticationDetailsSource)
     }
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new MyAuthenticationSuccessfulHandler();
-    }
+
+
 
 
     // todo: encode or not
