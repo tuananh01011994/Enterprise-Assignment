@@ -2,30 +2,540 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--    <link rel="stylesheet" href="home.css"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <title>Home</title>
+    <style>
+        /* The sticky class is added to the header with JS when it reaches its scroll position */
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%
+        }
+        .content {
+            padding: 16px;
+        }
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        .sticky + .content {
+            padding-top: 102px;
+        }
+        .carousel .carousel-item {
+            height: 300px;
+        }
+        .carousel-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 300px;
+        }
+        .dropdown{
+            float:right;
+            padding-right: 30px;
+        }
+        .btn{
+            border:0px;
+            margin:10px 0px;
+            box-shadow:none !important;
+        }
+        .dropdown .dropdown-menu{
+            padding:20px;
+            top:30px !important;
+            width:350px !important;
+            left:-110px !important;
+            box-shadow:0px 5px 30px black;
+        }
+        .total-header-section{
+            border-bottom:1px solid #d2d2d2;
+        }
+        .total-section p{
+            margin-bottom:20px;
+        }
+        .cart-detail{
+            padding:15px 0px;
+        }
+        .cart-detail-img img{
+            width:100%;
+            height:100%;
+            padding-left:15px;
+        }
+        .cart-detail-product p{
+            margin:0px;
+            color:#000;
+            font-weight:500;
+        }
+        .cart-detail .price{
+            font-size:12px;
+            margin-right:10px;
+            font-weight:500;
+        }
+        .cart-detail .count{
+            color:#C2C2DC;
+        }
+        .checkout{
+            border-top:1px solid #d2d2d2;
+            padding-top: 15px;
+        }
+        .checkout .btn-primary{
+            border-radius:50px;
+            height:50px;
+        }
+        .dropdown-menu:before{
+            content: " ";
+            position:absolute;
+            top:-20px;
+            right:50px;
+            border:10px solid transparent;
+            border-bottom-color:#fff;
+        }
+    </style>
 </head>
 <body>
+<nav class="navbar header navbar-expand-md navbar-dark bg-primary" id="myHeader" style="z-index: 100">
+    <div class="container">
+        <a class="navbar-brand" href="home.html">Shopping Center</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<p>??</p>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item active m-auto">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product.html">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login">Login</a>
+                </li>
+            </ul>
+            <div class="dropdown">
+                <button type="button" class="btn btn-info" data-toggle="dropdown">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">3</span>
+                </button>
+                <div class="dropdown-menu">
+                    <div class="row total-header-section">
+                        <div class="col-lg-6 col-sm-6 col-6">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">3</span>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                            <p>Total: <span class="text-info">$2,978.24</span></p>
+                        </div>
+                    </div>
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/811OyrCd5hL._SX425_.jpg">
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>Sony DSC-RX100M..</p>
+                            <span class="price text-info"> $250.22</span> <span class="count"> Quantity:01</span>
+                        </div>
+                    </div>
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            <img src="https://cdn2.gsmarena.com/vv/pics/blu/blu-vivo-48-1.jpg">
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>Vivo DSC-RX100M..</p>
+                            <span class="price text-info"> $500.40</span> <span class="count"> Quantity:01</span>
+                        </div>
+                    </div>
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            <img src="https://static.toiimg.com/thumb/msid-55980052,width-640,resizemode-4/55980052.jpg">
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>Lenovo DSC-RX100M..</p>
+                            <span class="price text-info"> $445.78</span> <span class="count"> Quantity:01</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                            <button class="btn btn-primary btn-block">Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
+</nav>
+<section class=" text-center">
+    <!--Section: Block Content-->
+    <section>
+
+        <!--Carousel Wrapper-->
+        <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-2" data-slide-to="1"></li>
+                <li data-target="#carousel-example-2" data-slide-to="2"></li>
+            </ol>
+            <!--/Indicators-->
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                    <div class="view">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Others/clothes(5)-crop.jpg"
+                             alt="First slide">
+                        <a href="#!">
+                            <div class="mask rgba-black-light"></div>
+                        </a>
+                    </div>
+                    <div class="carousel-caption">
+                        <h3 class="h3-responsive">First shop item</h3>
+                        <p>First text</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!--Mask color-->
+                    <div class="view">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Others/clothes(4)-crop.jpg"
+                             alt="Second slide">
+                        <a href="#!">
+                            <div class="mask rgba-black-light"></div>
+                        </a>
+                    </div>
+                    <div class="carousel-caption">
+                        <h3 class="h3-responsive">Second shop item</h3>
+                        <p>Secondary text</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!--Mask color-->
+                    <div class="view">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Others/clothes(3)-crop.jpg"
+                             alt="Third slide">
+                        <a href="#!">
+                            <div class="mask rgba-black-light"></div>
+                        </a>
+                    </div>
+                    <div class="carousel-caption">
+                        <h3 class="h3-responsive">Third shop item</h3>
+                        <p>Third text</p>
+                    </div>
+                </div>
+            </div>
+            <!--/Slides-->
+            <!--Controls-->
+            <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+            <!--/Controls-->
+        </div>
+        <!--/Carousel Wrapper-->
+    </section>
+    <!--Section: Block Content-->
+</section>
+
+
+</main>
+<div style="height: 2000px"></div>
+<!--Main layout-->
 </body>
-
+<!--<script src="home.js"></script>-->
 <script>
-    $(document).ready(function() {
-        load();
-    });
+    // When the user scrolls the page, execute myFunction
+    window.onscroll = function() {myFunction()};
 
-    function load(){
-        $.get("http://localhost:8080/username",function (data){
-            const object = JSON.parse(data);
-            $("p").html(object.username);
-            $("p").html(object.name);
+    // Get the header
+    var header = document.getElementById("myHeader");
 
-        })
+    // Get the offset position of the navbar
+    var sticky = header.offsetTop;
+
+    // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+</script>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--    <link rel="stylesheet" href="home.css"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <title>Home</title>
+    <style>
+        /* The sticky class is added to the header with JS when it reaches its scroll position */
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%
+        }
+        .content {
+            padding: 16px;
+        }
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        .sticky + .content {
+            padding-top: 102px;
+        }
+        .carousel .carousel-item {
+            height: 300px;
+        }
+        .carousel-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 300px;
+        }
+        .dropdown{
+            float:right;
+            padding-right: 30px;
+        }
+        .btn{
+            border:0px;
+            margin:10px 0px;
+            box-shadow:none !important;
+        }
+        .dropdown .dropdown-menu{
+            padding:20px;
+            top:30px !important;
+            width:350px !important;
+            left:-110px !important;
+            box-shadow:0px 5px 30px black;
+        }
+        .total-header-section{
+            border-bottom:1px solid #d2d2d2;
+        }
+        .total-section p{
+            margin-bottom:20px;
+        }
+        .cart-detail{
+            padding:15px 0px;
+        }
+        .cart-detail-img img{
+            width:100%;
+            height:100%;
+            padding-left:15px;
+        }
+        .cart-detail-product p{
+            margin:0px;
+            color:#000;
+            font-weight:500;
+        }
+        .cart-detail .price{
+            font-size:12px;
+            margin-right:10px;
+            font-weight:500;
+        }
+        .cart-detail .count{
+            color:#C2C2DC;
+        }
+        .checkout{
+            border-top:1px solid #d2d2d2;
+            padding-top: 15px;
+        }
+        .checkout .btn-primary{
+            border-radius:50px;
+            height:50px;
+        }
+        .dropdown-menu:before{
+            content: " ";
+            position:absolute;
+            top:-20px;
+            right:50px;
+            border:10px solid transparent;
+            border-bottom-color:#fff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar header navbar-expand-md navbar-dark bg-primary" id="myHeader" style="z-index: 100">
+    <div class="container">
+        <a class="navbar-brand" href="home.html">Shopping Center</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item active m-auto">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product.html">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+            </ul>
+            <div class="dropdown">
+                <button type="button" class="btn btn-info" data-toggle="dropdown">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">3</span>
+                </button>
+                <div class="dropdown-menu">
+                    <div class="row total-header-section">
+                        <div class="col-lg-6 col-sm-6 col-6">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">3</span>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                            <p>Total: <span class="text-info">$2,978.24</span></p>
+                        </div>
+                    </div>
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/811OyrCd5hL._SX425_.jpg">
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>Sony DSC-RX100M..</p>
+                            <span class="price text-info"> $250.22</span> <span class="count"> Quantity:01</span>
+                        </div>
+                    </div>
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            <img src="https://cdn2.gsmarena.com/vv/pics/blu/blu-vivo-48-1.jpg">
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>Vivo DSC-RX100M..</p>
+                            <span class="price text-info"> $500.40</span> <span class="count"> Quantity:01</span>
+                        </div>
+                    </div>
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            <img src="https://static.toiimg.com/thumb/msid-55980052,width-640,resizemode-4/55980052.jpg">
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>Lenovo DSC-RX100M..</p>
+                            <span class="price text-info"> $445.78</span> <span class="count"> Quantity:01</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                            <button class="btn btn-primary btn-block">Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</nav>
+<section class=" text-center">
+    <!--Section: Block Content-->
+    <section>
+
+        <!--Carousel Wrapper-->
+        <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-2" data-slide-to="1"></li>
+                <li data-target="#carousel-example-2" data-slide-to="2"></li>
+            </ol>
+            <!--/Indicators-->
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                    <div class="view">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Others/clothes(5)-crop.jpg"
+                             alt="First slide">
+                        <a href="#!">
+                            <div class="mask rgba-black-light"></div>
+                        </a>
+                    </div>
+                    <div class="carousel-caption">
+                        <h3 class="h3-responsive">First shop item</h3>
+                        <p>First text</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!--Mask color-->
+                    <div class="view">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Others/clothes(4)-crop.jpg"
+                             alt="Second slide">
+                        <a href="#!">
+                            <div class="mask rgba-black-light"></div>
+                        </a>
+                    </div>
+                    <div class="carousel-caption">
+                        <h3 class="h3-responsive">Second shop item</h3>
+                        <p>Secondary text</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!--Mask color-->
+                    <div class="view">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Others/clothes(3)-crop.jpg"
+                             alt="Third slide">
+                        <a href="#!">
+                            <div class="mask rgba-black-light"></div>
+                        </a>
+                    </div>
+                    <div class="carousel-caption">
+                        <h3 class="h3-responsive">Third shop item</h3>
+                        <p>Third text</p>
+                    </div>
+                </div>
+            </div>
+            <!--/Slides-->
+            <!--Controls-->
+            <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+            <!--/Controls-->
+        </div>
+        <!--/Carousel Wrapper-->
+    </section>
+    <!--Section: Block Content-->
+</section>
+
+
+</main>
+<div style="height: 2000px"></div>
+<!--Main layout-->
+</body>
+<!--<script src="home.js"></script>-->
+<script>
+    // When the user scrolls the page, execute myFunction
+    window.onscroll = function() {myFunction()};
+
+    // Get the header
+    var header = document.getElementById("myHeader");
+
+    // Get the offset position of the navbar
+    var sticky = header.offsetTop;
+
+    // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
     }
 </script>
 </html>
