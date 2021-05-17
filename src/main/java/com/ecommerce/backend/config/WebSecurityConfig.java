@@ -43,13 +43,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/home")
                 .loginPage("/login")
-/*
-                .defaultSuccessUrl("/login.html", true)
-*/
-                .successHandler(myAuthenticationSuccessHandler)
-                .failureUrl("/login.html?error=true")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+//                    .successForwardUrl("/login_success_handler")
+//                .defaultSuccessUrl("/home.html", true)
+
+                .successHandler(myAuthenticationSuccessHandler())
+//                .failureUrl("/login.html?error=true")
 //                .failureHandler(authenticationFailureHandler());
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -61,8 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .failureHandler(authenticationFailureHandler)
 //                .authenticationDetailsSource(authenticationDetailsSource)
     }
-
-
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return new MyAuthenticationSuccessfulHandler();
+    }
 
 
     // todo: encode or not
