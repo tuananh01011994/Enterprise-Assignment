@@ -23,9 +23,7 @@ import javax.validation.Valid;
 import java.lang.annotation.Annotation;
 import java.net.URI;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class LoginController {
@@ -72,5 +70,18 @@ public class LoginController {
     @GetMapping("/home")
     public String getHomePage(){
         return "home";
+    }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String id() throws JsonProcessingException {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ObjectMapper mapper = new ObjectMapper();
+        if (principal instanceof UserDetails) {
+            User user = userRepository.findByEmail(((UserDetails) principal).
+                    getUsername()).orElseThrow(() -> new NoSuchElementException());
+            return user.getId().toString();
+        }
+        return "user not found";
     }
 }
