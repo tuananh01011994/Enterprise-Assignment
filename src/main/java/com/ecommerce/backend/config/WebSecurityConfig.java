@@ -38,6 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .anonymous().principal("guest").authorities("READ_PRIVILEGE")
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()

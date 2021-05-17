@@ -99,13 +99,15 @@
 
     $(function() {
         $("#submit").click(function(e){
-            e.preventDefault();
+
             if(!($("#email").val()==="") && !($("#password").val()==="")){
                 $.post("http://localhost:8080/login", { username:$("#email").val(), password:$("#password").val()}, function (data) {
                     window.location.href = "home.html";
                 }).fail(function(xhr, textStatus, errorThrown){
-                    $(".card-error").append("Invalid email/password");
+                    $(".card-error").html("<p>Invalid email/password</p>")
                 });
+
+                e.preventDefault();
             }
 
 
