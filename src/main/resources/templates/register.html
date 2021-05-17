@@ -4,11 +4,182 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Sign Up</title>
+  <link href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/login.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/login.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/dialog.css">
+  <style>
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+    }
+    .dropdown{
+      float:right;
+      padding-right: 30px;
+    }
+    .btn{
+      border:0px;
+      margin:10px 0px;
+      box-shadow:none !important;
+    }
+    .dropdown .dropdown-menu{
+      padding:20px;
+      top:30px !important;
+      width:350px !important;
+      left:-110px !important;
+      box-shadow:0px 5px 30px black;
+    }
+    .total-header-section{
+      border-bottom:1px solid #d2d2d2;
+    }
+    .total-section p{
+      margin-bottom:20px;
+    }
+    .cart-detail{
+      padding:15px 0px;
+    }
+    .cart-detail-img img{
+      width:100%;
+      height:100%;
+      padding-left:15px;
+    }
+    .cart-detail-product p{
+      margin:0px;
+      color:#000;
+      font-weight:500;
+    }
+    .cart-detail .price{
+      font-size:12px;
+      margin-right:10px;
+      font-weight:500;
+    }
+    .cart-detail .count{
+      color:#C2C2DC;
+    }
+    .checkout{
+      border-top:1px solid #d2d2d2;
+      padding-top: 15px;
+    }
+    .checkout .btn-primary{
+      border-radius:50px;
+      height:50px;
+    }
+    .dropdown-menu:before{
+      content: " ";
+      position:absolute;
+      top:-20px;
+      right:50px;
+      border:10px solid transparent;
+      border-bottom-color:#fff;
+    }
+  </style>
+
+
 </head>
 <body class="my-login-page">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="home.html">Shopping Center</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+      <ul class="navbar-nav m-auto">
+        <li class="nav-item active m-auto">
+          <a class="nav-link" href="home.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="product.html">Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">Login</a>
+        </li>
+      </ul>
+      <div class="dropdown">
+        <button type="button" class="btn btn-info" data-toggle="dropdown">
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">3</span>
+        </button>
+        <div class="dropdown-menu">
+          <div class="row total-header-section">
+            <div class="col-lg-6 col-sm-6 col-6">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">3</span>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+              <p>Total: <span class="text-info">$2,978.24</span></p>
+            </div>
+          </div>
+          <div class="row cart-detail">
+            <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+              <img src="https://images-na.ssl-images-amazon.com/images/I/811OyrCd5hL._SX425_.jpg">
+            </div>
+            <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+              <p>Sony DSC-RX100M..</p>
+              <span class="price text-info"> $250.22</span> <span class="count"> Quantity:01</span>
+            </div>
+          </div>
+          <div class="row cart-detail">
+            <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+              <img src="https://cdn2.gsmarena.com/vv/pics/blu/blu-vivo-48-1.jpg">
+            </div>
+            <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+              <p>Vivo DSC-RX100M..</p>
+              <span class="price text-info"> $500.40</span> <span class="count"> Quantity:01</span>
+            </div>
+          </div>
+          <div class="row cart-detail">
+            <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+              <img src="https://static.toiimg.com/thumb/msid-55980052,width-640,resizemode-4/55980052.jpg">
+            </div>
+            <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+              <p>Lenovo DSC-RX100M..</p>
+              <span class="price text-info"> $445.78</span> <span class="count"> Quantity:01</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+              <button class="btn btn-primary btn-block">Checkout</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>
 <section class="h-100">
   <div class="container h-100">
     <div class="row justify-content-md-center h-100">
@@ -137,7 +308,32 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/login.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/dialog.js"></script>
+<script>
+  // Get the modal
+  var modal = document.getElementById("myModal")
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("agreement");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks the button, open the modal
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
 </body>
 </html>
