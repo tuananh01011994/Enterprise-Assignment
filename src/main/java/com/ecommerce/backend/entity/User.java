@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Scope("session")
@@ -45,6 +47,7 @@ public class User {
     @Column(name="photo",nullable = true, length = 64)
     private String photos;
 
+
     public User(String username,String password,String firstName,String lastName){
         this.username=username;
         this.password= password;
@@ -52,11 +55,10 @@ public class User {
         this.lastName = lastName;
     }
 
-
-
     public User() {
 
     }
+
 
     public Long getId() {
         return id;
