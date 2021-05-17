@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/seller")
@@ -53,7 +54,10 @@ public class SellerController {
 
     @PostMapping("/storeAdd/{id}")
     public ResponseEntity<Map<String,String>> addStore(@Valid @RequestParam(name="store_name") String storeName, @PathVariable("id") Long userID){
+
         User user = myUserRepository.findByID(userID);
+
+
         if(myStoreRepository.existsByUser(myUserRepository.findByID(userID))){
             Map<String,String> map = new HashMap<>();
             map.put("message","User maximum store reach");

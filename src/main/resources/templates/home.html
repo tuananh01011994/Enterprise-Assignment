@@ -132,8 +132,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="contact.html">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login">Login</a>
+                <li class="nav-item" id="log-field">
+<!--                    <a class="nav-link" href="login">Login</a>-->
                 </li>
                 <li class="nav-item nav-link" id="user">
                         <i class="fa fa-user-circle">
@@ -298,10 +298,28 @@
     function load(){
         $.get("http://localhost:8080/username",function (data){
             const object = JSON.parse(data);
-            alert(JSON.stringify(data));
             $(".username").html(object.username);
             $(".username").html(object.name);
+            getUserId();
+            if(object.authenticated !== false){
+                $("#log-field").html("<a class=\"nav-link\" onclick='logout()' href=\"home\">Logout</a>");
+            }
+            else{
+                $("#log-field").html("<a class=\"nav-link\" href=\"login\">Login</a>");
+            }
+
         })
     }
+
+    function getUserId(){
+        $.get("http://localhost:8080/test",function (data) {
+            alert(data)
+        })
+    }
+
+    function logout(){
+        $.post("http://localhost:8080/logout");
+    }
+
 </script>
 </html>

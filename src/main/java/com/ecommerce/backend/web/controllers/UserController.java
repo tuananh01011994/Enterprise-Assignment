@@ -79,7 +79,7 @@ public class UserController {
     @PutMapping("/basketItemUpdate/{oId}")
     public ResponseEntity<Map<String, String>> updateBasketItemUpdate(@Valid @RequestParam("quantity") int quantity,
                                                                       @PathVariable("oId") long id){
-        Order order = myOrderRepository.findById(id);
+        Order order = myOrderRepository.findById(231);
         if(quantity == 0){
             myOrderRepository.delete(order);
 
@@ -131,12 +131,7 @@ public class UserController {
         return ResponseEntity.accepted().body(myOrderRepository.findById(id));
     }
 
-    @GetMapping("/test")
-    public ModelAndView test(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
+
 
 
     //todo: validate email
