@@ -1,6 +1,7 @@
 package com.ecommerce.backend.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -15,16 +16,16 @@ public class Product {
     @Column(name="productprice")
     private String productPrice;
 
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
-
     @Column(name ="quantity")
     private int quantity;
 
     @ManyToOne
     @JoinColumn(name="store_id")
     private Store store;
+
+    @Column(name="photo",nullable = true, length = 64)
+    private String photos;
+
     public Long getId() {
         return id;
     }
@@ -76,6 +77,13 @@ public class Product {
         this.store = store;
     }
 
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
 
     @Override
     public String toString() {

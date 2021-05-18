@@ -1,10 +1,12 @@
 package com.ecommerce.backend.config;
 
 
+import com.ecommerce.backend.security.MyAuthenticationFailureHandler;
 import com.ecommerce.backend.security.MyAuthenticationSuccessfulHandler;
 import com.ecommerce.backend.security.MyLogOutSuccessfulHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,27 +32,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyLogOutSuccessfulHandler myLogOutSuccessfulHandler;
 
+    @Autowired
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .anonymous().principal("guest").authorities("READ_PRIVILEGE")
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/resources/**").permitAll()
                 .antMatchers("/api/seller/*").permitAll()
 //                .antMatchers("/login*").permitAll()
                 .antMatchers("/user/**").permitAll()
 //                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//                .loginPage("/login.html")
+                .loginPage("/login")
+                .permitAll()
+//                .loginPage("/home")
 /*
                 .defaultSuccessUrl("/login.html", true)
 */
-                    .successHandler(myAuthenticationSuccessHandler)
-                .failureUrl("/login.html?error=true")
-//                .failureHandler(authenticationFailureHandler());
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler)
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/perform_logout")
+                .logout()
+//                .logoutSuccessUrl("/perform_logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler(myLogOutSuccessfulHandler);
 

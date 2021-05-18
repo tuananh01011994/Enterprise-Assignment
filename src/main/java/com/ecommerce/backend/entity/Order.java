@@ -1,5 +1,7 @@
 package com.ecommerce.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,12 +13,16 @@ public class Order {
     @Column(name="id")
     private Long id;
 
-    @OneToOne(mappedBy = "order")
+    @ManyToOne(optional = false)
+    @JoinColumn(name="user_id")
     private User user;
 
-    @Column(name="product_id")
-    @OneToMany(mappedBy = "order")
-    private List<Product> productList;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="product_id")
+    private Product product;
+
+    @Column(name="product_count")
+    private int productCount;
 
     public Long getId() {
         return id;
@@ -34,22 +40,19 @@ public class Order {
         this.user = user;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public int getProductCount() {
+        return productCount;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
     }
-
-    @Column(name="totalprice")
-    private double totalPrice;
 }

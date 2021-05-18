@@ -38,8 +38,10 @@ public class MyUserRepository{
 
     public User findByID(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+    }
 
-
+    public boolean existById(long id){
+        return userRepository.existsById(id);
     }
 
     public List<User> findAll(){

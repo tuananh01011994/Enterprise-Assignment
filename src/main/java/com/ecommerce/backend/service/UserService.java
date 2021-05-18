@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,22 +32,6 @@ public class UserService {
     MyStoreRepository myStoreRepository;
 
 
-
-//    public User save(User user) {
-//        return userRepository.saveAndFlush(user);
-//    }
-//
-//    public User update(User user) {
-//        return userRepository.save(user);
-//    }
-//
-//    public User find(String userName) {
-//        return userRepository.findOneByUsername(userName);
-//    }
-
-//    public Optional<User> findById(Long id) {
-//        return userRepository.findById(id);
-//    }
     public void LoginRegularUserAccount(final User account) {
         if (emailNotExists(account.getEmail())) {
             throw new EmailNotExists();
@@ -72,7 +57,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User registerNewSellerUserAccount(final User account) {
+    public void registerNewSellerUserAccount(final User account) {
         if (emailExists(account.getEmail())){
             throw new UserAlreadyExistException();
         }
@@ -87,12 +72,12 @@ public class UserService {
 
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_SELLER")));
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     private boolean emailExists(final String email) {
         try{userRepository.findByEmail(email);}
-        catch (EmailNotExists e){return false;}
+        catch (NoSuchElementException e){return false;}
         return true;
     }
 
@@ -101,13 +86,6 @@ public class UserService {
         catch (EmailNotExists e){return true;}
         return false;
     }
-
-//    public Store registerNewStore(Store store){
-//    }
-
-//    private boolean isStoreNameExists(String name){
-//        return myStoreRepository.findByName(name) != null;
-//    }
 
 
     public void saveRegisteredUser(final User user) {
@@ -130,8 +108,5 @@ public class UserService {
         Matcher matcher = PATTERN.matcher(email);
         return matcher.matches();
     }
-
-
-
 
 }
