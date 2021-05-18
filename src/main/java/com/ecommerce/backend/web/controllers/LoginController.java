@@ -61,7 +61,14 @@ public class LoginController {
         }
         return user;
     }
-
+    @GetMapping("/register")
+    public String getRegisterPage(){
+        return "register";
+    }
+    @GetMapping("/product-list")
+    public String getProductList(){
+        return "product-list";
+    }
     @GetMapping("/login")
     public String getLoginPage(){
         return "login";
