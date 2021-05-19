@@ -1,5 +1,7 @@
 package com.ecommerce.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -46,14 +48,6 @@ public class Order {
         this.product = product;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public int getProductCount() {
         return productCount;
     }
@@ -61,7 +55,4 @@ public class Order {
     public void setProductCount(int productCount) {
         this.productCount = productCount;
     }
-
-    @Column(name="totalprice")
-    private double totalPrice;
 }

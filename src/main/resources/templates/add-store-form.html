@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Add store form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href=https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/add-store-form.css">
+</head>
+
+
+
+<body class="my-add-store-page">
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+            <div class="card-wrapper">
+                <div class="brand">
+                    <img src="img/logo.jpg" alt="logo">
+                </div>
+
+                <div class="card fat">
+
+                <div class = "card-body">
+                    <h4 class="card-title">Add store form</h4>
+
+                    <form method="POST" class="my-store-validation" novalidate="">
+                        <div class="form-group">
+                            <label for="name">Store name</label>
+                            <input id="name" type="text" class="form-control" name="name" required autofocus>
+                            <div class="invalid-feedback">
+                                What's your store name?
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="description">Store description</label>
+                            <textarea id="description" class="form-control" name="description" required autofocus></textarea>
+                            <div class="invalid-feedback">
+                                What's your store's description?
+                            </div>
+                        </div>
+
+                        <div class="form-group m-0">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Register store
+                            </button>
+                        </div>
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</body>
+
+<script>
+    $(".my-store-validation").submit(function() {
+        var form = $(this);
+        if (form[0].checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.addClass('was-validated');
+    });
+</script>
+</html>

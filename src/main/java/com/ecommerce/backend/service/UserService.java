@@ -57,7 +57,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User registerNewSellerUserAccount(final User account) {
+    public void registerNewSellerUserAccount(final User account) {
         if (emailExists(account.getEmail())){
             throw new UserAlreadyExistException();
         }
@@ -72,7 +72,7 @@ public class UserService {
 
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_SELLER")));
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     private boolean emailExists(final String email) {
@@ -108,4 +108,5 @@ public class UserService {
         Matcher matcher = PATTERN.matcher(email);
         return matcher.matches();
     }
+
 }

@@ -25,14 +25,6 @@ public class OrderService {
     @Autowired
     MyOrderRepository myOrderRepository;
 
-    public Order registerNewOrder(long userId, long productId){
-        final Order order = new Order();
-        User user = new User();
-        Product product = new Product();
 
-        order.setUser(myUserRepository.findByID(userId));
-        order.setProduct(myProductRepository.findProductById(productId));
-        return myOrderRepository.save(order);
-    }
 
 }

@@ -29,8 +29,9 @@ public class MyAuthenticationSuccessfulHandler implements AuthenticationSuccessH
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //todo: change!!
-        redirectStrategy.sendRedirect(request,response,"/homepage.html?user=" + authentication.getName());
-        final HttpSession session = request.getSession(false);
+//        response.sendError(HttpServletResponse.SC_OK);
+//        redirectStrategy.sendRedirect(request,response,"/home.html");
+        final HttpSession session = request.getSession();
         if (session != null) {
             String username;
             if (authentication.getPrincipal() instanceof UserDetails) {

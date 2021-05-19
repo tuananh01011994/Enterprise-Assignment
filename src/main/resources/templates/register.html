@@ -5,16 +5,113 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Sign Up</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="../static/login.css">
-  <link rel="stylesheet" type="text/css" href="../static/dialog.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js"
+          integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <script>
+    $(function(){
+      $("#header").load("header.html");
+    });
+  </script>
+  <link href="https://cdn.jsdelivr.net/gh/tuananh01011994/Enterprise-Assignment@backend/src/main/resources/templates/login.css" rel="stylesheet" />
+  <style>
+    /* The Modal (background) */
+    html,body {
+      height: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+    /* The sticky class is added to the header with JS when it reaches its scroll position */
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%
+    }
+    .content {
+      padding: 16px;
+    }
+    /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+    .sticky + .content {
+      padding-top: 102px;
+    }
+    #myHeader{
+      z-index: 100;
+    }
+    .btn{
+      border:0px;
+      margin:10px 0px;
+      box-shadow:none !important;
+    }
+    .user a{
+      text-decoration: none;
+      color: rgba(255,255,255,.5);
+    }
+    .user a:hover{
+      color: #f8f9fa;
+      text-decoration: none;
+    }
+    .dropdown-item:hover{
+      background-color: #007bff;
+    }
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+    }
+
+  </style>
+
+
 </head>
-<body class="my-login-page">
-<section class="h-100">
+<body>
+<nav id="header"></nav>
+
+<section class="my-login-page h-100">
   <div class="container h-100">
     <div class="row justify-content-md-center h-100">
       <div class="card-wrapper">
         <div class="brand">
-          <img src="img/logo.jpg" alt="bootstrap 4 login page">
+          <img src= "../static/logo.png" alt="Logo">
         </div>
         <div class="card fat">
           <div class="card-body">
@@ -111,7 +208,7 @@
 
                   </div>
                   <div class="invalid-feedback">
-                    You must agree with our Terms and Conditions
+                    You must agree with our Terms and Conditions in order to proceed
                   </div>
                 </div>
               </div>
@@ -122,7 +219,7 @@
                 </button>
               </div>
               <div class="mt-4 text-center">
-                Already have an account? <a href="login.html">Login</a>
+                Already have an account? <a href="login">Login</a>
               </div>
             </form>
           </div>
@@ -135,9 +232,120 @@
   </div>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="../static/login.js"></script>
-<script src="../static/dialog.js"></script>
+
+
 </body>
+<script>
+  // Get the modal
+  var modal = document.getElementById("myModal")
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("agreement");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks the button, open the modal
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+<script>
+  $(".my-login-validation").submit(function() {
+    var form = $(this);
+    if (form[0].checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.addClass('was-validated');
+  });
+</script>
+
+
+<!--TODO: ADD THIS BACK TO CDN-->
+<script>
+  'use strict';
+
+  $(function() {
+    $("#submit").click(function(e){
+
+      if(!($("#email").val()==="") && !($("#password").val()==="")){
+        $.post("http://localhost:8080/login", { username:$("#email").val(), password:$("#password").val()}, function (data) {
+          window.location.href = "home";
+        }).fail(function(xhr, textStatus, errorThrown){
+          $(".card-error").html("<p>Invalid email/password</p>")
+        });
+
+        e.preventDefault();
+      }
+    })
+
+    $("input[type='password'][data-eye]").each(function(i) {
+      var $this = $(this),
+              id = 'eye-password-' + i,
+              el = $('#' + id);
+
+      $this.wrap($("<div/>", {
+        style: 'position:relative',
+        id: id
+      }));
+
+      $this.css({
+        paddingRight: 60
+      });
+      $this.after($("<div/>", {
+        html: 'Show',
+        class: 'btn-primary btn-sm',
+        id: 'passeye-toggle-'+i,
+      }).css({
+        position: 'absolute',
+        right: 10,
+        top: ($this.outerHeight() / 2) - 12,
+        padding: '2px 7px',
+        fontSize: 12,
+        cursor: 'pointer',
+      }));
+
+      $this.after($("<input/>", {
+        type: 'hidden',
+        id: 'passeye-' + i
+      }));
+
+      var invalid_feedback = $this.parent().parent().find('.invalid-feedback');
+
+      if(invalid_feedback.length) {
+        $this.after(invalid_feedback.clone());
+      }
+
+      $this.on("keyup paste", function() {
+        $("#passeye-"+i).val($(this).val());
+      });
+      $("#passeye-toggle-"+i).on("click", function() {
+        if($this.hasClass("show")) {
+          $this.attr('type', 'password');
+          $this.removeClass("show");
+          $(this).removeClass("btn-outline-primary");
+        }else{
+          $this.attr('type', 'text');
+          $this.val($("#passeye-"+i).val());
+          $this.addClass("show");
+          $(this).addClass("btn-outline-primary");
+        }
+      });
+    });
+
+  });
+</script>
 </html>

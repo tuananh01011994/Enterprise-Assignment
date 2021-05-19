@@ -23,6 +23,9 @@ public class Product {
     @JoinColumn(name="store_id")
     private Store store;
 
+    @Column(name="photo",nullable = true, length = 64)
+    private String photos;
+
     public Long getId() {
         return id;
     }
@@ -74,6 +77,13 @@ public class Product {
         this.store = store;
     }
 
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
 
     @Override
     public String toString() {

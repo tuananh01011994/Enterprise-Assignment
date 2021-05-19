@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--    <link rel="stylesheet" href="home.css"/>-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+<!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>-->
+  <script src="https://code.jquery.com/jquery-3.6.0.js"
+          integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+    <title>Product List</title>
+  <script>
+
+    // $(document).ready(function() {
+    //   loaduser();
+    // });
+    // // When the user scrolls the page, execute myFunction
+    // window.onscroll = function() {myFunction()};
+    //
+    // // Get the header
+    // var header = document.getElementById("myHeader");
+    //
+    // // Get the offset position of the navbar
+    // var sticky = header.offsetTop;
+    //
+    // // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    // function myFunction() {
+    //   if (window.pageYOffset > sticky) {
+    //     header.classList.add("sticky");
+    //   } else {
+    //     header.classList.remove("sticky");
+    //   }
+    // }
+
+    function loaduser(){
+      $.get("http://localhost:8080/username",function (data){
+        const object = JSON.parse(data);
+        $(".username").html(object.username);
+        $(".username").html(object.name);
+        getUserId();
+        if(object.authenticated !== false){
+          $("#log-field").html("<a class=\"nav-link\" onclick='logout()' href=\"home\">Logout</a>");
+        }
+        else{
+          $("#log-field").html("<a class=\"nav-link\" href=\"login\">Login</a>");
+        }
+
+      })
+    }
+
+    function getUserId(){
+      $.get("http://localhost:8080/test",function (data) {
+        alert(data)
+      })
+    }
+
+    function logout(){
+      $.post("http://localhost:8080/logout");
+    }
+
+  </script>
+  <script>
+    $(function(){
+      $("#header").load("header.html");
+    });
+
+  </script>
+  <style>
+    .wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wrapper:after {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+
+    .wrapper img {
+      width: auto;
+      height: 100%;
+      max-width: none;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+    html,body {
+      height: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+    /* The sticky class is added to the header with JS when it reaches its scroll position */
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%
+    }
+    .content {
+      padding: 16px;
+    }
+    /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+    .sticky + .content {
+      padding-top: 102px;
+    }
+    #myHeader{
+      z-index: 100;
+    }
+    .user a{
+      text-decoration: none;
+      color: rgba(255,255,255,.5);
+    }
+    .user a:hover{
+      color: #f8f9fa;
+      text-decoration: none;
+    }
+    .dropdown-item:hover{
+      background-color: #007bff;
+    }
+    #myHeader{
+      z-index: 500;
+    }
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      max-width: 300px;
+      margin: auto;
+      text-align: center;
+      font-family: arial;
+    }
+
+    .price {
+      color: grey;
+      font-size: 22px;
+    }
+
+    .card button {
+      border: none;
+      outline: 0;
+      padding: 12px;
+      color: white;
+      background-color: #000;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      font-size: 18px;
+    }
+
+    .card button:hover {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+<nav id="header"></nav>
+<div class="cards">
+  <div id="test12" class="row"></div>
+</div>
+<section class="pt-5 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h3 class="mb-3">Carousel cards title </h3>
+      </div>
+      <div class="col-6 text-right">
+        <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+          <i class="fa fa-arrow-left"></i>
+        </a>
+        <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+          <i class="fa fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="col-12">
+        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row">
+
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532781914607-2031eca2f00d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=7c625ea379640da3ef2e24f20df7ce8d">
+                    <div class="card-body">
+                      <h4 class="card-title">Special title treatment</h4>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <img class="img-fluid" src="../user-photos/174/toefl.jpg">
+                    <div class="card-body">
+                      <h4 class="card-title">Special title treatment</h4>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532771098148-525cefe10c23?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3f317c1f7a16116dec454fbc267dd8e4">
+                    <div class="card-body">
+                      <h4 class="card-title">Special title treatment</h4>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row">
+
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532771098148-525cefe10c23?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3f317c1f7a16116dec454fbc267dd8e4">
+                    <div class="card-body">
+                      <h4 class="card-title">Special title treatment</h4>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <img class="img-fluid" alt="100%x280" src="../user-photos/174/toefl.jpg">
+                    <div class="card-body">
+                      <h4 class="card-title">Special title treatment</h4>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+<script>
+  var mokData = [{
+    store_id: '174',
+    name: 'toefl',
+    des: 'iphoenenenenssssssssssssssssssssssssss',
+    price: '$101',
+    quantity:'5',
+    product_id:'12',
+    photo: '../user-photos/174/toefl.jpg'
+  },
+    {
+      store_id: '158',
+      name: 'iphone',
+      des: 'iphoenenenenssssssssssssssssssssssssss',
+      price: '$1010',
+      quantity:'5',
+      product_id:'1',
+      photo: '../user-photos/158/iphone.jpg'
+    },
+    ,
+    {
+      store_id: '158',
+      name: 'iphone',
+      des: 'iphoenenenenssssssssssssssssssssssssss',
+      price: '$1010',
+      quantity:'5',
+      product_id:'1',
+      photo: '../user-photos/158/iphone.jpg'
+    },
+    ,
+    {
+      store_id: '158',
+      name: 'iphone',
+      des: 'iphoenenenenssssssssssssssssssssssssss',
+      price: '$1010',
+      quantity:'5',
+      product_id:'1',
+      photo: '../user-photos/158/iphone.jpg'
+    },
+
+  ];
+  $(document).ready(function() {
+    populateRecipe();
+  })
+
+  function populateRecipe() {
+    var div = document.querySelector('#test12');
+
+    mokData.forEach((i) => {
+      div.innerHTML =
+              div.innerHTML +
+              `
+<div class="col-md-4 mb-3">
+    <div class="card h-100">
+              <div class="wrapper">
+                <img class="card-img-top img-fluid" src="${i.photo}" alt="">
+              </div>
+
+              <h1>${i.name}</h1>
+              <p class="price">${i.price}</p>
+              <p>${i.des}</p>
+              <p><button>Add to Cart</button></p>
+    </div>
+</div>
+    `;
+    });
+  }
+</script>
+</html>
