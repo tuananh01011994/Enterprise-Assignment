@@ -1,9 +1,10 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="login.css"/>
-    <link rel="stylesheet" href="home.css"/>
+    <link  rel="stylesheet"  th:href="@{/home.css}"/>
+    <link  rel="stylesheet"  th:href="@{/login.css}"/>
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -90,8 +91,32 @@
 
 
 </body>
-<script src="home.js"></script>
 <script>
+    // Get the modal
+    var nav_element = document.getElementById("nav-ele");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("nav-btn");
+
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        if(nav_element.style.display == "none"){
+            nav_element.style.display = "block";
+        }else{nav_element.style.display = "none";}
+
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        // if (!nav_element.contains(event.target)) {
+        //     nav_element.style.display = 'none';
+        // }
+        if (event.target == nav_element) {
+            nav_element.style.display = "none";
+        }
+    }
+</script>
+<script type="text/javascript">
 
     $("#submit").click(function(e){
         e.preventDefault();
