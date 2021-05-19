@@ -23,10 +23,6 @@ public class BackEndApplication {
         Configuration configuration = new Configuration();
         configuration.setProperty("spring.jpa.properties.hibernate.format_sql", "true");
         configuration.setProperty("hibernate.show_sql", "true");
-
-
-
-
         SpringApplication.run(BackEndApplication.class, args);
 
     }

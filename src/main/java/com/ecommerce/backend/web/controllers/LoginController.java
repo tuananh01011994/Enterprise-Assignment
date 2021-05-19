@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -61,7 +62,14 @@ public class LoginController {
         }
         return user;
     }
-
+    @GetMapping("/register")
+    public String getRegisterPage(){
+        return "register";
+    }
+    @GetMapping("/product-list")
+    public String getProductList(){
+        return "product-list";
+    }
     @GetMapping("/login")
     public String getLoginPage(){
         return "login";
@@ -83,5 +91,12 @@ public class LoginController {
             return user.getId().toString();
         }
         return "user not found";
+    }
+
+    @GetMapping()
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
     }
 }
