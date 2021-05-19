@@ -29,14 +29,18 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
+        registry.addResourceHandler("/user-photos/**")
+                .addResourceLocations("file:user-photos/")
+                .setCachePeriod(0);
+
     }
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         //super.addViewControllers(registry);
-//        registry.addViewController("/home").setViewName("home");
+//        registry.addViewController("/product-list.html").setViewName("product-list");
+        registry.addViewController("/header.html").setViewName("header");
 //        registry.addViewController("/login.html").setViewName("login");
-        registry.addViewController("/home.html").setViewName("home");
-        registry.addViewController("/aaa").setViewName("user-profile");
+//        registry.addViewController("/home.html").setViewName("home");
 //        registry.addViewController("/register.html").setViewName("register");
 //        registry.addViewController("/forgot.html").setViewName("forgot");
 //        registry.addViewController("/reset.html").setViewName("reset");
