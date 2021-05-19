@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -91,9 +92,9 @@ public class LoginController {
         return "home";
     }
 
-    @GetMapping("/test")
+    @GetMapping("/getID")
     @ResponseBody
-    public String id() throws JsonProcessingException {
+    public String getCurrentUserId() throws JsonProcessingException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ObjectMapper mapper = new ObjectMapper();
         if (principal instanceof UserDetails) {
@@ -102,5 +103,12 @@ public class LoginController {
             return user.getId().toString();
         }
         return "user not found";
+    }
+
+    @GetMapping()
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
     }
 }
