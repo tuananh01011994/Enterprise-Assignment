@@ -3,6 +3,8 @@ package com.ecommerce.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,16 +23,17 @@ public class Order {
     @JoinColumn(name="product_id")
     private Product product;
 
-    @Column(name="product_count")
-    private int productCount;
+    @Column(name="time")
+    private String time;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name="quantity")
+    private int quantity;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name="store_id")
+    private long storeId;
+
+    @Column(name="address")
+    private String address;
 
     public User getUser() {
         return user;
@@ -44,15 +47,39 @@ public class Order {
         return product;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public void setProduct(Product product) {
         this.product = product;
     }
 
-    public int getProductCount() {
-        return productCount;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setProductCount(int productCount) {
-        this.productCount = productCount;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(long storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -9,7 +9,6 @@ import com.ecommerce.backend.service.UserService;
 import com.ecommerce.backend.utility.FileUploadUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,11 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
-import java.awt.*;
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/")
@@ -56,89 +52,44 @@ public class UserController {
         return ResponseEntity.accepted().body(userRepository.findAll());
     }
 
-    @PostMapping("/basketItemAdd")
-    public ResponseEntity<Map<String, String>> createItemBasket(@Valid @RequestParam("uId") long userId,@RequestParam("pId") long productId){
-        User user = myUserRepository.findByID(userId);
-        Product product = myProductRepository.findProductById(productId);
-        Order order = new Order();
-
-        if(myOrderRepository.existByUserAndProduct(user, product)){
-            order = myOrderRepository.findByUserAndProduct(user, product);
-            order.setProductCount(order.getProductCount() + 1);
+    @PostMapping("/basketCheckout")
+    public ResponseEntity<Map<String, String>> checkoutBasket(@Valid @RequestBody List<Order> orderList){
+//        System.out.println(orderList.get(0));
+        Map<String,String> map = new HashMap<>();
+        Order orderIn = new Order();
+//
+//        if (orderList.isEmpty()){
+//            map.put("message","Empty basket");
+//            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+//        }
+        for (Order order : orderList){
+            orderIn.setTime(order.getTime());
+            orderIn.setQuantity(order.getQuantity());
+            orderIn.setUser(myUserRepository.findByID(order.getUser().getId()));
+            orderIn.setAddress(order.getAddress());
+            orderIn.setStoreId(myProductRepository.findProductById(order.getProduct().getId()).getStore().getId());
+            orderIn.setProduct(myProductRepository.findProductById(order.getProduct().getId()));
             myOrderRepository.save(order);
-            Map<String,String> map = new HashMap<>();
-            map.put("message","Add existed item to basket succesfully");
-            return new ResponseEntity<>(map, HttpStatus.OK);
         }
-
-        order.setUser(user);
-        order.setProduct(product);
-        order.setProductCount(1);
-        myOrderRepository.save(order);
-        Map<String,String> map = new HashMap<>();
-        map.put("message","Add item to basket succesfully");
+//
+        map.put("message","Register successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PutMapping("/basketItemUpdate/{oId}")
-    public ResponseEntity<Map<String, String>> updateBasketItemUpdate(@Valid @RequestParam("quantity") int quantity,
-                                                                      @PathVariable("oId") long id){
-        Order order = myOrderRepository.findById(231);
-        if(quantity == 0){
-            myOrderRepository.delete(order);
-
-            Map<String,String> map = new HashMap<>();
-            map.put("message","Bakset item remove successfully");
-            return new ResponseEntity<>(map, HttpStatus.OK);
+    @DeleteMapping("/basketDelete")
+    public ResponseEntity<Map<String, String>> deleteBasket(@Valid @RequestParam("uId") long userId,
+                                                            @RequestParam("time") String orderTime){
+        List<Order> order = myOrderRepository.basketItemGet(userId, orderTime);
+        for (Order input : order){
+            myOrderRepository.delete(input);
         }
-        order.setProductCount(quantity);
-        myOrderRepository.save(order);
-
         Map<String,String> map = new HashMap<>();
-        map.put("message","Bakset item quantity update successfully");
+        map.put("message","All item in baskset delete successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
-    @DeleteMapping("/basketItemDelete/{oId}")
-    public ResponseEntity<Map<String, String>> deleteBasketItem(@Valid @PathVariable("oId") long id){
-        Order order = myOrderRepository.findById(id);
-        myOrderRepository.delete(order);
-        Map<String,String> map = new HashMap<>();
-        map.put("message","Bakset item delete successfully");
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/basketDelete/{uId}")
-    public ResponseEntity<Map<String, String>> deleteBasket(@Valid @PathVariable("uId") long uId){
-        List<Order> orders = myOrderRepository.findByUser(myUserRepository.findByID(uId));
-        for (Order order: orders){
-            myOrderRepository.delete(order);
-        }
-
-        Map<String,String> map = new HashMap<>();
-        map.put("message","Basket delete successfully");
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
-
-    @GetMapping("/basketGet/{uId}")
-    public ResponseEntity<List<Order>> getBasket(@Valid @PathVariable("uId") long uId){
-        return ResponseEntity.accepted().body(myOrderRepository.findByUser(myUserRepository.findByID(uId)));
-    }
-
-    @GetMapping("/basketGetAll")
-    public ResponseEntity<List<Order>> getAllBasket(){
-        return ResponseEntity.accepted().body(myOrderRepository.findAll());
-    }
-
-    @GetMapping("/basketItemGet/{oId}")
-    public ResponseEntity<Order> getBasketItem(@Valid @PathVariable("oId") long id){
-        return ResponseEntity.accepted().body(myOrderRepository.findById(id));
-    }
-
 
     //todo: validate email
-    @RequestMapping(value = "/regular/user", method = RequestMethod.POST)
-//    @PostMapping("/regular/user")
+    @PostMapping("/regular/user")
     public ResponseEntity<Map<String,String>> registerNewRegularUser(@Valid @RequestBody User account, final HttpServletRequest request) {
         userService.isValidEmail(account.getEmail());
         userService.registerNewRegularUserAccount(account);
@@ -156,17 +107,44 @@ public class UserController {
             return  ResponseEntity.accepted().body(user);
     }
 
-    //todo: validate email
-    @PutMapping("/changeemail/{id}")
-    public  ResponseEntity<Map<String,String>> updateUserEmail(@PathVariable("id") long userID,@RequestParam("new_email") String newEmail){
-        userService.isValidEmail(newEmail);
-        User user = userRepository.findByID(userID);
-        user.setEmail(newEmail);
+//    //todo: validate email
+//    @PutMapping("/changeemail/{id}")
+//    public  ResponseEntity<Map<String,String>> updateUserEmail(@PathVariable("id") long userID,@RequestParam("new_email") String newEmail){
+//        userService.isValidEmail(newEmail);
+//        User user = userRepository.findByID(userID);
+//        user.setEmail(newEmail);
+//        userRepository.save(user);
+//        Map<String,String> map = new HashMap<>();
+//        map.put("message","Change your email successfully");
+//        return new ResponseEntity<>(map, HttpStatus.OK);
+//    }
+
+    @PutMapping("/usernameUpdate/{id}")
+    public ResponseEntity<Map<String, String>> usernameUpdate(@PathVariable("id") long uId,
+                                                              @RequestParam("firstname") String firstname,
+                                                              @RequestParam("lastname") String lastname){
+        User user = userRepository.findByID(uId);
+        user.setFirstName(firstname);
+        user.setLastName(lastname);
         userRepository.save(user);
+
         Map<String,String> map = new HashMap<>();
-        map.put("message","Change your email successfully");
+        map.put("message","Username update successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+    @PutMapping("/userUsernameUpdate/{id}")
+    public ResponseEntity<Map<String, String>> userUsernameUpdate(@PathVariable("id") long uId,
+                                                                  @RequestParam("username") String username){
+        User user =userRepository.findByID(uId);
+        user.setUsername(username);
+        userRepository.save(user);
+
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Username update successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
 
     @PutMapping("/changepassword/{id}")
     public  ResponseEntity<Map<String,String>> updateUserPassword(@PathVariable("id") long userID,@RequestParam("new_password") String newPassword){
