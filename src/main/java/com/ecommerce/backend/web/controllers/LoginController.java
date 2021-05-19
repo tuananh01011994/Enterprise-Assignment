@@ -62,6 +62,14 @@ public class LoginController {
         }
         return user;
     }
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || AnonymousAuthenticationToken.class.
+                isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+        return authentication.isAuthenticated();
+    }
     @GetMapping("/register")
     public String getRegisterPage(){
         return "register";
@@ -70,8 +78,12 @@ public class LoginController {
     public String getProductList(){
         return "product-list";
     }
+
     @GetMapping("/login")
     public String getLoginPage(){
+        if (isAuthenticated()) {
+            return "redirect:home";
+        }
         return "login";
     }
 
@@ -80,9 +92,9 @@ public class LoginController {
         return "home";
     }
 
-    @GetMapping("/test")
+    @GetMapping("/getID")
     @ResponseBody
-    public String id() throws JsonProcessingException {
+    public String getCurrentUserId() throws JsonProcessingException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ObjectMapper mapper = new ObjectMapper();
         if (principal instanceof UserDetails) {
