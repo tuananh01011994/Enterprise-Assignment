@@ -132,13 +132,13 @@
     #myHeader{
       z-index: 500;
     }
-    .card {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      max-width: 300px;
-      margin: auto;
-      text-align: center;
-      font-family: arial;
-    }
+    /*.card {*/
+    /*  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+    /*  max-width: 300px;*/
+    /*  margin: auto;*/
+    /*  text-align: center;*/
+    /*  font-family: arial;*/
+    /*}*/
 
     .price {
       color: grey;
@@ -164,9 +164,7 @@
 </head>
 <body>
 <nav id="header"></nav>
-<div class="cards">
-  <div id="test12" class="row"></div>
-</div>
+
 <section class="pt-5 pb-5">
   <div class="container">
     <div class="row">
@@ -256,74 +254,47 @@
     </div>
   </div>
 </section>
+
+<div class="container">
+  <div id="test12" class="row"></div>
+</div>
 </body>
 <script>
-  var mokData = [{
-    store_id: '174',
-    name: 'toefl',
-    des: 'iphoenenenenssssssssssssssssssssssssss',
-    price: '$101',
-    quantity:'5',
-    product_id:'12',
-    photo: '../user-photos/174/toefl.jpg'
-  },
-    {
-      store_id: '158',
-      name: 'iphone',
-      des: 'iphoenenenenssssssssssssssssssssssssss',
-      price: '$1010',
-      quantity:'5',
-      product_id:'1',
-      photo: '../user-photos/158/iphone.jpg'
-    },
-    ,
-    {
-      store_id: '158',
-      name: 'iphone',
-      des: 'iphoenenenenssssssssssssssssssssssssss',
-      price: '$1010',
-      quantity:'5',
-      product_id:'1',
-      photo: '../user-photos/158/iphone.jpg'
-    },
-    ,
-    {
-      store_id: '158',
-      name: 'iphone',
-      des: 'iphoenenenenssssssssssssssssssssssssss',
-      price: '$1010',
-      quantity:'5',
-      product_id:'1',
-      photo: '../user-photos/158/iphone.jpg'
-    },
+  $.getJSON('http://localhost:8080/api/seller/productGetAll', function(data) {
 
-  ];
-
-  $(document).ready(function() {
-    populateRecipe();
-  })
-
-  function populateRecipe() {
-    var div = document.querySelector('#test12');
-
-    mokData.forEach((i) => {
+    data.forEach((product)=>{
+      var div = document.querySelector('#test12');
       div.innerHTML =
               div.innerHTML +
               `
 <div class="col-md-4 mb-3">
     <div class="card h-100">
               <div class="wrapper">
-                <img class="card-img-top img-fluid" src="${i.photo}" alt="">
+                <img class="card-img-top img-fluid" src="${product.photos}" alt="">
               </div>
-
-              <h1>${i.name}</h1>
-              <p class="price">${i.price}</p>
-              <p>${i.des}</p>
-              <p><button>Add to Cart</button></p>
+              <div class="card-body">
+                   <h4 class="card-title">${product.productName}</h4>
+                   <h6 class="card-subtitle mb-2 text-muted">Stock: ${product.quantity} </h6>
+                    <p class="card-text">${product.productDescription}</p>
+                    <div class="glyphicon-option-horizontal d-flex flex-fill">
+                      <select class="mr-1 custom-select">
+                           <option selected>Quantity</option>
+                           <option value="1">1</option>
+                           <option value="2">2</option>
+                           <option value="3">3</option>
+                      </select>
+                    </div>
+                    <div class="buy d-flex justify-content-between align-items-center">
+                        <div class="price text-success"><h5 class="mt-4">$ ${product.productPrice}</h5></div>
+                        <a href="#" class="btn btn-danger mt-3"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                    </div>
+              </div>
     </div>
 </div>
     `;
     });
-  }
+    });
+
+
 </script>
 </html>
