@@ -72,9 +72,9 @@ public class LoginController {
         return "home";
     }
 
-    @GetMapping("/test")
+    @GetMapping("/getID")
     @ResponseBody
-    public String id() throws JsonProcessingException {
+    public String getCurrentUserId() throws JsonProcessingException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ObjectMapper mapper = new ObjectMapper();
         if (principal instanceof UserDetails) {

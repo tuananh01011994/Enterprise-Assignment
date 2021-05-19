@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class = "row">
+        <div class="card col-lg-3" style="width: 18rem; margin-left: 30px; margin-top: 30px">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">My Profile</h5>
+                <p class="card-text">This is my profile page</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">My personal details</li>
+                <li class="list-group-item">My shop</li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">See my cart</a>
+                <a href="#" class="card-link">User settings</a>
+            </div>
+        </div>
+
+        <div class="col-lg-9" style="padding-left: 50px; padding-right:10%; margin-right:-100px; padding-top:30px">
+            <div class="row ">
+                <div class="card w-25 text-center">
+                    <div class="card-body">
+                        <h6 class="card-title" style="">Your name</h6>
+                    </div>
+                </div>
+                <div class="card w-75 text-center">
+                    <div class="card-body">
+                        <p class="card-title" style="">Your name <button style="padding: 0;border: none;background: none; outline:none !important;"
+                                                                         data-toggle="modal" data-target="#changeNameModal"><i class="fas fa-edit"></i></button></p>
+                        <!-- modal content                       -->
+                        <div class="modal fade" id="changeNameModal" tabindex="-1" role="dialog" aria-labelledby="changeNameModal" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Change your name</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="changeNameForm">
+                                            <div class="form-group row">
+                                                <label for="inputFirstName" class="col-md-2 col-form-label">First name</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="inputFirstName" placeholder="Your new first name" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputLastName" class="col-md-2 col-form-label">Last name</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="inputLastName" placeholder="Your new last name" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" id="submitNameButton">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end of modal content-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="card w-25 text-center">
+                    <div class="card-body">
+                        <h6 class="card-title" style="">Your username</h6>
+                    </div>
+                </div>
+                <div class="card w-75 text-center">
+                    <div class="card-body">
+                        <p class="card-title" style="">Your username <button style="padding: 0;border: none;background: none; outline:none !important;"
+                                                                          data-toggle="modal" data-target="#changeUsernameModal"><i class="fas fa-edit"></i></button></p>
+
+                        <!-- modal content                       -->
+                        <div class="modal fade" id="changeUsernameModal" tabindex="-1" role="dialog" aria-labelledby="changeUsernameModal" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Change your email</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form >
+                                            <div class="form-group row">
+                                                <label for="inputUsername" class="col-md-2 col-form-label">Username</label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" id="inputUsername" placeholder="Your new email" required/>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button class="btn btn-primary" type="submit" id="submitUsernameButton">Save changes</button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end of modal content-->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row ">
+                <div class="card w-25 text-center">
+                    <div class="card-body">
+                        <h6 class="card-title" style="">Your password</h6>
+                    </div>
+                </div>
+                <div class="card w-75 text-center">
+                    <div class="card-body">
+                        <p class="card-title" style="">Your password <button style="padding: 0;border: none;background: none; outline:none !important;"
+                                                                         data-toggle="modal" data-target="#changePasswordModal"><i class="fas fa-edit"></i></button></p>
+                        <!-- modal content                       -->
+                        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Change your password</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="changePasswordForm">
+                                            <div class="form-group row">
+                                                <label for="inputFirstName" class="col-md-2 col-form-label">Password</label>
+                                                <div class="col-md-7">
+                                                    <input type="password" class="form-control" id="inputPassword" placeholder="Your new password" required/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="checkbox" onclick="passwordToggler()"/><label class="col-form-label"> Show password</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" id="submitPasswordButton">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end of modal content-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script >
+
+    $(function() {
+        $("#submitNameButton").click(function (e){
+            e.preventDefault();
+            var firstname = $("#inputFirstName").val();
+            var lastname = $("#inputLastName").val();
+            $.when($.get("http://localhost:8080/getID").then (function(data){
+                $.ajax({
+                            type:"PUT",
+                            url: "http://localhost:8080/api/usernameUpdate/" + data + "?firstname=" + firstname + "&lastname=" + lastname,
+                            success: function (response){
+                                alert(JSON.stringify(response));
+                            },
+                            error: function(xhr) {
+                                alert(JSON.stringify(xhr));
+
+                            }
+                        })
+            }))
+        })
+    });
+
+    $(function(){
+        $("#submitUsernameButton").click(function (e){
+            e.preventDefault();
+            var username = $("#inputUsername").val();
+            $.when($.get("http://localhost:8080/getID").then (function(data){
+                $.ajax({
+                    type:"PUT",
+                    url: "http://localhost:8080/api/userUsernameUpdate/" + data + "?username=" + username,
+                    success: function (response){
+                        alert(JSON.stringify(response));
+                    },
+                    error: function(xhr) {
+                        alert(JSON.stringify(xhr));
+
+                    }
+                })
+            }))
+        })
+    })
+
+    $(function(){
+        $("#submitPasswordButton").click(function (e){
+            e.preventDefault();
+            var password = $("#inputPassword").val();
+            $.when($.get("http://localhost:8080/getID").then (function(data){
+                $.ajax({
+                    type:"PUT",
+                    url: "http://localhost:8080/api/changepassword/" + data + "?new_password=" + password,
+                    success: function (response){
+                        alert(JSON.stringify(response));
+                    },
+                    error: function(xhr) {
+                        alert(JSON.stringify(xhr));
+
+                    }
+                })
+            }))
+        })
+    })
+
+    function passwordToggler(){
+        var x = document.getElementById("inputPassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+</script>
+</html>
