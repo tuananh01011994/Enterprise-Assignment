@@ -116,20 +116,28 @@
         <div class="card fat">
           <div class="card-body">
             <h4 class="card-title">Register</h4>
-            <form method="POST" class="my-login-validation" novalidate="">
+            <form id="registerForm" class="my-login-validation" novalidate="">
               <div class="form-group">
-                <label for="firstname">First Name</label>
-                <input id="firstname" type="text" class="form-control" name="firstname" required autofocus>
+                <label for="firstName">First Name</label>
+                <input id="firstName" type="text" class="form-control" name="firstName" required >
                 <div class="invalid-feedback">
                   What's your First name?
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="lastname">Last Name</label>
-                <input id="lastname" type="text" class="form-control" name="lastname" required autofocus>
+                <label for="lastName">Last Name</label>
+                <input id="lastName" type="text" class="form-control" name="lastName" required>
                 <div class="invalid-feedback">
                   What's your Last name?
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="username">User Name</label>
+                <input id="username" type="text" class="form-control" name="username" required>
+                <div class="invalid-feedback">
+                  What's your username?
                 </div>
               </div>
 
@@ -150,18 +158,20 @@
               </div>
 
               <div class="form-group">
-                <div class="custom-checkbox custom-control">
-                  <input type="checkbox" name="user" id="user" class="custom-control-input" required="">
-                  <label for="agree" class="custom-control-label"></label>
+                  <label for="role"> Choose your type account: </label>
+                  <select name="role" id="role" class="custom-select " required>
+                    <option value="">None</option>
+                    <option value="user">User</option>
+                    <option value="seller">Seller</option>
+                  </select>
                   <div class="invalid-feedback">
                     You must choose your type account
                   </div>
-                </div>
               </div>
 
               <div class="form-group">
                 <div class="custom-checkbox custom-control">
-                  <input type="checkbox" name="agree" id="agree" class="custom-control-input" required="">
+                  <input type="checkbox" name="agree" id="agree" class="form-control custom-control-input" required>
                   <label for="agree" class="custom-control-label">I agree to the <a href="#" id="agreement">Terms and Conditions</a></label>
                   <div id="myModal" class="modal">
                     <div class="modal-content">
@@ -232,7 +242,7 @@
               </div>
 
               <div class="form-group m-0">
-                <button type="submit" class="btn btn-primary btn-block">
+                <button type="submit" id="btnSubmit" class="btn btn-primary btn-block">
                   Register
                 </button>
               </div>
@@ -281,6 +291,7 @@
   }
 </script>
 <script>
+
   $(".my-login-validation").submit(function() {
     var form = $(this);
     if (form[0].checkValidity() === false) {
@@ -296,20 +307,59 @@
 <script>
   'use strict';
 
+
   $(function() {
-    $("#submit").click(function(e){
+    function urlregister(){
 
-
-      if(!($("#email").val()==="") && !($("#password").val()==="") && !($("#firstnamename").val()==="")){
-        $.post("http://localhost:8080/regular/user", { name:$("#name").val(), email:$("#email"), password:$("#password").val()}, function (data) {
-          window.location.href = "home";
-        }).fail(function(xhr, textStatus, errorThrown){
-          $(".card-error").html("<p>Something wrong</p>")
+      switch ($("#role").val()){
+        case 'user':
+          return "http://localhost:8080/api/regular/user";
+          break;
+        case 'seller':
+          return "http://localhost:8080/api/seller/user";
+          break;
+          default: break;
+      }
+    }
+    $.fn.serializeObject = function() {
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function() {
+        if (o[this.name]) {
+          if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || '');
+        } else {
+          o[this.name] = this.value || '';
+        }
+      });
+      return o;
+    };
+    $("#btnSubmit").click(function (e) {
+      if(!($("#email").val()==="") && !($("#password").val()==="") && !($("#firstName").val()==="") && !($("#lastName").val()==="")&& !($("#username").val()==="") && !($("#role").val()==="") && ($('#agree').is(":checked"))) {
+        var formData = $("#registerForm").serializeObject();
+        var myjson = JSON.stringify(formData);
+        console.log(myjson)
+        $.ajax({
+          url: urlregister(),
+          contentType: 'application/json ; charset = utf-8',
+          type: "POST",
+          data: myjson,
+          success: function(e){
+            alert(e);
+            window.location.href = "home";
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            alert(JSON.stringify(jqXHR));
+          }
         });
-
         e.preventDefault();
       }
-    })
+
+
+
+    });
 
     $("input[type='password'][data-eye]").each(function(i) {
       var $this = $(this),

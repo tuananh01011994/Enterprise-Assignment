@@ -9,6 +9,7 @@ import com.ecommerce.backend.service.UserService;
 import com.ecommerce.backend.utility.FileUploadUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
+import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/")
@@ -133,7 +137,8 @@ public class UserController {
 
 
     //todo: validate email
-    @PostMapping("/regular/user")
+    @RequestMapping(value = "/regular/user", method = RequestMethod.POST)
+//    @PostMapping("/regular/user")
     public ResponseEntity<Map<String,String>> registerNewRegularUser(@Valid @RequestBody User account, final HttpServletRequest request) {
         userService.isValidEmail(account.getEmail());
         userService.registerNewRegularUserAccount(account);
