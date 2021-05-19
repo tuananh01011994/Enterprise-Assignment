@@ -105,11 +105,20 @@
     $("#submit").click(function(e){
 
     })
-    $(document).ready(function (){
+
+    function checkRowCount(){
         let rowCount = $('table#cart tr:last').index() + 1 - 3;;
         if (rowCount <=0){
             $("#submit").attr("disabled", true);
         }
+    }
+    $(document).ready(function (){
+       checkRowCount();
+
+        $(".btn-danger").click(function(){
+            $(this).parents('tr').first().remove();
+            checkRowCount();
+        })
     })
 
 
