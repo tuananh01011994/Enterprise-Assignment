@@ -89,8 +89,43 @@
                     <button class="btn btn-block btn-light" id="back">Continue Shopping</button>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-primary text-uppercase" id="submit">Checkout</button>
+                    <button class="btn btn-lg btn-block btn-primary text-uppercase" id="submit" data-toggle="modal" data-target="#addressPopUp">Checkout</button>
                 </div>
+                <!--      begin of modal              -->
+
+                <div class="modal fade" id="addressPopUp" tabindex="-1" role="dialog" aria-labelledby="addressPopUp" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Set your delivery address:</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addressForm" >
+                                    <div class="form-group row">
+                                        <label for="addressInput" class="col-md-4 col-form-label">Delivery address:</label>
+                                        <div class="col-md-7">
+                                            <input type="text" class="form-control" id="addressInput" placeholder="Enter your desired delivery address" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--      end of modal              -->
+
             </div>
         </div>
     </div>
@@ -102,8 +137,8 @@
         window.href.location = "home";
     });
 
-    $("#submit").click(function(e){
-
+    $("#addressForm").on("submit", function (e){
+        e.preventDefault();
     })
 
     function checkRowCount(){
