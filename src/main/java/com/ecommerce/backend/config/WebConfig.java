@@ -32,7 +32,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/user-photos/**")
                 .addResourceLocations("file:user-photos/")
                 .setCachePeriod(0);
-
+        registry.addResourceHandler("/image/**")
+                .addResourceLocations("file:image/")
+                .setCachePeriod(0);
     }
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
