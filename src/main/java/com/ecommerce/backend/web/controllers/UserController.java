@@ -112,7 +112,7 @@ public class UserController {
         }
 
         Map<String,String> map = new HashMap<>();
-        map.put("message","Bakset delete successfully");
+        map.put("message","Basket delete successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
@@ -134,15 +134,7 @@ public class UserController {
 
 
 
-    //todo: validate email
-    @PostMapping("/regular/user")
-    public ResponseEntity<Map<String,String>> registerNewRegularUser(@Valid @RequestBody User account, final HttpServletRequest request) {
-        userService.isValidEmail(account.getEmail());
-        userService.registerNewRegularUserAccount(account);
-        Map<String,String> map = new HashMap<>();
-        map.put("message","Register successfully");
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+
 
 
 
@@ -174,7 +166,15 @@ public class UserController {
         map.put("message","Change your password successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
+    //todo: validate email
+    @PostMapping("/regular/user")
+    public ResponseEntity<Map<String,String>> registerNewRegularUser(@Valid @RequestBody User account, final HttpServletRequest request) {
+        userService.isValidEmail(account.getEmail());
+        userService.registerNewRegularUserAccount(account);
+        Map<String,String> map = new HashMap<>();
+        map.put("message","Register successfully");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> loginUser(@RequestParam("email") final String email,
                                                         @RequestParam("password") final String password){

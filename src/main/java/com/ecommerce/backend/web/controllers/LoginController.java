@@ -61,6 +61,14 @@ public class LoginController {
         }
         return user;
     }
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || AnonymousAuthenticationToken.class.
+                isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+        return authentication.isAuthenticated();
+    }
     @GetMapping("/register")
     public String getRegisterPage(){
         return "register";
@@ -69,8 +77,12 @@ public class LoginController {
     public String getProductList(){
         return "product-list";
     }
+
     @GetMapping("/login")
     public String getLoginPage(){
+        if (isAuthenticated()) {
+            return "redirect:home";
+        }
         return "login";
     }
 

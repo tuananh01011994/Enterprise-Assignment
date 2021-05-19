@@ -31,22 +31,22 @@
       margin: 0;
       padding: 0;
     }
-    /* The sticky class is added to the header with JS when it reaches its scroll position */
-    .sticky {
-      position: fixed;
-      top: 0;
-      width: 100%
-    }
-    .content {
-      padding: 16px;
-    }
-    /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-    .sticky + .content {
-      padding-top: 102px;
-    }
-    #myHeader{
-      z-index: 100;
-    }
+    /*!* The sticky class is added to the header with JS when it reaches its scroll position *!*/
+    /*.sticky {*/
+    /*  position: fixed;*/
+    /*  top: 0;*/
+    /*  width: 100%*/
+    /*}*/
+    /*.content {*/
+    /*  padding: 16px;*/
+    /*}*/
+    /*!* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) *!*/
+    /*.sticky + .content {*/
+    /*  padding-top: 102px;*/
+    /*}*/
+    /*#myHeader{*/
+    /*  z-index: 100;*/
+    /*}*/
     .btn{
       border:0px;
       margin:10px 0px;
@@ -118,10 +118,18 @@
             <h4 class="card-title">Register</h4>
             <form method="POST" class="my-login-validation" novalidate="">
               <div class="form-group">
-                <label for="name">Name</label>
-                <input id="name" type="text" class="form-control" name="name" required autofocus>
+                <label for="firstname">First Name</label>
+                <input id="firstname" type="text" class="form-control" name="firstname" required autofocus>
                 <div class="invalid-feedback">
-                  What's your name?
+                  What's your First name?
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input id="lastname" type="text" class="form-control" name="lastname" required autofocus>
+                <div class="invalid-feedback">
+                  What's your Last name?
                 </div>
               </div>
 
@@ -203,7 +211,7 @@
                       <p>We may also collect information that your browser sends whenever you visit our Service or when you access Service by or through any device (“Usage Data”).</p>
 
                       <p>This Usage Data may include information such as your computer’s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
-                      <button class="close" style="float: right">OK</button>
+                      <button class="btn btn-primary btn-block close" style="float: right">OK</button>
                     </div>
 
                   </div>
@@ -281,11 +289,12 @@
   $(function() {
     $("#submit").click(function(e){
 
-      if(!($("#email").val()==="") && !($("#password").val()==="")){
-        $.post("http://localhost:8080/login", { username:$("#email").val(), password:$("#password").val()}, function (data) {
+
+      if(!($("#email").val()==="") && !($("#password").val()==="") && !($("#firstnamename").val()==="")){
+        $.post("http://localhost:8080/regular/user", { name:$("#name").val(), email:$("#email"), password:$("#password").val()}, function (data) {
           window.location.href = "home";
         }).fail(function(xhr, textStatus, errorThrown){
-          $(".card-error").html("<p>Invalid email/password</p>")
+          $(".card-error").html("<p>Something wrong</p>")
         });
 
         e.preventDefault();
