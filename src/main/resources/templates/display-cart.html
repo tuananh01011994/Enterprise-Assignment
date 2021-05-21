@@ -234,7 +234,7 @@
                         <td></td>
                         <td></td>
                         <td>Sub-Total</td>
-                        <td class="text-right" ></td>
+                        <td class="text-right" id="sub_total"></td>
                         <td ></td>
                     </tr>
                     <tr>
@@ -250,7 +250,7 @@
                         <td></td>
                         <td></td>
                         <td><strong>Total</strong></td>
-                        <td class="text-right" id="sum1"><strong></strong></td>
+                        <td class="text-right" id="totalprice"><strong></strong></td>
                         <td> </td>
                     </tr>`;
     };
@@ -261,23 +261,34 @@
         $("#shipcost").text(formatter.format(5));
     }else $("#shipcost").text(formatter.format(0));
 
-    var sum1 = 0;
-    $("#cart tr").not(':first').not('#sum1').each(function() {
-        sum1 +=  getnum($(this).find("td:eq(4)").text());
+    var sum = 0;
+    var sub_total = 0;
+    $('tr').each(function (){
 
-        function getnum(c){
-            var t= Number(c.replace(/[^0-9.-]+/g,""));
+        $(this).find('.price').each(function (){
+            sub_total += getnum($(this).text());
 
-            if(isNumeric(t)){
-                return parseInt(t,10);
+            function getnum(c){
+                var t= Number(c.replace(/[^0-9.-]+/g,""));
+
+                if(isNumeric(t)){
+                    return parseInt(t,10);
+                }
+                return 0;
+                function isNumeric(n) {
+                    return !isNaN(parseFloat(n)) && isFinite(n);
+                }
             }
-            return 0;
-            function isNumeric(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-        }
+            // if(sub.length!==0){
+            //     sub_total+=parseFloat(sub);
+            // }
+        });
+
+        // $(this).find('#sub_total').html(formatter.format(sub_total));
     });
-    $("#sum1").text(formatter.format(sum1));
+    $("#sub_total").text(formatter.format(sub_total));
+    $("#shipcost").text();
+    $("#totalprice").text(formatter.format(sum));
 
 
 
