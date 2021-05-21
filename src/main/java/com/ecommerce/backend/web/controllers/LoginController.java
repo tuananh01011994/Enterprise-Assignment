@@ -46,7 +46,7 @@ public class LoginController {
 
         String userName = null;
 
-        String user="";
+        String user;
         ObjectMapper mapper = new ObjectMapper();
 
         if (principal instanceof UserDetails) {
@@ -121,15 +121,15 @@ public class LoginController {
         if (principal instanceof UserDetails) {
             User user = userRepository.findByEmail(((UserDetails) principal).
                     getUsername()).orElseThrow(() -> new NoSuchElementException());
-            String userJson = mapper.writeValueAsString(user);
 
-            return userJson;
+
+            return mapper.writeValueAsString(user);
         }
         return "anonymous user";
 
     }
 
-    @GetMapping("/aaa")
+    @GetMapping("/profile")
     public String test(){
 
             return "user-profile";
