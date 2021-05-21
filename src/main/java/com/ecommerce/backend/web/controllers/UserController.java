@@ -72,7 +72,7 @@ public class UserController {
             myOrderRepository.save(order);
         }
 //
-        map.put("message","Register successfully");
+        map.put("message","Add orders successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 

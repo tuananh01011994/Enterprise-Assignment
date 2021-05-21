@@ -68,7 +68,6 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">My personal details</li>
-                <li class="list-group-item">My shop</li>
             </ul>
             <div class="card-body">
                 <a href="#" class="card-link">See my cart</a>
@@ -77,9 +76,9 @@
         </div>
 
         <div class="col-lg-9" style="padding-left: 50px; padding-right:10%; margin-right:-100px; padding-top:30px">
-            <div class="row ">
+            <div class="row">
                 <div class="card w-25 text-center">
-                    <div class="card-body">
+                    <div class="card-body" >
                         <h6 class="card-title" style="">Your name</h6>
                     </div>
                 </div>
@@ -87,6 +86,8 @@
                     <div class="card-body">
                         <p class="card-title" style="">Your name <button style="padding: 0;border: none;background: none; outline:none !important;"
                                                                          data-toggle="modal" data-target="#changeNameModal"><i class="fa fa-edit"></i></button></p>
+                        <p class="card-title" id="nameField" style=""> <button style="padding: 0;border: none;background: none; outline:none !important;"
+                                                                         data-toggle="modal" data-target="#changeNameModal"><i class="fas fa-edit"></i></button></p>
                         <!-- modal content                       -->
                         <div class="modal fade" id="changeNameModal" tabindex="-1" role="dialog" aria-labelledby="changeNameModal" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
@@ -134,6 +135,8 @@
                 </div>
                 <div class="card w-75 text-center">
                     <div class="card-body">
+                        <p class="card-title" style="" id="usernameField"> <button style="padding: 0;border: none;background: none; outline:none !important;"
+                                                                          data-toggle="modal" data-target="#changeUsernameModal"><i class="fas fa-edit"></i></button></p>
                         <p class="card-title" style="">Your username <button style="padding: 0;border: none;background: none; outline:none !important;"
                                                                           data-toggle="modal" data-target="#changeUsernameModal"><i class="fa fa-edit"></i></button></p>
 
@@ -309,6 +312,42 @@
             x.type = "password";
         }
     }
+
+    $(function(){
+        $.get("http://localhost:8080/username",function(data){
+            let userAuthentication = JSON.parse(data);
+            $.map(userAuthentication.authorities, function(elem, index) {
+                //TODO: FIX ME :)
+                if (elem.authority == "SHOP_PRIVILEdGE"){
+                    $(".list-group").append("<li class=\"list-group-item\">My shop</li>")
+
+                } else if (elem.authority == "CHANGE_PASSWORD_PRIVILEGE"){
+                    $(".list-group").append( "<li class=\"list-group-item\">My cart</li>");
+
+
+                }
+            });
+        });
+    });
+
+
+    $(function(){
+        $.get("http://localhost:8080/getCurrentUser",function(data){
+            let obj = JSON.parse(data);
+            $("#nameField").prepend(obj.firstName +" " + obj.lastName + " ");
+            let password = obj.password;
+            let hidePassword = password.substring(1,password.length);
+            let mask="";
+            for (let char in hidePassword) {
+                mask  += '*';
+            }
+            password =  password.charAt(0) + mask;
+            $("#passwordField").prepend(password + " ");
+
+            $("#usernameField").prepend(obj.username + " ");
+        })
+
+    })
 
 </script>
 </html>
