@@ -263,6 +263,11 @@
 </div>
 </body>
 <script>
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  })
   $.getJSON('http://localhost:8080/api/seller/productGetAll', function(data) {
 
     data.forEach((product)=>{
@@ -290,7 +295,7 @@
                        </div>
                     </div>
                     <div class="buy d-flex justify-content-between align-items-center">
-                        <div class="text-success"><h5 class="mt-4 price">$${product.productPrice}</h5></div>
+                        <div class="text-success"><h5 class="mt-4 price">${formatter.format(parseInt(product.productPrice))}</h5></div>
                         <a href="#0" onclick="reply_click(${product.id})" class="btn btn-danger mt-3"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
                     </div>
               </div>
@@ -304,47 +309,46 @@
     var qselector = "#" + clicked_id.toString() + " " + ".custom-select";
     var pnselector = "#" + clicked_id.toString() + " " + ".card-title";
     var pselector = "#" + clicked_id.toString() + " " + ".price";
+    var imgseletor = "#" + clicked_id.toString() + " " + ".card-img-top";
       // save the value of #checkbox-1 as a variable,
       var productName = $(pnselector).text();
       var quantity = $(qselector).val();
       var price = $(pselector).text();
+      var photo = $(imgseletor).attr('src');
       // and test it to confirm it worked.
       const jsonData = {
         id: clicked_id.toString(),
         productName: productName.toString(),
         quantity: quantity.toString(),
-        price: price.toString()
+        price: price.toString(),
+        photo: photo.toString()
       };
-    // var jsonDatahistory = JSON.parse(localStorage.getItem('product')) || [];
-    //   jsonDatahistory.push(productName.toString());
-    //   localStorage.setItem('product', JSON.stringify(jsonDatahistory));
-    //   console.log(jsonData);
-    // function appendValueToStorage(key, value) {
-    //   var values = JSON.parse(localStorage.getItem(key));
-    //   if (values === null) {
-    //     values = [];
-    //   }
-    //
-    //   values.push(JSON.stringify(value));
-    //   localStorage.setItem(key, JSON.stringify(values));
-    //   console.log(localStorage.getItem(key));
-    // }
-    // appendValueToStorage('productnew', jsonData);
-    if(!localStorage.getItem("1")){
-      localStorage.setItem("1", "[]");
+
+    if(!localStorage.getItem("13")){
+      localStorage.setItem("13", "[]");
     }
-    var list = JSON.parse(localStorage.getItem("1"));
+    var list = JSON.parse(localStorage.getItem("13"));
     var exist = false;
-
-      if(JSON.stringify(list) === JSON.stringify(jsonData)) {
+    for(var i = 0; i < list.length; i++){
+      if(list[i].id === jsonData.id) {
+        var newquantity = parseInt(jsonData.quantity) + parseInt(list[i].quantity);
+        list[i].quantity = newquantity.toString();
         exist = true;
+        break;
       }
-    if(!exist) list.push(JSON.stringify(jsonData));
-    else{
-      alert("EXIST");
+      else{
+
+
+      }
     }
 
-    localStorage.setItem("1", JSON.stringify(list));
+    if(!exist) list.push(jsonData);
+    else{
+      alert("Upgrade");
+    }
+
+    localStorage.setItem("13", JSON.stringify(list));
+
 
   }
 
