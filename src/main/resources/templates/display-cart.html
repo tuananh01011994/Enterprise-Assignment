@@ -9,10 +9,55 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <style>
+        #myHeader{
+            z-index: 500;
+        }
+        /* The sticky class is added to the header with JS when it reaches its scroll position */
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%
+        }
+        .content {
+            padding: 16px;
+        }
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        .sticky + .content {
+            padding-top: 102px;
+        }
+        .carousel .carousel-item {
+            height: 300px;
+        }
+        .carousel-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 300px;
+        }
+        .dropdown-menu{
+            transition: 0.4s;
+        }
+        #displaycart, #user, #icon-user{
+            text-decoration: none;
+            color: white;
+        }
+        #profile{
+            text-decoration: none;
+            color: rgba(255,255,255,.5);
+        }
+        .dropdown-item:hover{
+            background-color: #007bff;
+        }
+
+        /*.dropdown-item a:hover{*/
+        /*    color: #888888;*/
+        /*}*/
+    </style>
 
 </head>
 <body>
-
+<nav id="header"></nav>
 <div class="container mb-4">
     <div class="row">
         <div class="col-md-12">
@@ -134,6 +179,7 @@
 </body>
 
 <script>
+    $("#header").load("header.html");
     $("#back").click(function(e){
         window.href.location = "home";
     });

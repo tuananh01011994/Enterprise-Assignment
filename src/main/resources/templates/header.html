@@ -2,9 +2,7 @@
 <html lang="en">
 <style>
 
-  .user i{
-    color: rgba(255,255,255,.5);
-  }
+
 </style>
 <body>
 <nav class="navbar header navbar-expand-md navbar-dark bg-primary" id="myHeader">
@@ -32,12 +30,12 @@
       <div class="nav-link float-right dropdown dropdown-toggle user" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa" id="icon-user">
         </i>
-        <a class="username" href="#"></a>
+        <a class="username" id="user" href="#"></a>
         <div class="dropdown-menu bg-primary" aria-labelledby="dropdownMenuButton">
-          <div class="dropdown-item">
+          <div class="dropdown-item profile">
             <a class="" id="profile" href="profile"><i class="fa fa-user-circle" ></i> My Profile</a>
           </div>
-          <div class="dropdown-item">
+          <div class="dropdown-item displaycart">
             <a class="" id="displaycart" href="cart"><i class="fa fa-shopping-cart" ></i> My Cart</a>
           </div>
 
@@ -74,25 +72,10 @@
             break;
       case 'Login':
         $(".login").addClass("active m-auto");
-
-        // $(".home").removeClass("active m-auto");
-        // $(".contact").removeClass("active m-auto");
-        // $(".login").removeClass("active m-auto");
         break;
       case 'Sign Up':
         $(".login").addClass("active m-auto");
 
-
-        break;
-      case 'Profile':
-        $(".user").addClass("active m-auto");
-        $(".user").removeClass("float-right");
-        $("#profile").addClass("active");
-        break;
-      case 'Display Cart':
-        $(".user").addClass("active m-auto");
-        $(".user").removeClass("float-right");
-        $("#profile").addClass("active");
         break;
       default : break;
     }
