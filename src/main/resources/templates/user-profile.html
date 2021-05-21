@@ -315,7 +315,7 @@
             let userAuthentication = JSON.parse(data);
             $.map(userAuthentication.authorities, function(elem, index) {
                 //TODO: FIX ME :)
-                if (elem.authority == "SHOP_PRIVILEdGE"){
+                if (elem.authority == "SHOP_PRIVILEGE"){
                     $(".list-group").append("<li class=\"list-group-item\">My shop</li>")
 
                 } else if (elem.authority == "CHANGE_PASSWORD_PRIVILEGE"){
