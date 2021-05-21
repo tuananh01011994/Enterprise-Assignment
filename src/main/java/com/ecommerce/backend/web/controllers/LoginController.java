@@ -70,6 +70,14 @@ public class LoginController {
         }
         return authentication.isAuthenticated();
     }
+    @GetMapping("/cart")
+    public String getDisplayCartPage(){
+        return "display-cart";
+    }
+    @GetMapping("/profile")
+    public String getProfilePage(){
+        return "user-profile";
+    }
     @GetMapping("/register")
     public String getRegisterPage(){
         return "register";

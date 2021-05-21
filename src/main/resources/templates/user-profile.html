@@ -2,14 +2,62 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--    <link rel="stylesheet" href="home.css"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <style>
+        #myHeader{
+            z-index: 500;
+        }
+        /* The sticky class is added to the header with JS when it reaches its scroll position */
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%
+        }
+        .content {
+            padding: 16px;
+        }
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        .sticky + .content {
+            padding-top: 102px;
+        }
+        .carousel .carousel-item {
+            height: 300px;
+        }
+        .carousel-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 300px;
+        }
+        .dropdown-menu{
+            transition: 0.4s;
+        }
+        .user a{
+            text-decoration: none;
+            color: rgba(255,255,255,.5);
+        }
+        .user a:hover{
+            color: #f8f9fa;
+            text-decoration: none;
+        }
+        .dropdown-item:hover{
+            background-color: #007bff;
+        }
+
+        /*.dropdown-item a:hover{*/
+        /*    color: #888888;*/
+        /*}*/
+    </style>
 </head>
 
 <body>
-
+<nav id="header"></nav>
 <div class="container-fluid">
     <div class = "row">
         <div class="card col-lg-3" style="width: 18rem; margin-left: 30px; margin-top: 30px">
@@ -38,7 +86,7 @@
                 <div class="card w-75 text-center">
                     <div class="card-body">
                         <p class="card-title" style="">Your name <button style="padding: 0;border: none;background: none; outline:none !important;"
-                                                                         data-toggle="modal" data-target="#changeNameModal"><i class="fas fa-edit"></i></button></p>
+                                                                         data-toggle="modal" data-target="#changeNameModal"><i class="fa fa-edit"></i></button></p>
                         <!-- modal content                       -->
                         <div class="modal fade" id="changeNameModal" tabindex="-1" role="dialog" aria-labelledby="changeNameModal" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
@@ -87,10 +135,10 @@
                 <div class="card w-75 text-center">
                     <div class="card-body">
                         <p class="card-title" style="">Your username <button style="padding: 0;border: none;background: none; outline:none !important;"
-                                                                          data-toggle="modal" data-target="#changeUsernameModal"><i class="fas fa-edit"></i></button></p>
+                                                                          data-toggle="modal" data-target="#changeUsernameModal"><i class="fa fa-edit"></i></button></p>
 
                         <!-- modal content                       -->
-                        <div class="modal fade" id="changeUsernameModal" tabindex="-1" role="dialog" aria-labelledby="changeUsernameModal" aria-hidden="true">
+                        <div class="modal  fade" id="changeUsernameModal" tabindex="-1" role="dialog" aria-labelledby="changeUsernameModal" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -137,7 +185,7 @@
                 <div class="card w-75 text-center">
                     <div class="card-body">
                         <p class="card-title" style="">Your password <button style="padding: 0;border: none;background: none; outline:none !important;"
-                                                                         data-toggle="modal" data-target="#changePasswordModal"><i class="fas fa-edit"></i></button></p>
+                                                                         data-toggle="modal" data-target="#changePasswordModal"><i class="fa fa-edit"></i></button></p>
                         <!-- modal content                       -->
                         <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
@@ -181,18 +229,17 @@
 </div>
 
 
-
 </body>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
 <script >
 
     $(function() {
 
-
+        $("#header").load("header.html");
         $("#changeNameForm").on("submit", function (e){
             e.preventDefault();
             var firstname = $("#inputFirstName").val();

@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-  body #myHeader{
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-  }
+
   .user i{
     color: rgba(255,255,255,.5);
   }
@@ -40,10 +35,10 @@
         <a class="username" href="#"></a>
         <div class="dropdown-menu bg-primary" aria-labelledby="dropdownMenuButton">
           <div class="dropdown-item">
-            <a class="" href="#"><i class="fa fa-user-circle" ></i> My Profile</a>
+            <a class="" id="profile" href="profile"><i class="fa fa-user-circle" ></i> My Profile</a>
           </div>
           <div class="dropdown-item">
-            <a class="" href="#"><i class="fa fa-shopping-cart" ></i> My Cart</a>
+            <a class="" id="displaycart" href="cart"><i class="fa fa-shopping-cart" ></i> My Cart</a>
           </div>
 
         </div>
@@ -52,6 +47,11 @@
   </div>
 </nav>
 </body>
+<script>
+  $('.dropdown-item a').click(function(e){
+    $(".dropdown-menu").addClass("show");
+  });
+</script>
 <script>
   $(document).ready(function() {
     loaduser();
@@ -66,16 +66,11 @@
     switch (page_name){
       case 'Home':
         $(".home").addClass("active m-auto");
-        // $(".product").removeClass("active m-auto");
-        // $(".contact").removeClass("active m-auto");
-        // $(".login").removeClass("active m-auto");
+
             break;
 
       case 'Product List':
         $(".product").addClass("active m-auto");
-        // $(".home").removeClass("active m-auto");
-        // $(".contact").removeClass("active m-auto");
-        // $(".login").removeClass("active m-auto");
             break;
       case 'Login':
         $(".login").addClass("active m-auto");
@@ -87,9 +82,17 @@
       case 'Sign Up':
         $(".login").addClass("active m-auto");
 
-        // $(".home").removeClass("active m-auto");
-        // $(".contact").removeClass("active m-auto");
-        // $(".login").removeClass("active m-auto");
+
+        break;
+      case 'Profile':
+        $(".user").addClass("active m-auto");
+        $(".user").removeClass("float-right");
+        $("#profile").addClass("active");
+        break;
+      case 'Display Cart':
+        $(".user").addClass("active m-auto");
+        $(".user").removeClass("float-right");
+        $("#profile").addClass("active");
         break;
       default : break;
     }
@@ -122,6 +125,7 @@
       else{
         $("#log-field").html("<a class=\"nav-link\" href=\"login\">Login</a>");
         $("#icon-user").addClass("fa-user-secret");
+        $("#icon-user a").addClass("disabled");
         $("#dropdownMenuButton").removeClass("dropdown dropdown-toggle");
         $("#dropdownMenuButton").removeAttr("data-toggle");
         $(".dropdown-menu").css("display: none");

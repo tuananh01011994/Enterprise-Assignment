@@ -268,25 +268,27 @@
               div.innerHTML +
               `
 <div class="col-md-4 mb-3">
-    <div class="card h-100">
+    <div class="card h-100" id="${product.id}">
               <div class="wrapper">
                 <img class="card-img-top img-fluid" src="${product.photos}" alt="">
               </div>
-              <div class="card-body">
+              <div class="card-body" >
                    <h4 class="card-title">${product.productName}</h4>
                    <h6 class="card-subtitle mb-2 text-muted">Stock: ${product.quantity} </h6>
                     <p class="card-text">${product.productDescription}</p>
-                    <div class="glyphicon-option-horizontal d-flex flex-fill">
-                      <select class="mr-1 custom-select">
-                           <option selected>Quantity</option>
+                    <div class="form-group glyphicon-option-horizontal d-flex flex-fill" >
+                      <select id="q-${product.id}" name="q-${product.id}" class="mr-1 custom-select">
                            <option value="1">1</option>
                            <option value="2">2</option>
                            <option value="3">3</option>
                       </select>
+                      <div class="invalid-feedback">
+                            You must choose quantity
+                       </div>
                     </div>
                     <div class="buy d-flex justify-content-between align-items-center">
-                        <div class="price text-success"><h5 class="mt-4">$ ${product.productPrice}</h5></div>
-                        <a href="#" class="btn btn-danger mt-3"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                        <div class="text-success"><h5 class="mt-4 price">$${product.productPrice}</h5></div>
+                        <a href="#0" onclick="reply_click(${product.id})" class="btn btn-danger mt-3"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
                     </div>
               </div>
     </div>
@@ -294,6 +296,59 @@
     `;
     });
     });
+  function reply_click(clicked_id)
+  {
+    var qselector = "#" + clicked_id.toString() + " " + ".custom-select";
+    var pnselector = "#" + clicked_id.toString() + " " + ".card-title";
+    var pselector = "#" + clicked_id.toString() + " " + ".price";
+      // save the value of #checkbox-1 as a variable,
+      var productName = $(pnselector).text();
+      var quantity = $(qselector).val();
+      var price = $(pselector).text();
+      // and test it to confirm it worked.
+      const jsonData = {
+        id: clicked_id.toString(),
+        productName: productName.toString(),
+        quantity: quantity.toString(),
+        price: price.toString()
+      };
+    // var jsonDatahistory = JSON.parse(localStorage.getItem('product')) || [];
+    //   jsonDatahistory.push(productName.toString());
+    //   localStorage.setItem('product', JSON.stringify(jsonDatahistory));
+    //   console.log(jsonData);
+    // function appendValueToStorage(key, value) {
+    //   var values = JSON.parse(localStorage.getItem(key));
+    //   if (values === null) {
+    //     values = [];
+    //   }
+    //
+    //   values.push(JSON.stringify(value));
+    //   localStorage.setItem(key, JSON.stringify(values));
+    //   console.log(localStorage.getItem(key));
+    // }
+    // appendValueToStorage('productnew', jsonData);
+    if(!localStorage.getItem("1")){
+      localStorage.setItem("1", "[]");
+    }
+    var list = JSON.parse(localStorage.getItem("1"));
+    var exist = false;
+
+      if(JSON.stringify(list) === JSON.stringify(jsonData)) {
+        exist = true;
+      }
+    if(!exist) list.push(JSON.stringify(jsonData));
+    else{
+      alert("EXIST");
+    }
+
+    localStorage.setItem("1", JSON.stringify(list));
+
+  }
+
+
+
+
+
 
 
 </script>

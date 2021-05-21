@@ -32,6 +32,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/user-photos/**")
                 .addResourceLocations("file:user-photos/")
                 .setCachePeriod(0);
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:static/")
+                .setCachePeriod(0);
 
     }
     @Override
