@@ -169,39 +169,52 @@
 </body>
 
 <script>
+
+
     $("#header").load("header.html");
+    $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
+        var userinfo;
+        const object = JSON.parse(data);
+        userinfo = object.id;
+        window.userinfo = object.id;
+        console.log(userinfo);
+
     $("#back").click(function(e){
         window.href.location = "home";
     });
 
     $("#addressForm").on("submit", function (e){
         e.preventDefault();
-    })
+    });
 
     function checkRowCount(){
         let rowCount = $('table#cart tr:last').index() + 1 - 3;;
         if (rowCount <=0){
             $("#submit").attr("disabled", true);
         }
-    }
+    };
+
     $(document).ready(function (){
-       checkRowCount();
+
+        checkRowCount();
         $(".btn-danger").click(function(){
             $(this).parents('tr').first().remove();
             checkRowCount();
-            location.reload();
+            // location.reload();
         })
     })
+
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 2
     })
-    var obj = JSON.parse(localStorage.getItem('13'));
-    console.log(JSON.stringify(obj));
+    var obj = JSON.parse(localStorage.getItem(userinfo));
+    console.log(userinfo);
     loadcart(obj);
     function loadcart(data) {
         var div = document.querySelector('#listcart');
+        console.log(userinfo);
         data.forEach((product)=> {
 
             div.innerHTML =
@@ -216,7 +229,7 @@
                     </tr>`;
         });
         div.innerHTML = div.innerHTML +
-        `<tr>
+            `<tr>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -244,7 +257,7 @@
 
     var rowCount = $('#cart tr').length -4;
     console.log(rowCount);
-    if(rowCount <= 1){
+    if(rowCount <= 1 && rowCount >0){
         $("#shipcost").text(formatter.format(5));
     }else $("#shipcost").text(formatter.format(0));
 
@@ -253,7 +266,7 @@
         sum1 +=  getnum($(this).find("td:eq(4)").text());
 
         function getnum(c){
-           var t= Number(c.replace(/[^0-9.-]+/g,""));
+            var t= Number(c.replace(/[^0-9.-]+/g,""));
 
             if(isNumeric(t)){
                 return parseInt(t,10);
@@ -268,6 +281,8 @@
 
 
 
+
+    }));
     function reply_click(clicked_id)
     {
         var qselector = "#" + clicked_id.toString() + " " + ".quantity";
@@ -288,17 +303,15 @@
             photo: photo.toString()
         };
         // Parse json
-        let notes = JSON.parse(localStorage.getItem("13"))
+        let notes = JSON.parse(localStorage.getItem(window.userinfo));
         // Get index of object
-        const index = notes.indexOf(jsonData)
+        const index = notes.indexOf(jsonData);
         // Splice the array at the index of your object
-        notes.splice(index, 1)
+        notes.splice(index, 1);
         // Save back to localStorage
-        localStorage.setItem("13", JSON.stringify(notes))
+        localStorage.setItem(window.userinfo, JSON.stringify(notes));
+        location.reload();
 
     }
-
-
-
 </script>
 </html>
