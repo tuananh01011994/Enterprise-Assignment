@@ -39,7 +39,7 @@ public class LoginController {
 
     @RequestMapping(value = "/username", method = RequestMethod.GET)
     @ResponseBody
-    public String getCurrentUser() throws JsonProcessingException {
+    public String getCurrentUserAuthentication() throws JsonProcessingException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 //        Authentication principal = SecurityContextHolder.getContext().getAuthentication();
@@ -102,13 +102,30 @@ public class LoginController {
                     getUsername()).orElseThrow(() -> new NoSuchElementException());
             return user.getId().toString();
         }
-        return "user not found";
+        return "anonymous user";
     }
 
-    @GetMapping()
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
+    @GetMapping("/getCurrentUser")
+    @ResponseBody
+    public String getCurrentUser() throws JsonProcessingException {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ObjectMapper mapper = new ObjectMapper();
+        if (principal instanceof UserDetails) {
+            User user = userRepository.findByEmail(((UserDetails) principal).
+                    getUsername()).orElseThrow(() -> new NoSuchElementException());
+            String userJson = mapper.writeValueAsString(user);
+
+            return userJson;
+        }
+        return "anonymous user";
+
     }
+
+    @GetMapping("/aaa")
+    public String test(){
+
+            return "user-profile";
+
+    }
+
 }

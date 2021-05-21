@@ -173,7 +173,6 @@
             const object = JSON.parse(data);
             $(".username").html(object.username);
             $(".username").html(object.name);
-            getUserId();
             if(object.authenticated !== false){
                 $("#log-field").html("<a class=\"nav-link\" onclick='logout()' href=\"home\">Logout</a>");
             }
