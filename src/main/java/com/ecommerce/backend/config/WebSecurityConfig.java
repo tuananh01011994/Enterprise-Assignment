@@ -46,11 +46,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/seller/*").permitAll()
 //                .antMatchers("/login*").permitAll()
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/admin").hasAuthority("WRITE_PRIVILEGE")
 //                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
+
 //                .loginPage("/home")
 /*
                 .defaultSuccessUrl("/login.html", true)
@@ -61,7 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
 //                .logoutSuccessUrl("/perform_logout")
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessHandler(myLogOutSuccessfulHandler);
+                .logoutSuccessHandler(myLogOutSuccessfulHandler)
+                .and()
+                .exceptionHandling().accessDeniedPage("/access-denied");
 
 //                .successHandler(myAuthenticationSuccessHandler)
 //                .failureHandler(authenticationFailureHandler)
