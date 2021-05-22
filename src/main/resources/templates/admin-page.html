@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--    <link rel="stylesheet" href="home.css"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <h3 style="text-align: center;">Admin Controller Page</h3>
+    <ul class="nav nav-pills"  role="tablist">
+        <li class="nav-item">
+        <a class="nav-link active" data-toggle="pill" aria-current="page" href="#customer">Customer</a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" href="#product">Product</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="tab-content">
+    <div id="customer" class="container tab-pane active">
+        <h3 style="text-align: center">CUSTOMER LIST</h3>
+        <div class="container">
+            <div class="row">
+                <table class="table table-striped" id="cusTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="text-align: center;">ID</th>
+                        <th scope="col" style="text-align: center;">Name</th>
+                        <th scope="col" style="text-align: center;">Email</th>
+                        <th scope="col" style="text-align: center;">Delete</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+
+<script>
+    $(function(){
+        $.get("http://localhost:8080/api/users",function (data){
+            let table = $("#cusTable");
+            let button = "<button class=\"btn btn-sm btn-danger delCusButton\" \"><i class=\"fa fa-trash\" ></i> </button>"
+            $.each(data,function(i,cus){
+                table.append("<tr><td style='width: 10%;text-align: center'>" + data[i].id + "</id><td style='width: 40%;text-align: center'>" + data[i].firstName +  " " + data[i].lastName +   "</td><td style='width: 30%;text-align: center' class='email'>" + data[i].email +"</td><td style='text-align:center'>" +
+                    button +"</td>" + "</tr>");
+            })
+        })
+    })
+
+    $(function(){
+        $("#cusTable").on('click','.delCusButton',function() {
+            var currentRow=$(this).closest("tr");
+
+            var ID =currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+
+            $.ajax({
+                url: 'http://localhost:8080/api/users/' + ID,
+                type: 'DELETE',
+                success: function(result) {
+                    currentRow.remove();
+                    alert("Delete success!");
+                },
+                error: function (){
+                    alert("Cannot delete this customer because they still have unfinished order!")
+                }
+
+            });
+
+
+        })
+    })
+
+    // function delCustomer(){
+    //     var currentRow=$(this).closest("tr");
+    //
+    //     var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+    //     var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+    //     var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+    //     var data=col1+"\n"+col2+"\n"+col3;
+    //
+    //     alert(data);
+    // }
+</script>
+</html>

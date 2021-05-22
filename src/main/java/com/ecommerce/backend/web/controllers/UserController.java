@@ -7,6 +7,7 @@ import com.ecommerce.backend.repository.*;
 import com.ecommerce.backend.security.ActiveSessionList;
 import com.ecommerce.backend.service.UserService;
 import com.ecommerce.backend.utility.FileUploadUtility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -217,5 +218,7 @@ public class UserController {
         map.put("message", "Add photo successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+
 
 }
