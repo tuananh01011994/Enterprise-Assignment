@@ -129,10 +129,13 @@ public class LoginController {
 
     }
 
-    @GetMapping("/profile")
-    public String test(){
 
-            return "user-profile";
+
+
+    @GetMapping("/admin")
+    public String admin(){
+
+        return "admin-page";
 
     }
 
