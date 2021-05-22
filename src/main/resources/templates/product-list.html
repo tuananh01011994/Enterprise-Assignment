@@ -304,8 +304,18 @@
     `;
     });
     });
+
+
+
+
   function reply_click(clicked_id)
   {
+
+    $.get("http://localhost:8080/getCurrentUser", function (data){
+      var currentuser;
+      const object = JSON.parse(data);
+      currentuser = object.id;
+    alert(currentuser);
     var qselector = "#" + clicked_id.toString() + " " + ".custom-select";
     var pnselector = "#" + clicked_id.toString() + " " + ".card-title";
     var pselector = "#" + clicked_id.toString() + " " + ".price";
@@ -323,11 +333,10 @@
         price: price.toString(),
         photo: photo.toString()
       };
-
-    if(!localStorage.getItem("13")){
-      localStorage.setItem("13", "[]");
+    if(!localStorage.getItem(currentuser)){
+      localStorage.setItem(currentuser, "[]");
     }
-    var list = JSON.parse(localStorage.getItem("13"));
+    var list = JSON.parse(localStorage.getItem(currentuser));
     var exist = false;
     for(var i = 0; i < list.length; i++){
       if(list[i].id === jsonData.id) {
@@ -347,9 +356,9 @@
       alert("Upgrade");
     }
 
-    localStorage.setItem("13", JSON.stringify(list));
+    localStorage.setItem(currentuser, JSON.stringify(list));
 
-
+    });
   }
 
 
