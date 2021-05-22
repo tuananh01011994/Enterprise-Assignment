@@ -28,4 +28,6 @@ public class MyOrderRepository {
     public void delete(Order order){
         orderRepository.delete(order);
     }
+
+    public List<Order> findAll() { return orderRepository.findAll();}
 }

@@ -9,13 +9,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 </head>
+
+<style>
+    .nav-pills > li > a.active {
+        background-color: black !important;
+    }
+    a {
+        color: black;
+    }
+</style>
 <body>
-
-
-
-
-
-
 
 
 
@@ -30,6 +33,14 @@
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="pill" href="#product">Product</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" href="#order">Order</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " data-toggle="pill" href="#shop">Store</a>
         </li>
     </ul>
 </div>
@@ -56,6 +67,73 @@
             </div>
         </div>
     </div>
+
+    <div id="product" class="tab-pane container fade">
+        <h3 style="text-align: center">PRODUCT LIST</h3>
+        <div class="container">
+            <div class="row">
+                <table class="table table-striped" id="proTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="text-align: center;">ID</th>
+                        <th scope="col" style="text-align: center;">Name</th>
+                        <th scope="col" style="text-align: center;">Description</th>
+                        <th scope="col" style="text-align: center;">Price</th>
+                        <th scope="col" style="text-align: center;">Quantity</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="order" class="tab-pane container fade">
+        <h3 style="text-align: center">ORDER LIST</h3>
+        <div class="container">
+            <div class="row">
+                <table class="table table-striped" id="orderTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="text-align: center;">Product ID</th>
+                        <th scope="col" style="text-align: center;">Customer ID</th>
+                        <th scope="col" style="text-align: center;">Order time</th>
+                        <th scope="col" style="text-align: center;">Quantity</th>
+                        <th scope="col" style="text-align: center;">Address</th>
+
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="shop" class="tab-pane container fade">
+        <h3 style="text-align: center">SHOP LIST</h3>
+        <div class="container">
+            <div class="row">
+                <table class="table table-striped" id="shopTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="text-align: center;">Shop ID</th>
+                        <th scope="col" style="text-align: center;">Shop Name</th>
+                        <th scope="col" style="text-align: center;">Shop Owner</th>
+
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -68,10 +146,33 @@
             let table = $("#cusTable");
             let button = "<button class=\"btn btn-sm btn-danger delCusButton\" \"><i class=\"fa fa-trash\" ></i> </button>"
             $.each(data,function(i,cus){
-                table.append("<tr><td style='width: 10%;text-align: center'>" + data[i].id + "</id><td style='width: 40%;text-align: center'>" + data[i].firstName +  " " + data[i].lastName +   "</td><td style='width: 30%;text-align: center' class='email'>" + data[i].email +"</td><td style='text-align:center'>" +
+                table.append("<tr><td style='width: 10%;text-align: center'>" + data[i].id + "</id><td style='width: 40%;text-align: center'>" + data[i].firstName +  " " + data[i].lastName +   "</td><td style='width: 30%;text-align: center'>" + data[i].email +"</td><td style='text-align:center'>" +
                     button +"</td>" + "</tr>");
             })
         })
+        $.get("http://localhost:8080/api/seller/productGetAll",function (data){
+            let table = $("#proTable");
+            $.each(data,function(i,cus){
+                table.append("<tr><td style='width: 10%;text-align: center'>" + data[i].id + "</id><td style='width: 30%;text-align: center'>" + data[i].productName +   "</td><td style='width: 30%;text-align: center' >" + data[i].productDescription +"</td><td style='text-align:center'>" +
+                   + data[i].productPrice+ "</td><td style='width: 10%;text-align: center'>"+ data[i].quantity + "</td></tr>");
+            })
+        })
+
+        $.get("http://localhost:8080/api/orders",function (data){
+            let table = $("#orderTable");
+            $.each(data,function(i,cus){
+                table.append("<tr><td style='width: 10%;text-align: center'>" + data[i].user.id + "</id><td style='width: 30%;text-align: center'>" + data[i].product.id +   "</td><td style='width: 10%;text-align: center' >" + data[i].time +"</td><td style='text-align:center'>" +
+                    + data[i].quantity + "</td><td style='width: 30%;text-align: center'>"+ data[i].address + "</td></tr>");
+            })
+        })
+
+        $.get("http://localhost:8080/api/seller/storeGetAll",function (data){
+            let table = $("#shopTable");
+            $.each(data,function(i,cus){
+                table.append("<tr><td style='width: 20%;text-align: center'>" + data[i].id + "</id><td style='width: 30%;text-align: center'>" + data[i].storeName +   "</td><td style='width: 20%;text-align: center' >" + data[i].user.id+ "</td></tr>");
+            })
+        })
+
     })
 
     $(function(){

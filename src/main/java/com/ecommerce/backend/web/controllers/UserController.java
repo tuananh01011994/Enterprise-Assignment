@@ -53,6 +53,13 @@ public class UserController {
         return ResponseEntity.accepted().body(userRepository.findAll());
     }
 
+    @GetMapping("/orders")
+    public ResponseEntity<List<Order>> getAllOrder(){
+
+        return ResponseEntity.accepted().body(myOrderRepository.findAll());
+    }
+
+
     @PostMapping("/basketCheckout")
     public ResponseEntity<Map<String, String>> checkoutBasket(@Valid @RequestBody List<Order> orderList){
 //        System.out.println(orderList.get(0));
