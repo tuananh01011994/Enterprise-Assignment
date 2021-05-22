@@ -40,9 +40,11 @@ public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEve
         final Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
         final Privilege passwordPrivilege = createPrivilegeIfNotFound("CHANGE_PASSWORD_PRIVILEGE");
         final Privilege shopPrivilege = createPrivilegeIfNotFound("SHOP_PRIVILEGE");
+        final Privilege userPrivilege = createPrivilegeIfNotFound("USER_PRIVILEGE");
+
         // == create initial roles
         final List<Privilege> adminPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, writePrivilege, passwordPrivilege));
-        final List<Privilege> userPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, passwordPrivilege));
+        final List<Privilege> userPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, passwordPrivilege,userPrivilege));
         final List<Privilege> sellerPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, shopPrivilege));
 
         createRoleIfNotFound("ROLE_SELLER",sellerPrivileges);
