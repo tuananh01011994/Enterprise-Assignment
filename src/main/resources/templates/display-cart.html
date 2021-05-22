@@ -86,33 +86,7 @@
                         <th> </th>
                     </tr>
                     </thead>
-
                     <tbody id="listcart">
-<!--                    <tr>-->
-<!--                        <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>-->
-<!--                        <td>Product Name Dada</td>-->
-<!--                        <td>In stock</td>-->
-<!--                        <td><input class="form-control" type="text" value="1" /></td>-->
-<!--                        <td class="text-right">124,90 €</td>-->
-<!--                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>-->
-<!--                        <td>Product Name Toto</td>-->
-<!--                        <td>In stock</td>-->
-<!--                        <td><input class="form-control" type="text" value="1" /></td>-->
-<!--                        <td class="text-right">33,90 €</td>-->
-<!--                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>-->
-<!--                        <td>Product Name Titi</td>-->
-<!--                        <td>In stock</td>-->
-<!--                        <td><input class="form-control" type="text" value="1" /></td>-->
-<!--                        <td class="text-right">70,00 €</td>-->
-<!--                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>-->
-<!--                    </tr>-->
-
                     </tbody>
                 </table>
             </div>
@@ -169,8 +143,6 @@
 </body>
 
 <script>
-
-
     $("#header").load("header.html");
     $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
         var userinfo;
@@ -179,62 +151,62 @@
         window.userinfo = object.id;
         console.log(userinfo);
 
-    $("#back").click(function(e){
-        window.href.location = "home";
-    });
+        $("#back").click(function(e){
+            window.href.location = "home";
+        });
 
-    $("#addressForm").on("submit", function (e){
-        e.preventDefault();
-    });
+        $("#addressForm").on("submit", function (e){
+            e.preventDefault();
+        });
 
-    function checkRowCount(){
-        let rowCount = $('table#cart tr:last').index() + 1 - 3;;
-        if (rowCount <=0){
-            $("#submit").attr("disabled", true);
-        }
-    };
+        function checkRowCount(){
+            let rowCount = $('table#cart tr:last').index() + 1 - 3;;
+            if (rowCount <=0){
+                $("#submit").attr("disabled", true);
+            }
+        };
 
-    $(document).ready(function (){
+        $(document).ready(function (){
 
-        checkRowCount();
-        $(".btn-danger").click(function(){
-            $(this).parents('tr').first().remove();
             checkRowCount();
-            // location.reload();
+            $(".btn-danger").click(function(){
+                $(this).parents('tr').remove();
+                checkRowCount();
+                // location.reload();
+            })
         })
-    })
 
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2
-    })
-    var obj = JSON.parse(localStorage.getItem(userinfo));
-    console.log(userinfo);
-    loadcart(obj);
-    function loadcart(data) {
-        var div = document.querySelector('#listcart');
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        })
+        var obj = JSON.parse(localStorage.getItem(userinfo));
         console.log(userinfo);
-        data.forEach((product)=> {
+        loadcart(obj);
+        function loadcart(data) {
+            var div = document.querySelector('#listcart');
+            console.log(userinfo);
+            data.forEach((product)=> {
 
-            div.innerHTML =
-                div.innerHTML +
-                `<tr id="${product.id}">
+                div.innerHTML =
+                    div.innerHTML +
+                    `<tr id="${product.id}">
                         <td class="w-25"><img class="img-fluid img-thumbnail photo" src="${product.photo}" /> </td>
                         <td class="productName">${product.productName}</td>
                         <td>In stock</td>
                         <td><input class="form-control quantity" type="text" value="${product.quantity}" /></td>
-                        <td class="text-right price">${product.price}</td>
+                        <td class="text-right price">${formatter.format(getnum(product.price) * getq(product.quantity))}</td>
                         <td class="text-right"><button class="btn btn-sm btn-danger" onclick="reply_click(${product.id})"><i class="fa fa-trash"></i> </button> </td>
                     </tr>`;
-        });
-        div.innerHTML = div.innerHTML +
-            `<tr>
+            });
+            div.innerHTML = div.innerHTML +
+                `<tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td>Sub-Total</td>
-                        <td class="text-right" id="sub_total"></td>
+                        <td class="text-right"  id="sub_total"></td>
                         <td ></td>
                     </tr>
                     <tr>
@@ -250,79 +222,91 @@
                         <td></td>
                         <td></td>
                         <td><strong>Total</strong></td>
-                        <td class="text-right" id="totalprice"><strong></strong></td>
+                        <td class="text-right" id="total"><strong></strong></td>
                         <td> </td>
-                    </tr>`;
-    };
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-right "><button class="btn update btn-lg btn-primary"><i class="fa fa-upload"></i> </button> </td>
+                    </tr>
+`;
+        };
 
-    var rowCount = $('#cart tr').length -4;
-    console.log(rowCount);
-    if(rowCount <= 1 && rowCount >0){
-        $("#shipcost").text(formatter.format(5));
-    }else $("#shipcost").text(formatter.format(0));
+        var rowCount = $('#cart tr').length -4;
+        if(rowCount <= 1 && rowCount >0){
+            $("#shipcost").text(formatter.format(5));
+        }else $("#shipcost").text(formatter.format(0));
 
-    var sum = 0;
-    var sub_total = 0;
-    $('tr').each(function (){
+        function getnum(c){
+            var t= Number(c.replace(/[^0-9.-]+/g,""));
 
-        $(this).find('.price').each(function (){
-            sub_total += getnum($(this).text());
-
-            function getnum(c){
-                var t= Number(c.replace(/[^0-9.-]+/g,""));
-
-                if(isNumeric(t)){
-                    return parseInt(t,10);
-                }
-                return 0;
-                function isNumeric(n) {
-                    return !isNaN(parseFloat(n)) && isFinite(n);
-                }
+            if(isNumeric(t)){
+                return parseInt(t,10);
             }
-            // if(sub.length!==0){
-            //     sub_total+=parseFloat(sub);
-            // }
+            return 0;
+            function isNumeric(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+        }
+        function getq(c){
+            if(isNumeric(c)){
+                return parseInt(c,10);
+            }
+            return 0;
+            function isNumeric(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+        }
+        async function computeSub_total(){
+            var sub_total = 0;
+            await $("#cart tr").each(function() {
+                sub_total +=  getnum($(this).find(".price").text());
+
+
+            });
+            $("#sub_total").text(formatter.format(sub_total));
+        }
+        computeSub_total().then(function (){
+            var total = getnum($('#shipcost').text()) + getnum($('#sub_total').text());
+            $("#total").text(formatter.format(total));
+        })
+
+        $(".update").click(function (){
+            $("#cart tr").each(function() {
+                    var productid = $(this).closest('tr').attr('id');
+                    var currentquantity = getq($(this).find(".quantity").val());
+                    for(var i = 0; i < obj.length; i++){
+                        if(obj[i].id === productid) {
+                            obj[i].quantity = currentquantity.toString();
+                            break;
+                        }
+                    }
+            });
+            localStorage.setItem(userinfo, JSON.stringify(obj));
+            location.reload();
         });
-
-        // $(this).find('#sub_total').html(formatter.format(sub_total));
-    });
-    $("#sub_total").text(formatter.format(sub_total));
-    $("#shipcost").text();
-    $("#totalprice").text(formatter.format(sum));
-
-
 
 
     }));
+
     function reply_click(clicked_id)
     {
-        var qselector = "#" + clicked_id.toString() + " " + ".quantity";
-        var pnselector = "#" + clicked_id.toString() + " " + ".productName";
-        var pselector = "#" + clicked_id.toString() + " " + ".price";
-        var imgseletor = "#" + clicked_id.toString() + " " + ".photo";
-        // save the value of #checkbox-1 as a variable,
-        var productName = $(pnselector).text();
-        var quantity = $(qselector).val();
-        var price = $(pselector).text();
-        var photo = $(imgseletor).attr('src');
-        // and test it to confirm it worked.
-        const jsonData = {
-            id: clicked_id.toString(),
-            productName: productName.toString(),
-            quantity: quantity.toString(),
-            price: price.toString(),
-            photo: photo.toString()
-        };
         // Parse json
         let notes = JSON.parse(localStorage.getItem(window.userinfo));
         // Get index of object
-        const index = notes.indexOf(jsonData);
+        const index = notes.findIndex(function(item){
+            return item.id === clicked_id.toString();
+        });
         // Splice the array at the index of your object
         notes.splice(index, 1);
         // Save back to localStorage
+
         localStorage.setItem(window.userinfo, JSON.stringify(notes));
         location.reload();
-
     }
 </script>
 </html>
