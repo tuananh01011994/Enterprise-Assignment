@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Display Cart</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--    <link rel="stylesheet" href="home.css"/>-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <style>
+    #myHeader{
+      z-index: 500;
+    }
+    /* The sticky class is added to the header with JS when it reaches its scroll position */
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%
+    }
+    .content {
+      padding: 16px;
+    }
+    /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+    .sticky + .content {
+      padding-top: 102px;
+    }
+    .carousel .carousel-item {
+      height: 300px;
+    }
+    .carousel-item img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-height: 300px;
+    }
+    .dropdown-menu{
+      transition: 0.4s;
+    }
+    #displaycart, #user, #icon-user{
+      text-decoration: none;
+      color: white;
+    }
+    #profile{
+      text-decoration: none;
+      color: rgba(255,255,255,.5);
+    }
+    .dropdown-item:hover{
+      background-color: #007bff;
+    }
+
+    /*.dropdown-item a:hover{*/
+    /*    color: #888888;*/
+    /*}*/
+    .container {
+      padding: 2rem 0rem;
+    }
+
+    h4 {
+      margin: 2rem 0rem 1rem;
+    }
+
+    .table-image td, th{
+
+      vertical-align: middle;
+    }
+
+  </style>
+
+</head>
+<body>
+<nav id="header"></nav>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-image" id="cart">
+          <thead>
+          <tr>
+            <th scope="col"> </th>
+            <th scope="col">Product</th>
+            <th scope="col">Available</th>
+            <th scope="col" class="text-center">Quantity</th>
+            <th scope="col" class="text-right">Price</th>
+            <th> </th>
+          </tr>
+          </thead>
+          <tbody id="listcart">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+</body>
+
+<script>
+  $("#header").load("header.html");
+ $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
+      const object = JSON.parse(data);
+      var userid = object.id;
+      $.getJSON("http://localhost:8080/api/seller/storeGetByUser/" + userid, function (storeinfo){
+        const store = JSON.parse(storeinfo);
+        var storeid = store.id;
+        $.getJSON("http://localhost:8080/api/seller/productGetByStore/" + storeid , function (data){
+
+          var div = document.querySelector('#listcart');
+          data.forEach((product)=> {
+            div.innerHTML =
+                    div.innerHTML +
+                    `<tr id="${product.id}">
+                        <td class="w-25"><img class="img-fluid img-thumbnail photo" src="${product.photos}" /> </td>
+                        <td class="productName">${product.productName}</td>
+                        <td class="productDescription">${product.productDescription}</td>
+                        <td><input class="form-control quantity" type="text" value="${product.quantity}" /></td>
+                        <td class="text-right productPrice">${product.productPrice}</td>
+                        <td class="text-right"><button class="btn btn-sm btn-danger" onclick="reply_click(${product.id})"><i class="fa fa-trash"></i> </button> </td>
+                    </tr>`;
+
+          });
+
+          function getnum(c){
+            var t= Number(c.replace(/[^0-9.-]+/g,""));
+
+            if(isNumeric(t)){
+              return parseInt(t,10);
+            }
+            return 0;
+            function isNumeric(n) {
+              return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+          }
+          function getq(c){
+            if(isNumeric(c)){
+              return parseInt(c,10);
+            }
+            return 0;
+            function isNumeric(n) {
+              return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+          }
+          $(".update").click(function (){
+            $("#cart tr").each(function() {
+              var productid = $(this).closest('tr').attr('id');
+              var currentquantity = getq($(this).find(".quantity").val());
+              for(var i = 0; i < obj.length; i++){
+                if(obj[i].id === productid) {
+                  obj[i].quantity = currentquantity.toString();
+                  break;
+                }
+              }
+            });
+            localStorage.setItem(userinfo, JSON.stringify(obj));
+            location.reload();
+          });
+
+
+        });
+      });
+    }));
+
+
+
+
+
+  function reply_click(clicked_id)
+  {
+    // Parse json
+    let notes = JSON.parse(localStorage.getItem(window.userinfo));
+    // Get index of object
+    const index = notes.findIndex(function(item){
+      return item.id === clicked_id.toString();
+    });
+    // Splice the array at the index of your object
+    notes.splice(index, 1);
+    // Save back to localStorage
+
+    localStorage.setItem(window.userinfo, JSON.stringify(notes));
+    location.reload();
+  }
+</script>
+</html>

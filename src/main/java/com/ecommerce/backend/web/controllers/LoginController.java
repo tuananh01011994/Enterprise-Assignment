@@ -70,6 +70,11 @@ public class LoginController {
         }
         return authentication.isAuthenticated();
     }
+
+    @GetMapping("/seller-product")
+    public String getSellerPage(){
+        return "seller-products";
+    }
     @GetMapping("/cart")
     public String getDisplayCartPage(){
         return "display-cart";
