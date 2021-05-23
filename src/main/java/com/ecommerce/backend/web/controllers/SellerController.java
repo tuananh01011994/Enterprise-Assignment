@@ -116,7 +116,7 @@ public class SellerController {
         Map<String, String> map = new HashMap<>();
 
         Store store = myStoreRepository.findByStoreId(storeID);
-        Product product = productService.registerNewProduct(inProd.getProductName(), inProd.getProductPrice(), inProd.getProductDescription(), storeID);
+        Product product = productService.registerNewProduct(inProd.getProductName(), inProd.getProductPrice(), inProd.getQuantity(), inProd.getProductDescription(), storeID);
         product.setStore(store);
 
 

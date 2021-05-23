@@ -50,12 +50,13 @@ public class ProductService {
         }
     }
 
-    public Product registerNewProduct(String productName, String price, String description, long storeId){
+    public Product registerNewProduct(String productName, String price, int quantity, String description, long storeId){
         validatePrice(price);
         final Product product = new Product();
 
         product.setProductName(productName);
         product.setProductPrice(price);
+        product.setQuantity(quantity);
         product.setProductDescription(description);
         product.setStore(myStoreRepository.findByStoreId(storeId));
         return myProductRepository.save(product);

@@ -83,7 +83,7 @@
           <tr>
             <th scope="col">
               <div class="col">
-              <button class="btn btn-sm btn-primary" id="submit" data-toggle="modal" data-target="#addProduct">+</button>
+              <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addProduct">+</button>
             </div>
               <!--      begin of modal              -->
 
@@ -92,14 +92,14 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Add product form</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <button type="button" class="close" id="close1" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
                       <div class="card fat">
                         <div class = "card-body">
-                          <form method="POST" class="my-product-validation" novalidate="">
+                          <form class="my-product-validation" novalidate="">
                             <div class="form-group">
                               <label for="name">Product name</label>
                               <input id="name" type="text" class="form-control" name="name" required autofocus>
@@ -127,7 +127,7 @@
 
                             <div class="form-group">
                               <label for="quantity">Product quantity</label>
-                              <input type="text" id="quantity" class="form-control" name="quantity" required autofocus>
+                              <input type="number" id="quantity" class="form-control" name="quantity" required autofocus>
                               <div class="invalid-feedback">
                                 What's your product's stock?
                               </div>
@@ -146,7 +146,7 @@
                               </div>
                             </div>
                             <div class="form-group modal-footer">
-                              <button type="button" class="btn btn-secondary w-50" data-dismiss="modal">Close</button>
+                              <button type="button" id="close2" class="btn btn-secondary w-50" data-dismiss="modal">Close</button>
                               <button type="submit" id="upPhoto" class="btn btn-primary w-50">Up Photo</button>
                             </div>
                           </form>
@@ -216,7 +216,7 @@
                         <td class="w-25"><img class="img-fluid img-thumbnail photo" src="${product.photos}" /> </td>
                         <td><input class="form-control productName" type="text" value="${product.productName}" /></td>
                         <td><input class="form-control productDescription" type="text" value="${product.productDescription}" /></td>
-                        <td><input class="form-control quantity" type="text" value="${product.quantity}" /></td>
+                        <td><input class="form-control quantity" type="number" value="${product.quantity}" /></td>
                         <td><input class="form-control productPrice" type="text" value="${formatter.format(product.productPrice)}" /></td>
                         <td class="text-right"><button class="btn btn-sm btn-danger" onclick="reply_click(${product.id})"><i class="fa fa-trash"></i> </button> </td>
                     </tr>`;
@@ -262,7 +262,7 @@
       return !isNaN(parseFloat(n)) && isFinite(n);
     }
   }
-  $("#registerProduct").click(function (){
+  $("#registerProduct").click(function (e){
 
     if(($("#name").val()!== "") && ($("#description").val()!== "") && ($("#price").val()!== "") && ($("#quantity").val()!== "")){
 
@@ -270,17 +270,40 @@
         var product = {
           "productName": $("#name").val(),
           "productDescription": $("#description").val(),
-          "productPrice": getq($("#price").val()),
+          "productPrice": $("#price").val(),
           "quantity": getq($("#quantity").val())
         }
-        alert(JSON.stringify(product));
-        alert(window.userid);
 
       $.ajax({
-        url: "http://localhost:8080/api/seller/productAdd/" + window.userid.toString(),
-        contentType: 'application/json ; charset = utf-8',
+        url: "http://localhost:8080/api/seller/productAdd/" + window.storeid,
+        contentType: 'application/json',
         type: "POST",
         data: JSON.stringify(product),
+        success: function(mess){
+          alert(JSON.stringify(mess).indexOf(1));
+          $("#registerProduct").attr('disabled','disabled');
+          $("#close2").attr('disabled','disabled');
+          $("#close1").attr('disabled','disabled');
+         return window.mess = mess;
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          alert(JSON.stringify(jqXHR));
+        }
+      });
+        e.preventDefault();
+    }
+  });
+
+
+    $("#upPhoto").click(function (){
+      alert(JSON.stringify(window.mess));
+      var res = JSON.stringify(window.mess);
+      alert(res.productID);
+
+      $.ajax({
+        url: "http://localhost:8080/api/seller/productUpdate/" + res.productID +"/photo",
+        type: "PUT",
         success: function(e){
           alert(JSON.stringify(e));
         },
@@ -288,8 +311,8 @@
           alert(JSON.stringify(jqXHR));
         }
       });
-    }
-  });
+      e.preventDefault();
+    });
 
 
 
