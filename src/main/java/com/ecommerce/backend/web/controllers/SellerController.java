@@ -151,7 +151,9 @@ public class SellerController {
         Product product = myProductRepository.findProductById(productID);
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         product.setPhotos(fileName);
-        String uploadDir = "/product-photos/" + product.getId();
+
+        myProductRepository.save(product);
+        String uploadDir = "product-photos/" + product.getId();
         try{
             FileUploadUtility.saveFile(uploadDir, fileName, multipartFile);
 
@@ -161,6 +163,8 @@ public class SellerController {
 
         }
         map.put("Message", "Update Product successfully");
+
+        System.out.println(product.getPhotos());
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 

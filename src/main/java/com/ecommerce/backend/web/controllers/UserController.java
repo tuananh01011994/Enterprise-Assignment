@@ -214,7 +214,7 @@ public class UserController {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         user.setPhotos(fileName);
         userRepository.save(user);
-        String uploadDir = "/user-photos/" + user.getId();
+        String uploadDir = "user-photos/" + user.getId();
         try{
             FileUploadUtility.saveFile(uploadDir, fileName, multipartFile);
 
