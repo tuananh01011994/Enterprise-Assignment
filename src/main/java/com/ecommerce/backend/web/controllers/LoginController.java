@@ -138,10 +138,19 @@ public class LoginController {
 
 
     @GetMapping("/admin")
-    public String admin(){
+    public String getAdminPage(){
 
         return "admin-page";
 
     }
+
+    @GetMapping("/access-denied")
+    public String get403Page(){
+
+        return "access-denied";
+
+    }
+
+
 
 }
