@@ -122,6 +122,7 @@ public class SellerController {
 
         myStoreRepository.save(store);
         map.put("Message", "Add product successfully");
+        map.put("productID", product.getId().toString());
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
@@ -139,7 +140,7 @@ public class SellerController {
 
         myProductRepository.save(product);
         map.put("Message", "Update Product successfully");
-        map.put("productID", product.getId().toString());
+
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
