@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <link href="../static/login.css" rel="stylesheet" type="text/css">
+  <link href="../static/add-product-form.css" rel="stylesheet" type="text/css">
   <style>
     #addform{
       display: none;
@@ -30,15 +30,7 @@
     .sticky + .content {
       padding-top: 102px;
     }
-    .carousel .carousel-item {
-      height: 300px;
-    }
-    .carousel-item img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-height: 300px;
-    }
+
     .dropdown-menu{
       transition: 0.4s;
     }
@@ -54,9 +46,6 @@
       background-color: #007bff;
     }
 
-    /*.dropdown-item a:hover{*/
-    /*    color: #888888;*/
-    /*}*/
     .container {
       padding: 2rem 0rem;
     }
@@ -71,18 +60,107 @@
     }
 
   </style>
-
+  <script>
+    $(function(){
+      $("#header").load("header.html");
+    });
+  </script>
 </head>
 <body>
 <nav id="header"></nav>
 <div class="container">
+  <div class="col mb-2">
+    <div class="row">
+
+
+    </div>
+  </div>
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
         <table class="table table-image" id="cart">
           <thead>
           <tr>
-            <th scope="col"> </th>
+            <th scope="col">
+              <div class="col">
+              <button class="btn btn-sm btn-primary" id="submit" data-toggle="modal" data-target="#addProduct">+</button>
+            </div>
+              <!--      begin of modal              -->
+
+              <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="addProduct" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Add product form</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="card fat">
+                        <div class = "card-body">
+                          <form method="POST" class="my-product-validation" novalidate="">
+                            <div class="form-group">
+                              <label for="name">Product name</label>
+                              <input id="name" type="text" class="form-control" name="name" required autofocus>
+                              <div class="invalid-feedback">
+                                What's your product's name?
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label for="description">Product description</label>
+                              <textarea id="description" class="form-control" name="description" required autofocus></textarea>
+                              <div class="invalid-feedback">
+                                What's your product's description?
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="price">Product price</label>
+                              <input type="text" id="price" class="form-control" name="price" required autofocus>
+                              <div class="invalid-feedback">
+                                What's your product's price?
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="quantity">Product quantity</label>
+                              <input type="text" id="quantity" class="form-control" name="quantity" required autofocus>
+                              <div class="invalid-feedback">
+                                What's your product's stock?
+                              </div>
+                            </div>
+
+                            <div class="form-group modal-footer">
+                              <button type="submit" id="registerProduct" class="btn btn-primary w-100">Register product</button>
+                            </div>
+                          </form>
+                          <form>
+                            <div class="form-group">
+                              <label for="photo">Product photo</label>
+                              <input type="file" id="photo" name="photo" class="form-control" required autofocus>
+                              <div class="invalid-feedback">
+                                What's your product's photo?
+                              </div>
+                            </div>
+                            <div class="form-group modal-footer">
+                              <button type="button" class="btn btn-secondary w-50" data-dismiss="modal">Close</button>
+                              <button type="submit" id="upPhoto" class="btn btn-primary w-50">Up Photo</button>
+                            </div>
+                          </form>
+
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!--      end of modal              -->
+            </th>
             <th scope="col">Product Name</th>
             <th scope="col">Description</th>
             <th scope="col" class="text-center">Quantity</th>
@@ -99,26 +177,37 @@
 
 
   </div>
+
 </div>
-<div id="addform"></div>
+
+
 </body>
 
 <script>
-  $("#header").load("header.html");
-  $("#addform").load("add-product-form.html");
+
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2
   })
+  $(".my-product-validation").submit(function() {
+    var form = $(this);
+    if (form[0].checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.addClass('was-validated');
+  });
+
  $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
       const object = JSON.parse(data);
       var userid = object.id;
+      window.userid = object.id;
       $.get("http://localhost:8080/api/seller/storeGetByUser/" + userid, function (storeinfo){
 
        storeinfo.forEach((store)=>{window.storeid = store.id});
        $.getJSON("http://localhost:8080/api/seller/productGetByStore/" + window.storeid , function (data){
-
+          // window.products = JSON.parse(data);
           var div = document.querySelector('#listcart');
           data.forEach((product)=> {
             div.innerHTML =
@@ -134,61 +223,73 @@
 
           });
           div.innerHTML = div.innerHTML +
-                  ` <tr>
+                 `
+                   <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="text-right popup "><button class="btn update btn-lg btn-primary"><i class="fa fa-upload"></i> </button> </td>
-                    </tr>`
+                        <td class="text-right "><button class="btn update btn-lg btn-primary"><i class="fa fa-upload"></i> </button> </td>
+                    </tr>`;
 
 
-          function getnum(c){
-            var t= Number(c.replace(/[^0-9.-]+/g,""));
-
-            if(isNumeric(t)){
-              return parseInt(t,10);
-            }
-            return 0;
-            function isNumeric(n) {
-              return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-          }
-          function getq(c){
-            if(isNumeric(c)){
-              return parseInt(c,10);
-            }
-            return 0;
-            function isNumeric(n) {
-              return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-          }
-          $(".update").click(function update (){
-
-            $('#addform').css("display: flex");
 
 
-            // $("#cart tr").each(function() {
-            //   var productid = $(this).closest('tr').attr('id');
-            //   var currentquantity = getq($(this).find(".quantity").val());
-            //   for(var i = 0; i < obj.length; i++){
-            //     if(obj[i].id === productid) {
-            //       obj[i].quantity = currentquantity.toString();
-            //       break;
-            //     }
-            //   }
-            // });
-            // localStorage.setItem(userinfo, JSON.stringify(obj));
-            // location.reload();
-          });
+
 
 
         });
       });
     }));
+  function getnum(c){
+    var t= Number(c.replace(/[^0-9.-]+/g,""));
+
+    if(isNumeric(t)){
+      return parseInt(t,10);
+    }
+    return 0;
+    function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+  }
+  function getq(c){
+    if(isNumeric(c)){
+      return parseInt(c,10);
+    }
+    return 0;
+    function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+  }
+  $("#registerProduct").click(function (){
+
+    if(($("#name").val()!== "") && ($("#description").val()!== "") && ($("#price").val()!== "") && ($("#quantity").val()!== "")){
 
 
+        var product = {
+          "productName": $("#name").val(),
+          "productDescription": $("#description").val(),
+          "productPrice": getq($("#price").val()),
+          "quantity": getq($("#quantity").val())
+        }
+        alert(JSON.stringify(product));
+
+
+      $.ajax({
+        url: "http://localhost:8080/api/seller/productAdd/" + window.userid,
+        contentType: 'application/json ; charset = utf-8',
+        type: "POST",
+        data: JSON.stringify(product),
+        success: function(e){
+          alert(e);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          alert(JSON.stringify(jqXHR));
+        }
+      });
+    }
+  });
 
 
 
