@@ -75,9 +75,12 @@ public class UserController {
             orderIn.setQuantity(order.getQuantity());
             orderIn.setUser(myUserRepository.findByID(order.getUser().getId()));
             orderIn.setAddress(order.getAddress());
-            orderIn.setStoreId(myProductRepository.findProductById(order.getProduct().getId()).getStore().getId());
+//            orderIn.setStoreId(myProductRepository.findProductById(order.getProduct().getId()).getStore().getId());
+            orderIn.setStoreId(order.getStoreId());
+            System.out.println(orderIn.getStoreId());
             orderIn.setProduct(myProductRepository.findProductById(order.getProduct().getId()));
-            myOrderRepository.save(order);
+
+            myOrderRepository.save(orderIn);
         }
 //
         map.put("message","Add orders successfully");
