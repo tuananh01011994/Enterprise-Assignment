@@ -151,7 +151,7 @@ public class SellerController {
         Product product = myProductRepository.findProductById(productID);
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         product.setPhotos(fileName);
-        String uploadDir = "/product-photos/" + product.getId();
+        String uploadDir = "product-photos/" + product.getId();
         try{
             FileUploadUtility.saveFile(uploadDir, fileName, multipartFile);
 

@@ -137,10 +137,10 @@
                               <button type="submit" id="registerProduct" class="btn btn-primary w-100">Register product</button>
                             </div>
                           </form>
-                          <form>
+                          <form id="image-upload-form">
                             <div class="form-group">
-                              <label for="photo">Product photo</label>
-                              <input type="file" id="photo" name="photo" class="form-control" required autofocus>
+                              <label for="image">Product photo</label>
+                              <input type="file" id="image" name="image" class="form-control" required autofocus>
                               <div class="invalid-feedback">
                                 What's your product's photo?
                               </div>
@@ -233,12 +233,6 @@
                         <td class="text-right "><button class="btn update btn-lg btn-primary"><i class="fa fa-upload"></i> </button> </td>
                     </tr>`;
 
-
-
-
-
-
-
         });
       });
     }));
@@ -262,7 +256,8 @@
       return !isNaN(parseFloat(n)) && isFinite(n);
     }
   }
-  $("#registerProduct").click(function (e){
+
+  $("#registerProduct").click( function (e){
 
     if(($("#name").val()!== "") && ($("#description").val()!== "") && ($("#price").val()!== "") && ($("#quantity").val()!== "")){
 
@@ -273,18 +268,17 @@
           "productPrice": $("#price").val(),
           "quantity": getq($("#quantity").val())
         }
-
       $.ajax({
         url: "http://localhost:8080/api/seller/productAdd/" + window.storeid,
         contentType: 'application/json',
         type: "POST",
         data: JSON.stringify(product),
         success: function(mess){
-          alert(JSON.stringify(mess).indexOf(1));
+          alert(JSON.stringify(mess));
           $("#registerProduct").attr('disabled','disabled');
           $("#close2").attr('disabled','disabled');
           $("#close1").attr('disabled','disabled');
-         return window.mess = mess;
+          window.mess = mess;
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -293,25 +287,50 @@
       });
         e.preventDefault();
     }
+
   });
+  $('#image-upload-form').on('submit',(function(e) {
+    e.preventDefault();
+    var res = Object.values(window.mess);
+    var formData = new FormData(this);
 
+    $.ajax({
+      type:'PUT',
+      url: "http://localhost:8080/api/seller/productUpdate/" + res[1] +"/photo",
+      data:formData,
+      cache:false,
+      contentType: false,
+      processData: false,
+      success: function(e){
+            alert(JSON.stringify(e));
+            window.location.href = "seller-product";
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert(JSON.stringify(jqXHR));
+      }
+    });
+  }));
+  $("#image").on("change", function() {
 
-    $("#upPhoto").click(function (){
-      alert(JSON.stringify(window.mess));
-      var res = JSON.stringify(window.mess);
-      alert(res.productID);
+  });
+    $("#upPhoto").click(function (e){
+      // console.log(window.mess);
+      // // window.mess = JSON.stringify(window.mess);
+      // var res = Object.values(window.mess);
+      // console.log(res[1]);
+      // $.ajax({
+      //   url: "http://localhost:8080/api/seller/productUpdate/" + res[1] +"/photo?image",
+      //   type: "PUT",
+      //   success: function(e){
+      //     alert(JSON.stringify(e));
+      //   },
+      //   error: function(jqXHR, textStatus, errorThrown) {
+      //     alert(JSON.stringify(jqXHR));
+      //   }
+      // });
 
-      $.ajax({
-        url: "http://localhost:8080/api/seller/productUpdate/" + res.productID +"/photo",
-        type: "PUT",
-        success: function(e){
-          alert(JSON.stringify(e));
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          alert(JSON.stringify(jqXHR));
-        }
-      });
-      e.preventDefault();
+      $("#image-upload-form").submit();
+      // e.preventDefault();
     });
 
 

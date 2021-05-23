@@ -352,7 +352,7 @@
           type: "POST",
           data: myjson,
           success: function(e){
-            alert(e);
+            alert(JSON.stringify(e));
             window.location.href = "home";
           },
           error: function(jqXHR, textStatus, errorThrown) {
