@@ -123,7 +123,7 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                        <button type="submit" id="checkout" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </form>
 
@@ -143,13 +143,35 @@
 </body>
 
 <script>
+    var time = new Date();
+    var year = time.toDateString();
+    function getnum(c){
+        var t= Number(c.replace(/[^0-9.-]+/g,""));
+
+        if(isNumeric(t)){
+            return parseInt(t,10);
+        }
+        return 0;
+        function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+    }
+    function getq(c){
+        if(isNumeric(c)){
+            return parseInt(c,10);
+        }
+        return 0;
+        function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+    }
     $("#header").load("header.html");
     $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
-        var userinfo;
+        var userid;
         const object = JSON.parse(data);
-        userinfo = object.id;
+        userid = object.id;
         window.userinfo = object.id;
-        console.log(userinfo);
+        console.log(userid);
 
         $("#back").click(function(e){
             window.href.location = "home";
@@ -181,12 +203,13 @@
             currency: 'USD',
             minimumFractionDigits: 2
         })
-        var obj = JSON.parse(localStorage.getItem(userinfo));
-        console.log(userinfo);
+        var obj = JSON.parse(localStorage.getItem(userid));
+        window.obj = obj;
+        console.log(userid);
         loadcart(obj);
         function loadcart(data) {
             var div = document.querySelector('#listcart');
-            console.log(userinfo);
+            console.log(userid);
             data.forEach((product)=> {
 
                 div.innerHTML =
@@ -236,31 +259,9 @@
 `;
         };
 
-        var rowCount = $('#cart tr').length -4;
-        if(rowCount <= 1 && rowCount >0){
-            $("#shipcost").text(formatter.format(5));
-        }else $("#shipcost").text(formatter.format(0));
 
-        function getnum(c){
-            var t= Number(c.replace(/[^0-9.-]+/g,""));
 
-            if(isNumeric(t)){
-                return parseInt(t,10);
-            }
-            return 0;
-            function isNumeric(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-        }
-        function getq(c){
-            if(isNumeric(c)){
-                return parseInt(c,10);
-            }
-            return 0;
-            function isNumeric(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-        }
+
         async function computeSub_total(){
             var sub_total = 0;
             await $("#cart tr").each(function() {
@@ -271,10 +272,26 @@
             $("#sub_total").text(formatter.format(sub_total));
         }
         computeSub_total().then(function (){
+            if(getnum($('#sub_total').text()) > 200 || getnum($('#sub_total').text()) === 0){
+                $("#shipcost").text(formatter.format(0));
+            }else $("#shipcost").text(formatter.format(5));
+
             var total = getnum($('#shipcost').text()) + getnum($('#sub_total').text());
             $("#total").text(formatter.format(total));
-        })
 
+
+
+            var order =
+                {
+                    "user":{"id": getq(userid)},
+                    "product":{"id": 237},
+                    "quantity": 2,
+                    "store":{"id": 217},
+                    "address": "something something",
+                    "order_time": 2019
+                };
+
+        })
         $(".update").click(function (){
             $("#cart tr").each(function() {
                     var productid = $(this).closest('tr').attr('id');
@@ -286,12 +303,42 @@
                         }
                     }
             });
-            localStorage.setItem(userinfo, JSON.stringify(obj));
+            localStorage.setItem(userid, JSON.stringify(obj));
             location.reload();
         });
 
-
     }));
+
+    $("#checkout").click(function (){
+         window.order = [];
+        if($("#addressInput").val()!== ""){
+            for(var i = 0; i < window.obj.length; i++){
+
+                var product = {};
+                product={"user": {"id":getq( window.userinfo)}, "product": {"id":getq( window.obj[i].id)}, "quantity": window.obj[i].quantity, "store_id": {"id":getq(window.obj[i].store_id)}, "address":$("#addressInput").val(), "time":year};
+                alert(window.obj[i].store_id);
+                window.order.push(product);
+
+
+            };
+            $.ajax({
+                url: "http://localhost:8080/api/basketCheckout",
+                contentType: 'application/json ; charset = utf-8',
+                type: "POST",
+                data: JSON.stringify(window.order),
+                success: function(e){
+                    alert(e);
+                    localStorage.removeItem(window.userinfo);
+                    window.location.href = "profile";
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert(JSON.stringify(jqXHR));
+                }
+            });
+        }
+    });
+
 
     function reply_click(clicked_id)
     {

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-
-
-</style>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <body>
 <nav class="navbar header navbar-expand-md navbar-dark bg-primary" id="myHeader">
   <div class="container-fluid">
@@ -36,7 +33,7 @@
             <a class="" id="profile" href="profile"><i class="fa fa-user-circle" ></i> My Profile</a>
           </div>
           <div class="dropdown-item displaycart">
-            <a class="" id="displaycart" href="cart"><i class="fa fa-shopping-cart" ></i> My Cart</a>
+
           </div>
 
         </div>
@@ -55,6 +52,22 @@
     loaduser();
     check_curent_page();
   });
+  // $(function(){
+  //   $.get("http://localhost:8080/username",function(data){
+  //     let userAuthentication = JSON.parse(data);
+  //     $.map(userAuthentication.authorities, function(elem, index) {
+  //       //TODO: FIX ME 🙂
+  //       if (elem.authority == "SHOP_PRIVILEGE"){
+  //         $(".displaycart").append("<a class=\"\" id=\"displaycart\" href=\"seller-products\"><i class=\"fa fa-store\" ></i> My Shop</a>")
+  //
+  //       } else if (elem.authority == "USER_PRIVILEGE"){
+  //         $(".displaycart").append( "<a class=\"\" id=\"displaycart\" href=\"cart\"><i class=\"fa fa-shopping-cart\" ></i> My Cart</a>");
+  //
+  //
+  //       }
+  //     });
+  //   });
+  // });
   // When the user scrolls the page, execute myFunction
   window.onscroll = function() {myFunction()};
 
@@ -99,7 +112,7 @@
       const object = JSON.parse(data);
       $(".username").html(object.username);
       $(".username").html(object.name);
-      getUserId();
+
       if(object.authenticated !== false){
         $("#log-field").html("<a class=\"nav-link\" onclick='logout()' href=\"#\">Logout</a>");
         $("#icon-user").addClass("fa-user");
@@ -113,14 +126,23 @@
         $("#dropdownMenuButton").removeAttr("data-toggle");
         $(".dropdown-menu").css("display: none");
       }
+      let userAuthentication = JSON.parse(data);
+      $.map(userAuthentication.authorities, function(elem, index) {
+        //TODO: FIX ME 🙂
 
+        if (elem.authority === "SHOP_PRIVILEGE"){
+          $(".displaycart").append("<a id=\"displaycart\" href=\"seller-product\"><i class=\"fas fa-store\" ></i> My Shop</a>")
+
+        } else if (elem.authority === "USER_PRIVILEGE"){
+          $(".displaycart").append( "<a id=\"displaycart\" href=\"cart\"><i class=\"fa fa-shopping-cart\" ></i> My Cart</a>");
+
+
+        }
+      });
     })
   }
 
-  function getUserId(){
-    $.get("http://localhost:8080/test",function (data) {
-    })
-  }
+
 
   function logout(){
     var leave = confirm("Do you want to leave?");
