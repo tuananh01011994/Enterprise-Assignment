@@ -213,7 +213,7 @@
             div.innerHTML =
                     div.innerHTML +
                     `<tr id="${product.id}">
-                        <td class="w-25"><img class="img-fluid img-thumbnail photo" src="${product.photos}" /> </td>
+                        <td class="w-25"><img class="img-fluid img-thumbnail photo" src="./product-photos/${product.id+"/"+product.photos}" /> </td>
                         <td><input class="form-control productName" type="text" value="${product.productName}" /></td>
                         <td><input class="form-control productDescription" type="text" value="${product.productDescription}" /></td>
                         <td><input class="form-control quantity" type="number" value="${product.quantity}" /></td>
