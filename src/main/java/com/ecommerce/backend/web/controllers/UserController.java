@@ -64,19 +64,22 @@ public class UserController {
     public ResponseEntity<Map<String, String>> checkoutBasket(@Valid @RequestBody List<Order> orderList){
 //        System.out.println(orderList.get(0));
         Map<String,String> map = new HashMap<>();
-        Order orderIn = new Order();
 //
 //        if (orderList.isEmpty()){
 //            map.put("message","Empty basket");
 //            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
 //        }
         for (Order order : orderList){
+            Order orderIn = new Order();
             orderIn.setTime(order.getTime());
             orderIn.setQuantity(order.getQuantity());
             orderIn.setUser(myUserRepository.findByID(order.getUser().getId()));
             orderIn.setAddress(order.getAddress());
-            orderIn.setStoreId(myProductRepository.findProductById(order.getProduct().getId()).getStore().getId());
+//            orderIn.setStoreId(myProductRepository.findProductById(order.getProduct().getId()).getStore().getId());
+            orderIn.setStoreId(order.getStoreId());
+            System.out.println(orderIn.getStoreId());
             orderIn.setProduct(myProductRepository.findProductById(order.getProduct().getId()));
+
             myOrderRepository.save(orderIn);
         }
 //
