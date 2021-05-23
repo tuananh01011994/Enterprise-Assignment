@@ -77,7 +77,7 @@ public class UserController {
             orderIn.setAddress(order.getAddress());
             orderIn.setStoreId(myProductRepository.findProductById(order.getProduct().getId()).getStore().getId());
             orderIn.setProduct(myProductRepository.findProductById(order.getProduct().getId()));
-            myOrderRepository.save(order);
+            myOrderRepository.save(orderIn);
         }
 //
         map.put("message","Add orders successfully");
