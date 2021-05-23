@@ -274,15 +274,15 @@
           "quantity": getq($("#quantity").val())
         }
         alert(JSON.stringify(product));
-
+        alert(window.userid);
 
       $.ajax({
-        url: "http://localhost:8080/api/seller/productAdd/" + window.userid,
+        url: "http://localhost:8080/api/seller/productAdd/" + window.userid.toString(),
         contentType: 'application/json ; charset = utf-8',
         type: "POST",
         data: JSON.stringify(product),
         success: function(e){
-          alert(e);
+          alert(JSON.stringify(e));
         },
         error: function(jqXHR, textStatus, errorThrown) {
           alert(JSON.stringify(jqXHR));
