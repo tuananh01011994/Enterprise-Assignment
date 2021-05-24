@@ -39,4 +39,18 @@
 </div>
 
 </body>
+<script>
+    $.ajax({
+        type:"PUT",
+        url: " http://localhost:8080/api/seller/storeUpdate/216",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({"storeName": "aaaa"}),
+        success: function (response){
+            alert(JSON.stringify(response))
+        },
+        error: function (res){
+            alert(JSON.stringify(res))
+        }
+    })
+</script>
 </html>
