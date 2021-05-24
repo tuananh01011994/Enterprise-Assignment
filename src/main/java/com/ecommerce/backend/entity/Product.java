@@ -1,6 +1,9 @@
 package com.ecommerce.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,6 +25,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="store_id")
     private Store store;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Order> order;
 
     @Column(name="photo",nullable = true, length = 64)
     private String photos;
