@@ -338,18 +338,23 @@
 
   function reply_click(clicked_id)
   {
-    // Parse json
-    let notes = JSON.parse(localStorage.getItem(window.userinfo));
-    // Get index of object
-    const index = notes.findIndex(function(item){
-      return item.id === clicked_id.toString();
-    });
-    // Splice the array at the index of your object
-    notes.splice(index, 1);
-    // Save back to localStorage
+    var del = confirm("Do you want to REMOVE this product?");
+    if(del){
+      $.ajax({
+        url: "http://localhost:8080/api/seller/productDelete/" + clicked_id.toString(),
+        contentType: 'application/json',
+        type: "DELETE",
+        success: function(success){
+          alert(JSON.stringify(success));
+          location.reload();
 
-    localStorage.setItem(window.userinfo, JSON.stringify(notes));
-    location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          alert(JSON.stringify(jqXHR));
+        }
+      });
+    }
+
   }
 </script>
 </html>
