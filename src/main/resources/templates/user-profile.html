@@ -248,7 +248,7 @@
                                 <button class="shop-name-block store-exist-not" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#createShopModal"><i class="fa fa-edit"></i></button></p></p>
                             <p class="card-title shop-name-block store-exist" id="shopField" style="">
                                 <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#changeShopModal"><i class="fa fa-edit"></i></button> &nbsp
-                                <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#deleteShopModal"><i class="fa fa-edit"></i></button></p>
+                                <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#deleteShopModal"><i class="fa fa-trash"></i></button></p>
                             <!-- modal content -->
                             <div class="modal fade" id="createShopModal" tabindex="-1" role="dialog" aria-labelledby="createShopModal" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -311,11 +311,13 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Delete confirmation</h5>
+
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
+                                            <p>Are you sure you want to delete your shop?</p>
                                             <form id="deleteShopForm">
                                                 <div class="form-group row">
                                                 </div>
@@ -359,6 +361,7 @@
                             type:"PUT",
                             url: "http://localhost:8080/api/usernameUpdate/" + data + "?firstname=" + firstname + "&lastname=" + lastname,
                             success: function (response){
+                                location.reload()
                                 alert(JSON.stringify(response));
                             },
                             error: function(xhr) {
@@ -379,6 +382,7 @@
                     type:"PUT",
                     url: "http://localhost:8080/api/userUsernameUpdate/" + data + "?username=" + username,
                     success: function (response){
+                        location.reload()
                         alert(JSON.stringify(response));
                     },
                     error: function(xhr) {
@@ -399,6 +403,7 @@
                     type:"PUT",
                     url: "http://localhost:8080/api/changepassword/" + data + "?new_password=" + password,
                     success: function (response){
+                        location.reload()
                         alert(JSON.stringify(response));
                     },
                     error: function(xhr) {
@@ -432,6 +437,7 @@
                         contentType: "application/json; charset=utf-8",
                         data: JSON.stringify({"storeName": shopName}),
                         success: function (response) {
+                            location.reload()
                             alert(JSON.stringify(response))
                         },
                         error: function (res) {
@@ -453,6 +459,7 @@
                     url: " http://localhost:8080/api/seller/storeAdd/" + data + "?store_name=" + shopName,
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
+                        location.reload();
                         alert(JSON.stringify(response))
                     },
                     error: function (res) {
@@ -472,6 +479,7 @@
                         type: "DELETE",
                         url: " http://localhost:8080/api/seller/storeDelete/" + listStore[0].id,
                         success: function (response) {
+                            location.reload();
                             alert(JSON.stringify(response))
                         },
                         error: function (res) {
