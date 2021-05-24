@@ -85,6 +85,7 @@ public class SellerController {
     @DeleteMapping("/storeDelete/{id}")
     public ResponseEntity<Map<String, String>> updateStore(@Valid @PathVariable("id") long id){
         Store store = myStoreRepository.findByStoreId(id);
+        System.out.println(store);
         myStoreRepository.delete(store);
         Map<String, String> map = new HashMap<>();
         map.put("Message", "Delete store successfully");

@@ -29,11 +29,11 @@ public class User {
     @Column(name = "password",length = 60)
     private String password;
 
-    @OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
+    @OneToOne(mappedBy="user", cascade={CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH}, orphanRemoval=true)
     @JsonIgnore
     private Store store;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH}, orphanRemoval = true)
     @JsonIgnore
     private List<Order> order;
 
