@@ -218,7 +218,7 @@
                         <td><input class="form-control productDescription" type="text" value="${product.productDescription}" /></td>
                         <td><input class="form-control quantity" type="number" value="${product.quantity}" /></td>
                         <td><input class="form-control productPrice" type="text" value="${formatter.format(product.productPrice)}" /></td>
-                        <td class="text-right btn-group-sm "><button class="btn btn-primary" onclick="updateProduct(${product.id})"><i class="fa fa-upload"></i> </button> <button class="btn btn-sm btn-danger" onclick="reply_click(${product.id})"><i class="fa fa-trash"></i> </button> </td>
+                        <td class="text-right"><button class="btn btn-sm btn-primary" onclick="updateProduct(${product.id})"><i class="fa fa-upload"></i> </button> <button class="btn btn-sm btn-danger" onclick="reply_click(${product.id})"><i class="fa fa-trash"></i> </button> </td>
                     </tr>`;
 
           });
@@ -325,12 +325,21 @@
   function updateProduct(product_id)
   {
 
-    var del = confirm("Do you want to REMOVE this product?");
-    if(del){
+    var update = confirm("Do you want to UPDATE this product?");
+    if(update){
+      var productSel = "#"+product_id.toString();
+      var productData= {
+        productName: $(productSel + " "+ ".productName").val(),
+        productDescription:  $(productSel + " "+ ".productDescription").val(),
+        productPrice: getnum($(productSel + " "+ ".productPrice").val()).toString(),
+        quantity: parseInt($(productSel + " "+ ".quantity").val())
+      }
+      alert( JSON.stringify(productData));
       $.ajax({
-        url: "http://localhost:8080/api/seller/productDelete/" + clicked_id.toString(),
+        url: "http://localhost:8080/api/seller/productUpdate/" + product_id.toString(),
         contentType: 'application/json',
-        type: "DELETE",
+        type: "PUT",
+        data: JSON.stringify(productData),
         success: function(success){
           alert(JSON.stringify(success));
           location.reload();
