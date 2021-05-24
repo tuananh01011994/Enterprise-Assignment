@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 //    @Query("Select t from Order t where t.user =?1 and t.order_time = ?2")
     List<Order> findByUser_IdAndTime(long userId, String orderTime);
+    List<Order> findByProduct_Store_Id(long storeId);
 
 }

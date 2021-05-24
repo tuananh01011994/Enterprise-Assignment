@@ -59,6 +59,12 @@ public class UserController {
         return ResponseEntity.accepted().body(myOrderRepository.findAll());
     }
 
+    @GetMapping("/orderGetByStore/{store_id}")
+    public ResponseEntity<List<Order>> getOrderbyStore(@Valid @PathVariable("store_id") long store_id){
+        return ResponseEntity.accepted().body(myOrderRepository.findOrderbyProductStoreId(store_id));
+    }
+
+
 
     @PostMapping("/basketCheckout")
     public ResponseEntity<Map<String, String>> checkoutBasket(@Valid @RequestBody List<Order> orderList){
