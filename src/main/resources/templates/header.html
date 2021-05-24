@@ -121,12 +121,16 @@
       $.map(userAuthentication.authorities, function(elem, index) {
 
         if (elem.authority === "SHOP_PRIVILEGE"){
-          $(".displaycart").append("<a href=\"#\" onclick='redirectToShop()'><i class=\"fas fa-store\" ></i> My Shop</a>")
+          $.when($.get("http://localhost:8080/getID").then (function(data){
+            $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore){
+              if (listStore.length > 0){
+                $(".displaycart").append("<a href=\"#\" onclick='redirectToShop()'><i class=\"fas fa-store\" ></i> My Shop</a>")
+              }
+            }));
+          }));
 
         } else if (elem.authority === "USER_PRIVILEGE"){
           $(".displaycart").append( "<a href=\"#\" onclick='redirectToCart()'><i class=\"fa fa-shopping-cart\" ></i> My Cart</a>");
-
-
         }
       });
     })
