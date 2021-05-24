@@ -313,6 +313,7 @@
 
 
             };
+            console.log(JSON.stringify(window.order));
             $.ajax({
                 url: "http://localhost:8080/api/basketCheckout",
                 contentType: 'application/json ; charset = utf-8',
@@ -320,6 +321,7 @@
                 data: JSON.stringify(window.order),
                 success: function(e){
                     alert(e);
+
                     localStorage.removeItem(window.userinfo);
                     window.location.href = "profile";
 
