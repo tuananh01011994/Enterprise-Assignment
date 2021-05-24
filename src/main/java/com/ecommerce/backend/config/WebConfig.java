@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
     String dbUrl = "jdbc:postgresql://localhost:5432/backend";
-    String username = "backend";
+    String username = "postgres";
     String password = "admin";
 
     @Bean
