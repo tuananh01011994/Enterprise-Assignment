@@ -2,6 +2,7 @@ package com.ecommerce.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -28,9 +29,9 @@ public class MyAuthenticationSuccessfulHandler implements AuthenticationSuccessH
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        //todo: change!!
 //        response.sendError(HttpServletResponse.SC_OK);
 //        redirectStrategy.sendRedirect(request,response,"/home.html");
+
         final HttpSession session = request.getSession();
         if (session != null) {
             String username;
@@ -45,6 +46,7 @@ public class MyAuthenticationSuccessfulHandler implements AuthenticationSuccessH
             session.setAttribute("user", activeSession);
         }
         clearAuthenticationAttributes(request);
+
     }
 
     protected void clearAuthenticationAttributes(final HttpServletRequest request) {
