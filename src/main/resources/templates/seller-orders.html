@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Store Product</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--    <link rel="stylesheet" href="home.css"/>-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <link href="../static/add-product-form.css" rel="stylesheet" type="text/css">
+  <script>
+    $(function(){
+      $("#header").load("header.html");
+    });
+
+  </script>
+  <style>
+    #addform{
+      display: none;
+    }
+
+    .dropdown-menu{
+      transition: 0.4s;
+    }
+    .displaycart a, #user, #icon-user{
+      text-decoration: none;
+      color: white;
+    }
+    .profile a{
+      text-decoration: none;
+      color: rgba(255,255,255,.5);
+    }
+    .dropdown-item:hover{
+      background-color: #007bff;
+    }
+
+    .container {
+      padding: 2rem 0rem;
+    }
+
+    h4 {
+      margin: 2rem 0rem 1rem;
+    }
+
+    .table-image td, th{
+
+      vertical-align: middle;
+    }
+
+  </style>
+  <script>
+
+  </script>
+</head>
+
+<body>
+<nav id="header"></nav>
+<div class="container">
+  <div class="col mb-2">
+    <div class="row">
+
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-image" id="cart">
+
+          <th scope="col">User Email</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Buyer Address</th>
+          <th scope="col">Bought Time</th>
+          <th> </th>
+          </tr>
+          </thead>
+          <tbody id="listOrder">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</div>
+
+
+</body>
+
+<script>
+  $(function (){
+    $.when($.get("http://localhost:8080/getID").then (function(data){
+      $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore){
+        $.when($.get("http://http://localhost:8080/api/orderGetByStore/" + listStore[0].id). then(function(listOrder){
+          var div = document.querySelector('#listOrder');
+          listOrder.forEach((order)=> {
+            div.innerHTML =
+                    div.innerHTML +
+                    `<tr id="${orders.id}">
+                        <td><input class="form-control userMail" type="text" value="${order.user.email}" /></td>
+                        <td><input class="form-control productName" type="text" value="${order.product.name}" /></td>
+                        <td><input class="form-control quantity" type="number" value="${order.quantity}" /></td>
+                        <td><input class="form-control address" type="text" value="${order.address}" /></td>
+                        <td><input class="form-control time" type="number" value="${order.time}" /></td>
+                    </tr>`;
+
+          });
+        }))
+      }));
+    }));
+  });
+
+</script>

@@ -83,6 +83,13 @@ public class LoginController {
         return "redirect:login";
 
     }
+    @GetMapping("/seller-orders")
+    public String getOrderPage(){
+        if(isAuthenticated()){
+            return "seller-orders";
+        }
+        return "redirect:login";
+    }
     @GetMapping("/cart")
     public String getDisplayCartPage(){
         if (isAuthenticated()) {
