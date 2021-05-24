@@ -232,6 +232,110 @@
                 </div>
             </div>
 
+
+                <div class="row shop-name-block">
+                    <div class="card w-25 text-center">
+                        <div class="card-body shop-name-block" >
+                            <h6 class="card-title shop-name-block" style="">Your shop</h6>
+                        </div>
+                    </div>
+                    <div class="card w-75 text-center">
+                        <div class="card-body shop-name-block">
+                            <p class="card-title shop-name-block store-exist-not">Create your store &nbsp
+                                <button class="shop-name-block store-exist-not" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#createShopModal"><i class="fa fa-edit"></i></button></p></p>
+                            <p class="card-title shop-name-block store-exist" id="shopField" style="">
+                                <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#changeShopModal"><i class="fa fa-edit"></i></button></p>
+<!--                            <button class="shop-name-block store-exist"-->
+<!--                                    style="padding: 0;border: none;background: none; outline:none !important;"-->
+<!--                                    data-toggle="modal" data-target="#deleteShopModal"><i class="fa fa-edit"></i></button></p>-->
+                            <!-- modal content -->
+                            <div class="modal fade" id="createShopModal" tabindex="-1" role="dialog" aria-labelledby="createShopModal" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Choose your shop name</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="createShopForm">
+                                                <div class="form-group row">
+                                                    <label for="inputShopNameCreate" class="col-md-2 col-form-label">Shop name</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" id="inputShopNameCreate" placeholder="Your new shop name" required>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" id="submitShopCreateButton">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="changeShopModal" tabindex="-1" role="dialog" aria-labelledby="changeShopModal" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Change your shop name</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="changeShopForm">
+                                                <div class="form-group row">
+                                                    <label for="inputFirstName" class="col-md-2 col-form-label">Shop name</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" id="inputShopName" placeholder="Your new shop name" required>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" id="submitShopButton">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+<!--                            <div class="modal fade" id="deleteShopModal" tabindex="-1" role="dialog" aria-labelledby="deleteShopModal" aria-hidden="true">-->
+<!--                                <div class="modal-dialog modal-lg" role="document">-->
+<!--                                    <div class="modal-content">-->
+<!--                                        <div class="modal-header">-->
+<!--                                            <h5 class="modal-title">Change your shop name</h5>-->
+<!--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                                <span aria-hidden="true">&times;</span>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                        <div class="modal-body">-->
+<!--                                            <form id="changeShopForm">-->
+<!--                                                <div class="form-group row">-->
+<!--                                                    <label for="inputFirstName" class="col-md-2 col-form-label">Shop name</label>-->
+<!--                                                    <div class="col-md-7">-->
+<!--                                                        <input type="text" class="form-control" id="inputShopName" placeholder="Your new shop name" required>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <div class="modal-footer">-->
+<!--                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                                                    <button type="submit" class="btn btn-primary" id="submitShopButton">Save changes</button>-->
+<!--                                                </div>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
+
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <!-- end of modal content-->
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 
@@ -320,6 +424,64 @@
     }
 
     $(function(){
+        $("#changeShopForm").on("submit", function (e){
+            e.preventDefault();
+            var shopName = $("#inputShopName").val();
+            $.when($.get("http://localhost:8080/getID").then (function(data){
+                $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore) {
+                    $.ajax({
+                        type: "PUT",
+                        url: " http://localhost:8080/api/seller/storeUpdate/" + listStore[0].id,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({"storeName": shopName}),
+                        success: function (response) {
+                            alert(JSON.stringify(response))
+                        },
+                        error: function (res) {
+                            alert(JSON.stringify(res))
+                        }
+                    })
+                }))
+            }))
+        })
+    })
+
+    $(function(){
+        $("#createShopForm").on("submit", function (e){
+            e.preventDefault();
+            var shopName = $("#inputShopNameCreate").val();
+            $.when($.get("http://localhost:8080/getID").then (function(data){
+                $.ajax({
+                    type: "POST",
+                    url: " http://localhost:8080/api/seller/storeAdd/" + data + "?store_name=" + shopName,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        alert(JSON.stringify(response))
+                    },
+                    error: function (res) {
+                        alert(JSON.stringify(res))
+                    }
+                })
+            }))
+        })
+    })
+
+    $(function (){
+        $.when($.get("http://localhost:8080/getID").then (function(data){
+            $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore){
+                if (listStore.length < 1){
+                    $(".store-exist").hide();
+                }
+                else {
+                    $(".store-exist-not").hide();
+                }
+            }));
+        }));
+    });
+
+
+
+    $(function(){
         $.get("http://localhost:8080/username",function(data){
             let userAuthentication = JSON.parse(data);
             $.map(userAuthentication.authorities, function(elem, index) {
@@ -329,6 +491,7 @@
 
                 } else if (elem.authority == "USER_PRIVILEGE"){
                     $(".list-group").append( "<li class=\"list-group-item\">My cart</li>");
+                    $(".shop-name-block").hide();
 
 
                 }
@@ -351,9 +514,13 @@
             $("#passwordField").prepend(password + " ");
 
             $("#usernameField").prepend(obj.username + " ");
-        })
-
-    })
+        });
+        $.when($.get("http://localhost:8080/getID").then (function(data){
+            $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore){
+                $("#shopField").prepend(listStore[0].storeName + " ");
+            }));
+        }));
+    });
 
 </script>
 </html>

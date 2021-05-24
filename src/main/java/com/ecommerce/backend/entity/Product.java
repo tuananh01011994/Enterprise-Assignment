@@ -26,7 +26,7 @@ public class Product {
     @JoinColumn(name="store_id")
     private Store store;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH}, orphanRemoval = true)
     @JsonIgnore
     private List<Order> order;
 

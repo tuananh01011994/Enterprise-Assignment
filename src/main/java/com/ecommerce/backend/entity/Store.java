@@ -16,8 +16,10 @@ public class Store {
 
     @Column(name="storename")
     private String storeName;
-    @OneToMany(mappedBy = "store", cascade=CascadeType.ALL, orphanRemoval=true)
+
+    @OneToMany(mappedBy = "store", cascade={CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH}, orphanRemoval=true)
     private Set<Product> product;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
