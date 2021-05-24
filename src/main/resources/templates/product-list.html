@@ -262,7 +262,7 @@
 </section>
 
 <div class="container">
-  <div id="test12" class="row"></div>
+  <div id="products" class="row"></div>
 </div>
 </body>
 <script>
@@ -274,7 +274,7 @@
   $.getJSON('http://localhost:8080/api/seller/productGetAll', function(data) {
 
     data.forEach((product)=>{
-      var div = document.querySelector('#test12');
+      var div = document.querySelector('#products');
       div.innerHTML =
               div.innerHTML +
               `
@@ -389,10 +389,9 @@
 
       }
     }
-
-    if(!exist) list.push(jsonData);
+    if(!exist) {list.push(jsonData); alert("Successfully Add to Cart");}
     else{
-      // alert("Upgrade");
+      alert("Your Cart is Updated");
     }
 
     localStorage.setItem(currentuser, JSON.stringify(list));
