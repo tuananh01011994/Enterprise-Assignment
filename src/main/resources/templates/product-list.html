@@ -308,12 +308,15 @@
 
 
   function viewProduct(product_id){
-    localStorage.removeItem('product-details');
+
+    localStorage.removeItem('product-detail');
     var qselector = "#" + product_id.toString() + " " + ".custom-select";
     var pnselector = "#" + product_id.toString() + " " + ".card-title";
     var pselector = "#" + product_id.toString() + " " + ".price";
     var imgselector = "#" + product_id.toString() + " " + ".card-img-top";
+    var desselector = "#" + product_id.toString() + " " + ".card-text";
     var btnselector = "#" + product_id.toString() + " " + ".buy";
+    var stockselector = "#" + product_id.toString() + " " + ".card-subtitle";
     console.log(btnselector);
     // save the value of #checkbox-1 as a variable,
     var productName = $(pnselector).text();
@@ -321,6 +324,8 @@
     var price = $(pselector).text();
     var photo = $(imgselector).attr('src');
     var store = $(btnselector).attr('id');
+    var description = $(desselector).text();
+    var stock = $(stockselector).text();
     console.log(store);
     // and test it to confirm it worked.
     const jsonData = {
@@ -328,10 +333,12 @@
       productName: productName.toString(),
       quantity: quantity.toString(),
       price: price.toString(),
+      stock: stock.toString(),
       photo: photo.toString(),
+      description: description.toString(),
       store_id: store.toString()
     };
-    localStorage.setItem('product-details', JSON.stringify(jsonData));
+    localStorage.setItem('product-detail', JSON.stringify(jsonData));
     window.location.href = "product-detail";
   }
 

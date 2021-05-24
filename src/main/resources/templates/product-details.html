@@ -3,6 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--    <link rel="stylesheet" href="home.css"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <style>
+        .logout a:hover{
+            color: white;
+        }
+        .wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wrapper:after {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+
+        .wrapper img {
+            width: auto;
+            height: 100%;
+            max-width: none;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+        }
+        html,body {
+            height: 100%;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+        /* The sticky class is added to the header with JS when it reaches its scroll position */
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%
+        }
+        .content {
+            padding: 16px;
+        }
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        .sticky + .content {
+            padding-top: 102px;
+        }
+        #myHeader{
+            z-index: 100;
+        }
+        .user a{
+            text-decoration: none;
+            color: rgba(255,255,255,.5);
+        }
+        .user a:hover{
+            color: #f8f9fa;
+            text-decoration: none;
+        }
+        .dropdown-item:hover{
+            background-color: #007bff;
+        }
+        #myHeader{
+            z-index: 500;
+        }
+
+        .user i{
+            color: rgba(255,255,255,.5);
+        }
+        .gallery-wrap .img-big-wrap img {
+            height: 450px;
+            width: auto;
+            display: inline-block;
+            cursor: zoom-in;
+        }
+
+
+        .gallery-wrap .img-small-wrap .item-gallery {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #ddd;
+            margin: 7px 2px;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .gallery-wrap .img-small-wrap {
+            text-align: center;
+        }
+        .gallery-wrap .img-small-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: zoom-in;
+        }
+    </style>
     <script>
         $(function(){
             $("#header").load("header.html");
@@ -12,5 +116,108 @@
 </head>
 <body>
 <nav id="header"></nav>
+<br>  <p class="text-center">Shopping Center <a href="home"> Shopping-Center.com</a></p>
+<hr>
+<div class="container" id="product">
+     <!-- card.// -->
+
+
+</div>
+<!--container.//-->
 </body>
+<script>
+    $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
+        // var userid;
+        // const object = JSON.parse(data);
+        // userid = object.id;
+        // window.userinfo = object.id;
+
+        // $("#back").click(function(e){
+        //     window.href.location = "home";
+        // });
+        //
+        // $("#addressForm").on("submit", function (e){
+        //     e.preventDefault();
+        // });
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        })
+
+
+
+    }));
+    var obj = JSON.parse(localStorage.getItem('product-detail'));
+    window.obj = obj;
+    alert(JSON.stringify(obj));
+    loadcart(obj);
+    function loadcart(product) {
+        var div = document.querySelector('#product');
+        // data.forEach((product)=> {
+
+            div.innerHTML =
+                div.innerHTML +
+                `<div class="card">
+        <div class="row">
+            <aside class="col-sm-5 border-right">
+                <article class="gallery-wrap">
+                    <div class="img-big-wrap">
+                        <div> <a href="#"><img src="${product.photo}"></a></div>
+                    </div> <!-- slider-product.// -->
+                    <div class="img-small-wrap">
+                        <div class="item-gallery"> <img src="${product.photo}"> </div>
+                        <div class="item-gallery"> <img src="${product.photo}"> </div>
+                        <div class="item-gallery"> <img src="${product.photo}"> </div>
+                        <div class="item-gallery"> <img src="${product.photo}"> </div>
+                    </div> <!-- slider-nav.// -->
+                </article> <!-- gallery-wrap .end// -->
+            </aside>
+            <aside class="col-sm-7">
+                <article class="card-body p-5">
+                    <h3 class="title mb-3">${product.productName}</h3>
+
+                    <p class="price-detail-wrap">
+	<span class="price h3 text-warning">
+		<span class="currency">${product.price}</span>
+	</span>
+
+                    </p> <!-- price-detail-wrap .// -->
+                    <dl class="item-property">
+                        <dt>Description</dt>
+                        <dd><p>${product.description}</p></dd>
+                    </dl>
+
+
+                    <dl class="param param-feature">
+                        <dt>Stock:</dt>
+                        <dd>${product.stock}</dd>
+                    </dl>  <!-- item-property-hor .// -->
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <dl class="param param-inline">
+                                <dt>Quantity: </dt>
+                                <dd>
+                                    <select class="form-control form-control-sm" style="width:70px;">
+                                        <option> 1 </option>
+                                        <option> 2 </option>
+                                        <option> 3 </option>
+                                    </select>
+                                </dd>
+                            </dl>  <!-- item-property .// -->
+                        </div> <!-- col.// -->
+                    </div> <!-- row.// -->
+                    <hr>
+                    <a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
+                    <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
+                </article> <!-- card-body.// -->
+            </aside> <!-- col.// -->
+        </div> <!-- row.// -->
+    </div>`;
+        // });
+    }
+</script>
 </html>
