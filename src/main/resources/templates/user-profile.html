@@ -70,13 +70,15 @@
 <div class="container-fluid">
     <div class = "row">
         <div class="card col-lg-3" style="width: 18rem; margin-left: 30px; margin-top: 30px">
-            <img src="../static/default-avatar.png" style=" height: auto;
+            <img id="avatarImg" style=" height: auto;
                  width: auto;
                  max-width: 200px;
                  max-height: 300px; align-self: center " class="card-img-top" alt="...">
+
+
             <div class="card-body" style="align-self: center">
                 <h5 class="card-title" style="text-align: center">My Profile</h5>
-                <p class="card-text" style="text-align: center">This is my profile page</p>
+                <p class="card-text" style="text-align: center">This is my control panel</p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">My personal details</li>
@@ -191,6 +193,56 @@
             <div class="row ">
                 <div class="card w-25 text-center">
                     <div class="card-body">
+                        <h6 class="card-title" style="">Your profile picture</h6>
+                    </div>
+                </div>
+                <div class="card w-75 text-center">
+                    <div class="card-body">
+                        <p class="card-title" style="" id="avatarField">  Change your avatar here <i class="fas fa-arrow-right"></i> <button style="padding: 0;border: none;background: none; outline:none !important;"
+                                                                                   data-toggle="modal" data-target="#changeAvatarModal"><i class="fa fa-edit"></i></button></p>
+
+                        <!-- modal content                       -->
+                        <div class="modal  fade" id="changeAvatarModal" tabindex="-1" role="dialog" aria-labelledby="changeAvatarModal" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Change your avatar</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="changeAvatarForm" enctype="multipart/form-data" >
+                                            <div class="form-group row">
+                                                <label for="inputUsername" class="col-md-2 col-form-label">New avatar</label>
+                                                <div class="col-md-7">
+                                                    <input type="file" id="inputAvatar" name="img" accept="image/*">
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button class="btn btn-primary" type="submit" id="submitAvatarButton">Save changes</button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end of modal content-->
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row ">
+                <div class="card w-25 text-center">
+                    <div class="card-body">
                         <h6 class="card-title" style="">Your password</h6>
                     </div>
                 </div>
@@ -244,7 +296,7 @@
                     </div>
                     <div class="card w-75 text-center">
                         <div class="card-body shop-name-block">
-                            <p class="card-title shop-name-block store-exist-not">Create your store &nbsp
+                            <p class="card-title shop-name-block store-exist-not"> <i class="fas fa-exclamation-triangle" style="color: red"></i> You do not have a store! Create your store here <i class="fas fa-arrow-right"></i> &nbsp
                                 <button class="shop-name-block store-exist-not" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#createShopModal"><i class="fa fa-edit"></i></button></p></p>
                             <p class="card-title shop-name-block store-exist" id="shopField" style="">
                                 <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#changeShopModal"><i class="fa fa-edit"></i></button> &nbsp
@@ -469,6 +521,65 @@
             }))
         })
     })
+
+
+
+    $(function (){
+        $.when($.get("http://localhost:8080/getID").then (function(data) {
+            $.get("http://localhost:8080/api/" + data + "/checkPhoto",function (res){
+                if (res.message === "true"){
+                    $("#avatarImg").attr("src",  ".././user-photos/" + data + "/avatar.jpg");
+                    $("#avatarImg").attr("src",  ".././user-photos/" + data + "/avatar.png");
+                } else {
+                    $("#avatarImg").attr("src",  "../static/default-avatar.png");
+                }
+            })
+        }))
+    })
+
+    $(function(){
+        $("#changeAvatarForm").on("submit", function (e){
+            e.preventDefault();
+            var formData = new FormData();
+            var filename = $("#inputAvatar").val();
+            var aux = filename.split('.');
+            var extension = aux[aux.length -1].toUpperCase();
+            console.log(extension);
+
+
+            formData.append('image', $('input[type=file]')[0].files[0]);
+
+            $.when($.get("http://localhost:8080/getID").then (function(data){
+                $.ajax({
+                    type:"PUT",
+                    url: "http://localhost:8080/api/user/" + data + "/photo",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+
+                    success: function (response){
+
+                        $.when($.get("http://localhost:8080/getID").then (function(data) {
+                            if (extension === "PNG"){
+                                $("#avatarImg").attr("src",  ".././user-photos/" + data + "/avatar.png");
+                            } else if (extension === "JPEG" || extension === "JPG"){
+                                $("#avatarImg").attr("src",  ".././user-photos/" + data + "/avatar.jpg");
+
+                            }
+
+                        }));
+
+                        alert(JSON.stringify(response));
+                    },
+                    error: function(xhr) {
+                        alert(JSON.stringify(xhr));
+
+                    }
+                })
+            }))
+        })
+    })
+
 
     $(function(){
         $("#deleteShopForm").on("submit", function (e){

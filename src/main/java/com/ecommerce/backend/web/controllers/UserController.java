@@ -222,7 +222,13 @@ public class UserController {
         userRepository.save(user);
         String uploadDir = "user-photos/" + user.getId();
         try{
-            FileUploadUtility.saveFile(uploadDir, fileName, multipartFile);
+            if (fileName.contains(".jpg")){
+                FileUploadUtility.saveFile(uploadDir, "avatar.jpg", multipartFile);
+
+            } else if (fileName.contains(".png")) {
+                FileUploadUtility.saveFile(uploadDir, "avatar.png", multipartFile);
+
+            }
 
         } catch (IOException e){
             map.put("message", "Can't add photo to user");
@@ -234,6 +240,22 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/checkPhoto")
+    public ResponseEntity<Map<String,String>> hasUserGotAvatar(@PathVariable("id") Long userId) {
+        Map<String, String> map = new HashMap<>();
+
+        User user = userRepository.findByID(userId);
+        System.out.println(user.getPhotos());
+        if (user.getPhotos() != null) {
+            map.put("message", "true");
+        } else {
+            map.put("message", "false");
+
+        }
+
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 
 
 }
