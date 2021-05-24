@@ -70,7 +70,10 @@ public class LoginController {
         }
         return authentication.isAuthenticated();
     }
-
+    @GetMapping("/product-detail")
+    public String getProductDetailsPage(){
+        return "product-details";
+    }
     @GetMapping("/seller-product")
     public String getSellerPage(){
         if (isAuthenticated()){
