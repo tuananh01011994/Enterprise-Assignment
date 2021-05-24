@@ -96,7 +96,7 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light" id="back">Continue Shopping</button>
+                    <button class="btn btn-block btn-light" id="back" onclick="redirectToList()">Continue Shopping</button>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
                     <button class="btn btn-lg btn-block btn-primary text-uppercase" id="submit" data-toggle="modal" data-target="#addressPopUp">Checkout</button>
@@ -333,7 +333,9 @@
         }
     });
 
-
+    function redirectToList(){
+        window.location.href = "product-list";
+    }
     function reply_click(clicked_id)
     {
         // Parse json
