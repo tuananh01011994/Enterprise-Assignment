@@ -96,7 +96,7 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light" id="back">Continue Shopping</button>
+                    <button class="btn btn-block btn-light" id="back" onclick="redirectToList()">Continue Shopping</button>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
                     <button class="btn btn-lg btn-block btn-primary text-uppercase" id="submit" data-toggle="modal" data-target="#addressPopUp">Checkout</button>
@@ -308,7 +308,7 @@
 
                 var product = {};
                 product={"user": {"id":getq( window.userinfo)}, "product": {"id":getq( window.obj[i].id)}, "quantity": window.obj[i].quantity, "storeId": getq(window.obj[i].store_id), "address":$("#addressInput").val(), "time":year};
-                alert(window.obj[i].store_id);
+
                 window.order.push(product);
 
 
@@ -320,7 +320,7 @@
                 type: "POST",
                 data: JSON.stringify(window.order),
                 success: function(e){
-                    alert(e);
+                    alert(JSON.stringify(e));
 
                     localStorage.removeItem(window.userinfo);
                     window.location.href = "profile";
@@ -333,7 +333,9 @@
         }
     });
 
-
+    function redirectToList(){
+        window.location.href = "product-list";
+    }
     function reply_click(clicked_id)
     {
         // Parse json
