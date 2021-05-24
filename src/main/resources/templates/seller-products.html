@@ -10,35 +10,41 @@
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
   <link href="../static/add-product-form.css" rel="stylesheet" type="text/css">
+  <script>
+    $(function(){
+      $("#header").load("header.html");
+    });
+
+  </script>
   <style>
     #addform{
       display: none;
     }
-    #myHeader{
-      z-index: 500;
-    }
-    /* The sticky class is added to the header with JS when it reaches its scroll position */
-    .sticky {
-      position: fixed;
-      top: 0;
-      width: 100%
-    }
-    .content {
-      padding: 16px;
-    }
-    /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-    .sticky + .content {
-      padding-top: 102px;
-    }
+    /*#myHeader{*/
+    /*  z-index: 500;*/
+    /*}*/
+    /*!* The sticky class is added to the header with JS when it reaches its scroll position *!*/
+    /*.sticky {*/
+    /*  position: fixed;*/
+    /*  top: 0;*/
+    /*  width: 100%*/
+    /*}*/
+    /*.content {*/
+    /*  padding: 16px;*/
+    /*}*/
+    /*!* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) *!*/
+    /*.sticky + .content {*/
+    /*  padding-top: 102px;*/
+    /*}*/
 
     .dropdown-menu{
       transition: 0.4s;
     }
-    #displaycart, #user, #icon-user{
+    .displaycart a, #user, #icon-user{
       text-decoration: none;
       color: white;
     }
-    #profile{
+    .profile a{
       text-decoration: none;
       color: rgba(255,255,255,.5);
     }
@@ -61,9 +67,7 @@
 
   </style>
   <script>
-    $(function(){
-      $("#header").load("header.html");
-    });
+
   </script>
 </head>
 <body>

@@ -9,6 +9,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function(){
+            $("#header").load("header.html");
+        });
+
+    </script>
     <style>
         /*#myHeader{*/
         /*    z-index: 500;*/
@@ -29,13 +35,16 @@
         .dropdown-menu{
             transition: 0.4s;
         }
-        #displaycart, #user, #icon-user{
+        .displaycart a, #user, #icon-user{
             text-decoration: none;
             color: white;
         }
-        #profile{
+        .profile a{
             text-decoration: none;
             color: rgba(255,255,255,.5);
+        }
+        .logout a:hover{
+            color: white;
         }
         .dropdown-item:hover{
             background-color: #007bff;
@@ -156,7 +165,7 @@
             return !isNaN(parseFloat(n)) && isFinite(n);
         }
     }
-    $("#header").load("header.html");
+
     $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
         var userid;
         const object = JSON.parse(data);

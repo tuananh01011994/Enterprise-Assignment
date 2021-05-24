@@ -9,7 +9,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function(){
+            $("#header").load("header.html");
+        });
+
+    </script>
     <style>
+        .logout a:hover{
+            color: white;
+        }
         #myHeader{
             z-index: 500;
         }
@@ -38,11 +47,11 @@
         .dropdown-menu{
             transition: 0.4s;
         }
-        #profile, #user, #icon-user{
+        .profile a, #user, #icon-user{
             text-decoration: none;
             color: white;
         }
-        #displaycart{
+        .displaycart a {
             text-decoration: none;
             color: rgba(255,255,255,.5);
         }
@@ -239,7 +248,7 @@
 
     $(function() {
 
-        $("#header").load("header.html");
+
         $("#changeNameForm").on("submit", function (e){
             e.preventDefault();
             var firstname = $("#inputFirstName").val();
