@@ -52,27 +52,10 @@
     loaduser();
     check_curent_page();
   });
-  // $(function(){
-  //   $.get("http://localhost:8080/username",function(data){
-  //     let userAuthentication = JSON.parse(data);
-  //     $.map(userAuthentication.authorities, function(elem, index) {
-  //       //TODO: FIX ME 🙂
-  //       if (elem.authority == "SHOP_PRIVILEGE"){
-  //         $(".displaycart").append("<a class=\"\" id=\"displaycart\" href=\"seller-products\"><i class=\"fa fa-store\" ></i> My Shop</a>")
-  //
-  //       } else if (elem.authority == "USER_PRIVILEGE"){
-  //         $(".displaycart").append( "<a class=\"\" id=\"displaycart\" href=\"cart\"><i class=\"fa fa-shopping-cart\" ></i> My Cart</a>");
-  //
-  //
-  //       }
-  //     });
-  //   });
-  // });
   // When the user scrolls the page, execute myFunction
   window.onscroll = function() {myFunction()};
 
   var page_name = document.title;
-  console.log(page_name);
   function check_curent_page(){
     switch (page_name){
       case 'Home':
@@ -128,13 +111,12 @@
       }
       let userAuthentication = JSON.parse(data);
       $.map(userAuthentication.authorities, function(elem, index) {
-        //TODO: FIX ME 🙂
 
         if (elem.authority === "SHOP_PRIVILEGE"){
-          $(".displaycart").append("<a id=\"displaycart\" href=\"seller-product\"><i class=\"fas fa-store\" ></i> My Shop</a>")
+          $(".displaycart").append("<a href=\"#\" onclick='redirectToShop()'><i class=\"fas fa-store\" ></i> My Shop</a>")
 
         } else if (elem.authority === "USER_PRIVILEGE"){
-          $(".displaycart").append( "<a id=\"displaycart\" href=\"cart\"><i class=\"fa fa-shopping-cart\" ></i> My Cart</a>");
+          $(".displaycart").append( "<a href=\"#\" onclick='redirectToCart()'><i class=\"fa fa-shopping-cart\" ></i> My Cart</a>");
 
 
         }
@@ -142,7 +124,13 @@
     })
   }
 
+  function redirectToShop(){
+    window.location.href = "seller-product"
+  }
 
+  function redirectToCart(){
+    window.location.href = "cart"
+  }
 
   function logout(){
     var leave = confirm("Do you want to leave?");
