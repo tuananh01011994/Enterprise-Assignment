@@ -33,6 +33,10 @@ public class User {
     @JsonIgnore
     private Store store;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Order> order;
+
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)

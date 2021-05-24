@@ -30,4 +30,6 @@ public class MyOrderRepository {
     }
 
     public List<Order> findAll() { return orderRepository.findAll();}
+
+    public List<Order> findOrderbyProductStoreId(long store_id){return orderRepository.findByProduct_Store_Id(store_id);}
 }
