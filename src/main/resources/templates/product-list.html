@@ -308,75 +308,60 @@
 
   function reply_click(clicked_id)
   {
-    $.get("http://localhost:8080/username",function (data){
-      let userAuthentication = JSON.parse(data);
-      $.map(userAuthentication.authorities, function(elem, index) {
-        //TODO: FIX ME 🙂
 
-        if (elem.authority === "SHOP_PRIVILEGE"){
-          alert("USER_ONLY!!!");
-
-        } else if (elem.authority === "USER_PRIVILEGE"){
-
-          $.get("http://localhost:8080/getCurrentUser", function (data){
-            var currentuser;
-            const object = JSON.parse(data);
-            currentuser = object.id;
-            // alert(currentuser);
-            var qselector = "#" + clicked_id.toString() + " " + ".custom-select";
-            var pnselector = "#" + clicked_id.toString() + " " + ".card-title";
-            var pselector = "#" + clicked_id.toString() + " " + ".price";
-            var imgselector = "#" + clicked_id.toString() + " " + ".card-img-top";
-            var btnselector = "#" + clicked_id.toString() + " " + ".buy";
-            console.log(btnselector);
-            // save the value of #checkbox-1 as a variable,
-            var productName = $(pnselector).text();
-            var quantity = $(qselector).val();
-            var price = $(pselector).text();
-            var photo = $(imgselector).attr('src');
-            var store = $(btnselector).attr('id');
-            console.log(store);
-            // and test it to confirm it worked.
-            const jsonData = {
-              id: clicked_id.toString(),
-              productName: productName.toString(),
-              quantity: quantity.toString(),
-              price: price.toString(),
-              photo: photo.toString(),
-              store_id: store.toString()
-            };
-            if(!localStorage.getItem(currentuser)){
-              localStorage.setItem(currentuser, "[]");
-            }
-            var list = JSON.parse(localStorage.getItem(currentuser));
-            var exist = false;
-            for(var i = 0; i < list.length; i++){
-              if(list[i].id === jsonData.id) {
-                var newquantity = parseInt(jsonData.quantity) + parseInt(list[i].quantity);
-                list[i].quantity = newquantity.toString();
-                exist = true;
-                break;
-              }
-              else{
+    $.get("http://localhost:8080/getCurrentUser", function (data){
+      var currentuser;
+      const object = JSON.parse(data);
+      currentuser = object.id;
+    // alert(currentuser);
+    var qselector = "#" + clicked_id.toString() + " " + ".custom-select";
+    var pnselector = "#" + clicked_id.toString() + " " + ".card-title";
+    var pselector = "#" + clicked_id.toString() + " " + ".price";
+    var imgselector = "#" + clicked_id.toString() + " " + ".card-img-top";
+    var btnselector = "#" + clicked_id.toString() + " " + ".buy";
+      console.log(btnselector);
+      // save the value of #checkbox-1 as a variable,
+      var productName = $(pnselector).text();
+      var quantity = $(qselector).val();
+      var price = $(pselector).text();
+      var photo = $(imgselector).attr('src');
+      var store = $(btnselector).attr('id');
+      console.log(store);
+      // and test it to confirm it worked.
+      const jsonData = {
+        id: clicked_id.toString(),
+        productName: productName.toString(),
+        quantity: quantity.toString(),
+        price: price.toString(),
+        photo: photo.toString(),
+        store_id: store.toString()
+      };
+    if(!localStorage.getItem(currentuser)){
+      localStorage.setItem(currentuser, "[]");
+    }
+    var list = JSON.parse(localStorage.getItem(currentuser));
+    var exist = false;
+    for(var i = 0; i < list.length; i++){
+      if(list[i].id === jsonData.id) {
+        var newquantity = parseInt(jsonData.quantity) + parseInt(list[i].quantity);
+        list[i].quantity = newquantity.toString();
+        exist = true;
+        break;
+      }
+      else{
 
 
-              }
-            }
+      }
+    }
 
-            if(!exist) list.push(jsonData);
-            else{
-              // alert("Upgrade");
-            }
+    if(!exist) list.push(jsonData);
+    else{
+      // alert("Upgrade");
+    }
 
-            localStorage.setItem(currentuser, JSON.stringify(list));
-            alert(JSON.stringify(list));
+    localStorage.setItem(currentuser, JSON.stringify(list));
 
-          });
-
-        }
-      });
-    })
-
+    });
   }
 
 
