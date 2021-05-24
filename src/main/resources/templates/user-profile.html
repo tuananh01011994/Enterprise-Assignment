@@ -247,10 +247,8 @@
                             <p class="card-title shop-name-block store-exist-not">Create your store &nbsp
                                 <button class="shop-name-block store-exist-not" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#createShopModal"><i class="fa fa-edit"></i></button></p></p>
                             <p class="card-title shop-name-block store-exist" id="shopField" style="">
-                                <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#changeShopModal"><i class="fa fa-edit"></i></button></p>
-<!--                            <button class="shop-name-block store-exist"-->
-<!--                                    style="padding: 0;border: none;background: none; outline:none !important;"-->
-<!--                                    data-toggle="modal" data-target="#deleteShopModal"><i class="fa fa-edit"></i></button></p>-->
+                                <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#changeShopModal"><i class="fa fa-edit"></i></button> &nbsp
+                                <button class="shop-name-block store-exist" style="padding: 0;border: none;background: none; outline:none !important;" data-toggle="modal" data-target="#deleteShopModal"><i class="fa fa-edit"></i></button></p>
                             <!-- modal content -->
                             <div class="modal fade" id="createShopModal" tabindex="-1" role="dialog" aria-labelledby="createShopModal" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -308,34 +306,30 @@
                                 </div>
                             </div>
 
-<!--                            <div class="modal fade" id="deleteShopModal" tabindex="-1" role="dialog" aria-labelledby="deleteShopModal" aria-hidden="true">-->
-<!--                                <div class="modal-dialog modal-lg" role="document">-->
-<!--                                    <div class="modal-content">-->
-<!--                                        <div class="modal-header">-->
-<!--                                            <h5 class="modal-title">Change your shop name</h5>-->
-<!--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                                                <span aria-hidden="true">&times;</span>-->
-<!--                                            </button>-->
-<!--                                        </div>-->
-<!--                                        <div class="modal-body">-->
-<!--                                            <form id="changeShopForm">-->
-<!--                                                <div class="form-group row">-->
-<!--                                                    <label for="inputFirstName" class="col-md-2 col-form-label">Shop name</label>-->
-<!--                                                    <div class="col-md-7">-->
-<!--                                                        <input type="text" class="form-control" id="inputShopName" placeholder="Your new shop name" required>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="modal-footer">-->
-<!--                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                                                    <button type="submit" class="btn btn-primary" id="submitShopButton">Save changes</button>-->
-<!--                                                </div>-->
-<!--                                            </form>-->
-<!--                                        </div>-->
+                            <div class="modal fade" id="deleteShopModal" tabindex="-1" role="dialog" aria-labelledby="deleteShopModal" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Delete confirmation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="deleteShopForm">
+                                                <div class="form-group row">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" id="submitDeleteShopButton">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
 
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-                            <!-- end of modal content-->
+                                    </div>
+                                </div>
+                            </div>
+<!--                             end of modal content-->
                         </div>
                     </div>
                 </div>
@@ -465,6 +459,26 @@
                         alert(JSON.stringify(res))
                     }
                 })
+            }))
+        })
+    })
+
+    $(function(){
+        $("#deleteShopForm").on("submit", function (e){
+            e.preventDefault();
+            $.when($.get("http://localhost:8080/getID").then (function(data){
+                $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: " http://localhost:8080/api/seller/storeDelete/" + listStore[0].id,
+                        success: function (response) {
+                            alert(JSON.stringify(response))
+                        },
+                        error: function (res) {
+                            alert(JSON.stringify(res))
+                        }
+                    })
+                }))
             }))
         })
     })
