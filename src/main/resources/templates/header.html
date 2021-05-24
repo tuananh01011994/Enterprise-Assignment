@@ -4,7 +4,12 @@
 <body>
 <nav class="navbar header navbar-expand-md navbar-dark bg-primary" id="myHeader">
   <div class="container-fluid">
-    <a class="navbar-brand" href="home">Shopping Center</a>
+    <a class="navbar-brand" href="home">
+      <img src="../static/raw-logo.png" style=" height: auto;
+           width: auto;
+           max-width: 50px;
+           max-height: 50px; image-rendering: pixelated"/>
+      Shopping Center</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,7 +35,7 @@
         <a class="username" id="user" href="#"></a>
         <div class="dropdown-menu bg-primary" id="dropdownData" aria-labelledby="dropdownMenuButton">
           <div class="dropdown-item profile">
-            <a class="" id="profile" href="profile"><i class="fa fa-user-circle" ></i> My Profile</a>
+            <a href="#" id="profile" onclick='redirectToProfile()'><i class="fa fa-user-circle" ></i> My Profile</a>
           </div>
           <div class="dropdown-item displaycart">
 
@@ -132,6 +137,10 @@
 
   function redirectToCart(){
     window.location.href = "cart"
+  }
+
+  function redirectToProfile(){
+    window.location.href = "profile"
   }
 
   function logout(){

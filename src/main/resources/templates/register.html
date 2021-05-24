@@ -343,7 +343,10 @@
     };
     $("#btnSubmit").click(function (e) {
       if(!($("#email").val()==="") && !($("#password").val()==="") && !($("#firstName").val()==="") && !($("#lastName").val()==="")&& !($("#username").val()==="") && !($("#role").val()==="") && ($('#agree').is(":checked"))) {
+        e.preventDefault();
+
         var formData = $("#registerForm").serializeObject();
+        alert(formData);
         var myjson = JSON.stringify(formData);
         console.log(myjson)
         $.ajax({
@@ -359,7 +362,6 @@
             alert(JSON.stringify(jqXHR));
           }
         });
-        e.preventDefault();
       }
 
 
@@ -420,5 +422,6 @@
       });
     });
   });
+
 </script>
 </html>

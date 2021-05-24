@@ -73,15 +73,28 @@ public class LoginController {
 
     @GetMapping("/seller-product")
     public String getSellerPage(){
-        return "seller-products";
+        if (isAuthenticated()){
+            return "seller-products";
+
+        }
+        return "redirect:login";
+
     }
     @GetMapping("/cart")
     public String getDisplayCartPage(){
-        return "display-cart";
+        if (isAuthenticated()) {
+            return "display-cart";
+
+        }
+        return "redirect:login";
     }
     @GetMapping("/profile")
     public String getProfilePage(){
-        return "user-profile";
+        if (isAuthenticated()){
+            return "user-profile";
+
+        }
+        return "redirect:login";
     }
     @GetMapping("/register")
     public String getRegisterPage(){
@@ -100,8 +113,19 @@ public class LoginController {
         return "login";
     }
 
+    private boolean isAdmin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("WRITE_PRIVILEGE"))){
+            return true;
+        }
+        return false;
+    }
+
     @GetMapping("/home")
     public String getHomePage(){
+        if (isAdmin()){
+            return "redirect:admin";
+        }
         return "home";
     }
 
@@ -150,7 +174,6 @@ public class LoginController {
         return "access-denied";
 
     }
-
 
 
 }
