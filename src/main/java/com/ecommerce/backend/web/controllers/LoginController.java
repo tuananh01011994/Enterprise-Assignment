@@ -100,8 +100,19 @@ public class LoginController {
         return "login";
     }
 
+    private boolean isAdmin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("WRITE_PRIVILEGE"))){
+            return true;
+        }
+        return false;
+    }
+
     @GetMapping("/home")
     public String getHomePage(){
+        if (isAdmin()){
+            return "redirect:admin";
+        }
         return "home";
     }
 
