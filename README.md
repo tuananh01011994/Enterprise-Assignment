@@ -1,8 +1,8 @@
 # Enterprise-Assignment
 PandaPik market application setup for testing:  
-  Sign up for pgAdmin4 with password: admin  
-  In your pgAdmin interface, create a new sever named: backend; password admin  
-  Open Query tool for backend  
-  Run script dtbSetupFinal to create table schema  
-  Run the project PandaPik in IntelliJ to jumpstart api sever  
-  Run script insertDataFinal for test object  
+&nbspSign up for pgAdmin4 with password: admin  
+&nbspIn your pgAdmin interface, create a new sever named: backend; password admin  
+&nbspOpen Query tool for backend  
+&nbspRun script dtbSetupFinal to create table schema  
+&nbspRun the project PandaPik in IntelliJ to jumpstart api sever  
+&nbspRun script insertDataFinal for test object  
