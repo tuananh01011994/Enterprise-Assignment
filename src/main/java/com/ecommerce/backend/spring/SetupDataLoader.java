@@ -2,7 +2,9 @@ package com.ecommerce.backend.spring;
 
 import com.ecommerce.backend.entity.Privilege;
 import com.ecommerce.backend.entity.Role;
+import com.ecommerce.backend.entity.Store;
 import com.ecommerce.backend.entity.User;
+import com.ecommerce.backend.repository.MyStoreRepository;
 import com.ecommerce.backend.repository.PrivilegeRepository;
 import com.ecommerce.backend.repository.RoleRepository;
 import com.ecommerce.backend.repository.UserRepository;
@@ -12,10 +14,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -29,6 +28,8 @@ public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEve
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private MyStoreRepository storeRepository;
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if (alreadySetup) {
@@ -47,20 +48,27 @@ public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEve
         final List<Privilege> userPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, passwordPrivilege,userPrivilege));
         final List<Privilege> sellerPrivileges = new ArrayList<>(Arrays.asList(readPrivilege, shopPrivilege));
 
-        createRoleIfNotFound("ROLE_SELLER",sellerPrivileges);
+        final Role sellerRole = createRoleIfNotFound("ROLE_SELLER",sellerPrivileges);
         final Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         final Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
-        createUserIfNotFound("test@test.com", "Test", "Test", "test", new ArrayList<>(Arrays.asList(adminRole)));
+        createUserIfNotFound("admin@test.com", "Admin", "Test", "test", new ArrayList<>(Arrays.asList(adminRole)));
+        User seller1 = createUserIfNotFound("seller@test.com","Hera", "The Seller", "test", new ArrayList<>(Arrays.asList(sellerRole)));
+        User seller2 =  createUserIfNotFound("seller1@test.com","Tommy", "The Seller", "test", new ArrayList<>(Arrays.asList(sellerRole)));
+
+
+        createUserIfNotFound("user@test.com","User", "Test", "test", new ArrayList<>(Arrays.asList(userRole)));
+
 
         alreadySetup = true;
     }
 
     @Transactional
-    User createUserIfNotFound(final String email , final String firstName, final String lastName, final String password, final Collection<Role> roles) {
+    User createUserIfNotFound( final String email , final String firstName, final String lastName, final String password, final Collection<Role> roles) {
         User user = userRepository.findByEmail(email).orElse(null);
         if (user == null) {
             user = new User();
+
             user.setUsername(email);
             user.setFirstName(firstName);
             user.setLastName(lastName);
@@ -70,6 +78,17 @@ public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEve
         user.setRoles(roles);
         user = userRepository.save(user);
         return user;
+    }
+
+
+    @Transactional
+     Store createStoreIfNotFound(final Long id,String storeName){
+        Store store = new Store();
+        store.setStoreName(storeName);
+        store.setId(id);
+        storeRepository.save(store);
+
+        return store;
     }
 
 
