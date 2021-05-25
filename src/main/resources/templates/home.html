@@ -181,36 +181,40 @@
 <script>
     $(function (){
         $.when($.get("http://localhost:8080/api/seller/productGetAll").then (function(productList) {
-            $(".top-product").append("<div class = \"col-md-4 my-4\"><img id=\"product-0\" class=\"rounded-circle z-depth-2\" style=\"max-height: 300px;max-width: 300px\" alt=\"100x100\"\n" +
-                "                         src=\"./product-photos/\""+ productList[0].id + "\"/\"" + productList[0].photo + "}\">\n" +
-                "                    <blockquote class=\"blockquote text-center\">\n" +
-                "                        <p class=\"mb-0\">" + productList[0].productDescription + "</p>\n" +
-                "                        <footer class=\"blockquote-footer\"><small>" + productList[0].productName + "</small></footer>\n" +
-                "                    </blockquote></div>");
-            $(".top-product").append("<div class = \"col-md-4 my-4\"><img id=\"product-1\" class=\"rounded-circle z-depth-2\" style=\"max-height: 300px;max-width: 300px\" alt=\"100x100\"\n" +
-                "                         src=\"./product-photos/\""+ productList[1].id + "\"/\"" + productList[1].photo + "}\">\n" +
-                "                    <blockquote class=\"blockquote text-center\">\n" +
-                "                        <p class=\"mb-0\">" + productList[1].productDescription + "</p>\n" +
-                "                        <footer class=\"blockquote-footer\"><small>" + productList[1].productName + "</small></footer>\n" +
-                "                    </blockquote></div>");
-            $(".top-product").append("<div class = \"col-md-4 my-4\"><img id=\"product-2\" class=\"rounded-circle z-depth-2\" style=\"max-height: 300px;max-width: 300px\" alt=\"100x100\"\n" +
-                "                         src=\"./product-photos/\""+ productList[2].id + "\"/\"" + productList[2].photo + "}\">\n" +
-                "                    <blockquote class=\"blockquote text-center\">\n" +
-                "                        <p class=\"mb-0\">" + productList[2].productDescription + "</p>\n" +
-                "                        <footer class=\"blockquote-footer\"><small>" + productList[2].productName + "</small></footer>\n" +
-                "                    </blockquote></div>");
-            $(".bottom-product").append("<div class = \"col-md-6 my-4\"><img id=\"product-3\" class=\"rounded-circle z-depth-2\" style=\"max-height: 300px;max-width: 300px\" alt=\"100x100\"\n" +
-                "                         src=\"./product-photos/\""+ productList[3].id + "\"/\"" + productList[3].photo + "}\">\n" +
-                "                    <blockquote class=\"blockquote text-center\">\n" +
-                "                        <p class=\"mb-0\">" + productList[3].productDescription + "</p>\n" +
-                "                        <footer class=\"blockquote-footer\"><small>" + productList[3].productName + "</small></footer>\n" +
-                "                    </blockquote></div>");
-            $(".bottom-product").append("<div class = \"col-md-6 my-4\"><img id=\"product-4\" class=\"rounded-circle z-depth-2\" style=\"max-height: 300px;max-width: 300px\" alt=\"100x100\"\n" +
-                "                         src=\"./product-photos/\""+ productList[4].id + "\"/\"" + productList[4].photo + "}\">\n" +
-                "                    <blockquote class=\"blockquote text-center\">\n" +
-                "                        <p class=\"mb-0\">" + productList[4].productDescription + "</p>\n" +
-                "                        <footer class=\"blockquote-footer\"><small>" + productList[4].productName + "</small></footer>\n" +
-                "                    </blockquote></div>");
+            $(".top-product").append("<div class = \"col-md-4 my-4\" style=\"align-items: center; justify-content: flex-start;\"><div class=\"card\" style=\"max-width:400px; align-self: center\">\n" +
+            "<img class=\"card-img-top\" src=\"../../../../product-photos/108/banana-product.png\" alt=\"banana image\" style=\"width:100%; background-color: orange\">\n" +
+                "<div class=\"card-body\">\n" +
+                "<h4 class=\"card-title\">" + productList[0].productName + "</h4>\n" +
+                "<p class=\"card-text\">" +  productList[0].productDescription + "</p>\n" +
+                "</div></div></div>");
+
+            $(".top-product").append("<div class = \"col-md-4 my-4\" style=\"align-items: center; justify-content: flex-start;\"><div class=\"card\" style=\"max-width:400px; align-self: center\">\n" +
+                "<img class=\"card-img-top\" src=\"../../../../product-photos/109/paper-product.png\" alt=\"paper image\" style=\"width:100%; background-color: pink\">\n" +
+                "<div class=\"card-body\">\n" +
+                "<h4 class=\"card-title\">" + productList[1].productName + "</h4>\n" +
+                "<p class=\"card-text\">" +  productList[1].productDescription + "</p>\n" +
+                "</div></div></div>");
+
+            $(".top-product").append("<div class = \"col-md-4 my-4\" style=\"align-items: center; justify-content: flex-start;\"><div class=\"card\" style=\"max-width:400px; align-self: center\">\n" +
+                "<img class=\"card-img-top\" src=\"../../../../product-photos/110/potato-product.png\" alt=\"potato image\" style=\"width:100%; background-color: lawngreen\">\n" +
+                "<div class=\"card-body\">\n" +
+                "<h4 class=\"card-title\">" + productList[2].productName + "</h4>\n" +
+                "<p class=\"card-text\">" +  productList[2].productDescription + "</p>\n" +
+                "</div></div></div>");
+
+            $(".bottom-product").append("<div class = \"col-md-6 my-4\" style=\"align-items: center; justify-content: flex-start;\"><div class=\"card\" style=\"max-width:400px; align-self: center\">\n" +
+                "<img class=\"card-img-top\" src=\"../../../../product-photos/111/phone-product.png\" alt=\"phone image\" style=\"width:100%; background-color: antiquewhite\">\n" +
+                "<div class=\"card-body\">\n" +
+                "<h4 class=\"card-title\">" + productList[3].productName + "</h4>\n" +
+                "<p class=\"card-text\">" +  productList[3].productDescription + "</p>\n" +
+                "</div></div></div>");
+
+            $(".bottom-product").append("<div class = \"col-md-6 my-4\" style=\"align-items: center; justify-content: flex-start;\"><div class=\"card\" style=\"max-width:400px; align-self: center\">\n" +
+                "<img class=\"card-img-top\" src=\"../../../../product-photos/109/paper-product.png\" alt=\"paper image\" style=\"width:100%; background-color: khaki\">\n" +
+                "<div class=\"card-body\">\n" +
+                "<h4 class=\"card-title\">" + productList[4].productName + "</h4>\n" +
+                "<p class=\"card-text\">" +  productList[4].productDescription + "</p>\n" +
+                "</div></div></div>");
         }))
     })
 </script>
