@@ -157,40 +157,41 @@ $.when($.get("http://localhost:8080/getCurrentUser").then(function (data){
         localStorage.setItem(userid, JSON.stringify(obj));
         location.reload();
     });
+    $("#checkout").click(function (){
+        window.order = [];
+        if($("#addressInput").val()!== ""){
+            for(var i = 0; i < window.obj.length; i++){
+
+                var product = {};
+                product={"user": {"id":getq( window.userinfo)}, "product": {"id":getq( window.obj[i].id)}, "quantity": window.obj[i].quantity, "storeId": getq(window.obj[i].store_id), "address":$("#addressInput").val(), "time":year};
+
+                window.order.push(product);
+
+
+            };
+            console.log(JSON.stringify(window.order));
+            $.ajax({
+                url: "http://localhost:8080/api/basketCheckout",
+                contentType: 'application/json ; charset = utf-8',
+                type: "POST",
+                data: JSON.stringify(window.order),
+                success: function(e){
+                    alert(JSON.stringify(e));
+
+                    localStorage.removeItem(window.userinfo);
+                    window.location.href = "profile";
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert(JSON.stringify(jqXHR));
+                }
+            });
+        }
+    });
 
 }));
 
-$("#checkout").click(function (){
-    window.order = [];
-    if($("#addressInput").val()!== ""){
-        for(var i = 0; i < window.obj.length; i++){
 
-            var product = {};
-            product={"user": {"id":getq( window.userinfo)}, "product": {"id":getq( window.obj[i].id)}, "quantity": window.obj[i].quantity, "storeId": getq(window.obj[i].store_id), "address":$("#addressInput").val(), "time":year};
-
-            window.order.push(product);
-
-
-        };
-        console.log(JSON.stringify(window.order));
-        $.ajax({
-            url: "http://localhost:8080/api/basketCheckout",
-            contentType: 'application/json ; charset = utf-8',
-            type: "POST",
-            data: JSON.stringify(window.order),
-            success: function(e){
-                alert(JSON.stringify(e));
-
-                localStorage.removeItem(window.userinfo);
-                window.location.href = "profile";
-
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert(JSON.stringify(jqXHR));
-            }
-        });
-    }
-});
 
 function redirectToList(){
     window.location.href = "product-list";
