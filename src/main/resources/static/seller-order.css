@@ -7,7 +7,7 @@
 }
 .displaycart a, #user, #icon-user{
     text-decoration: none;
-    color: white;
+    color: rgba(255,255,255,.5);
 }
 .profile a{
     text-decoration: none;
@@ -28,4 +28,7 @@ h4 {
 .table-image td, th{
 
     vertical-align: middle;
+}
+.thead-dark th{
+    text-align: right;
 }

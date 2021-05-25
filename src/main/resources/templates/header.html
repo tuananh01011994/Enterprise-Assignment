@@ -70,6 +70,7 @@
 
       case 'Product List':
       case 'Product Details':
+      case 'Order':
         $(".product").addClass("active m-auto");
             break;
       case 'Login':
@@ -121,6 +122,8 @@
       $.map(userAuthentication.authorities, function(elem, index) {
 
         if (elem.authority === "SHOP_PRIVILEGE"){
+          $(".product a").attr('href', 'seller-orders');
+          $(".product a").text('Order');
           $.when($.get("http://localhost:8080/getID").then (function(data){
             $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore){
               if (listStore.length > 0){

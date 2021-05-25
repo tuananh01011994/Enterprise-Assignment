@@ -145,14 +145,9 @@ $(function(){
 
 
     load().then(function (){
-        $.get("http://localhost:8080/username",function (data){
 
-            let userAuthentication = JSON.parse(data);
 
-            $.map(userAuthentication.authorities, function(elem, index) {
-                window.elem = elem;
-                if (elem.authority === "USER_PRIVILEGE"){
-                    $("#checkout").click(function (e){
+        $("#checkout").click(function (e){
 
                         e.preventDefault();
                         const buyNow = [];
@@ -191,11 +186,8 @@ $(function(){
 
                         // }
                     });
-                }
-                else $(".buynow").attr('disabled', true)
-            });
-        })
-})
+
+    })
 
 
     function addToCart(clicked_id)
