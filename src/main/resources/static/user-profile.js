@@ -224,7 +224,7 @@ $(function(){
     $.get("http://localhost:8080/username",function(data){
         let userAuthentication = JSON.parse(data);
         $.map(userAuthentication.authorities, function(elem, index) {
-            
+
             if (elem.authority == "SHOP_PRIVILEGE"){
                 $(".list-group").append("<li class=\"list-group-item\">My shop</li>")
                 $("#userAction").append("<a href=\"seller-orders\" class=\"card-link\">See my order</a>")
