@@ -1,5 +1,6 @@
 $(function(){
     $("#header").load("header.html");
+    $("#footer").load("footer.html");
 });
 
     const formatter = new Intl.NumberFormat('en-US', {
