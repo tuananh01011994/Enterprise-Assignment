@@ -83,6 +83,10 @@ public class LoginController {
         return "redirect:login";
 
     }
+    @GetMapping("/contact")
+    public String getContactPage(){ return "contact";}
+
+
     @GetMapping("/seller-orders")
     public String getOrderPage(){
         if(isAuthenticated()){
@@ -123,7 +127,12 @@ public class LoginController {
         return "login";
     }
     @GetMapping("/home")
-    public String getHomePage(){ return "home"; }
+    public String getHomePage(){
+        if (isAdmin()){
+            return "redirect:admin";
+        }
+        return "home";
+    }
     private boolean isAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("WRITE_PRIVILEGE"))){
@@ -178,6 +187,11 @@ public class LoginController {
 
         return "access-denied";
 
+    }
+
+    @GetMapping("/")
+    public String access(){
+        return "redirect:home";
     }
 
 
