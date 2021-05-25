@@ -92,7 +92,7 @@
     </section>
     <!--Section: Block Content-->
 </section>
-    <div class = "main-body">
+<div class = "main-body">
         <div class="separator">
             <div class = "separator_title">panda piks  of the day</div>
         </div>
@@ -162,12 +162,24 @@
 
 
         </div>
+
+        <div class="separator">
+            <div class = "separator_title">panda piks  of the day</div>
+        </div>
+
+        <div class ="card">
+            <div class="imgP">
+                <img src=${detail.img}>
+            </div>
+            <div class="content">
+                <h3 class="productName" >${detail.name}</h3>
+                <h2 class ="price">${detail.first_price}.<small>${detail.last_price}</small></h2>
+                <a href="#" onclick="showProductBuyDialogue(this.id)" class ="buy">Buy now</a>
+            </div>
+        </div>
     </div>
-
-
-</main>
 <div style="height: 2000px"></div>
-<!--Main layout-->
+
 <footer id="footer"></footer>
 </body>
 
