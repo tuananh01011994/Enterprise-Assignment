@@ -1,6 +1,7 @@
 package com.ecommerce.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.context.annotation.Scope;
@@ -29,11 +30,11 @@ public class User {
     @Column(name = "password",length = 60)
     private String password;
 
-    @OneToOne(mappedBy="user", cascade={CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH}, orphanRemoval=true)
+    @OneToOne(mappedBy="user", cascade={CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH})
     @JsonIgnore
     private Store store;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH})
     @JsonIgnore
     private List<Order> order;
 

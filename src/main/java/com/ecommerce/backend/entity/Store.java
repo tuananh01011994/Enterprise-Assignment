@@ -2,6 +2,7 @@ package com.ecommerce.backend.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class Store {
     @Column(name="storename")
     private String storeName;
 
-    @OneToMany(mappedBy = "store", cascade={CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH}, orphanRemoval=true)
+    @OneToMany(mappedBy = "store", cascade={CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH})
     private Set<Product> product;
 
     @OneToOne
