@@ -29,3 +29,6 @@ h4 {
 
     vertical-align: middle;
 }
+.thead-dark th{
+    text-align: right;
+}
