@@ -83,8 +83,8 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">My personal details</li>
             </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">See my cart</a>
+            <div class="card-body" id="userAction">
+
                 <a href="#" class="card-link">User settings</a>
             </div>
         </div>
@@ -624,9 +624,11 @@
                 //TODO: FIX ME :)
                 if (elem.authority == "SHOP_PRIVILEGE"){
                     $(".list-group").append("<li class=\"list-group-item\">My shop</li>")
+                    $("#userAction").append("<a href=\"seller-orders\" class=\"card-link\">See my order</a>")
 
                 } else if (elem.authority == "USER_PRIVILEGE"){
                     $(".list-group").append( "<li class=\"list-group-item\">My cart</li>");
+                    $("#userAction").append("<a href=\"display-cart\" class=\"card-link\">See my cart</a>")
                     $(".shop-name-block").hide();
 
 

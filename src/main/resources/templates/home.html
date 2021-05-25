@@ -5,62 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!--    <link rel="stylesheet" href="home.css"/>-->
+    <link rel="stylesheet" href="../static/home.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <title>Home</title>
-    <style>
-        .user i{
-            color: rgba(255,255,255,.5);
-        }
-        #myHeader{
-            z-index: 500;
-        }
-        /* The sticky class is added to the header with JS when it reaches its scroll position */
-        .sticky {
-            position: fixed;
-            top: 0;
-            width: 100%
-        }
-        .content {
-            padding: 16px;
-        }
-        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-        .sticky + .content {
-            padding-top: 102px;
-        }
-        .carousel .carousel-item {
-            height: 300px;
-        }
-        .carousel-item img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            min-height: 300px;
-        }
-        .dropdown-menu{
-            transition: 0.4s;
-        }
-        .user a{
-            text-decoration: none;
-            color: rgba(255,255,255,.5);
-        }
-        .user a:hover{
-            color: #f8f9fa;
-            text-decoration: none;
-        }
-        .dropdown-item:hover{
-            background-color: #007bff;
-        }
-        .logout a:hover{
-            color: white;
-        }
-        /*.dropdown-item a:hover{*/
-        /*    color: #888888;*/
-        /*}*/
-    </style>
     <script>
         $(function(){
             $("#header").load("header.html");
@@ -143,6 +96,76 @@
     </section>
     <!--Section: Block Content-->
 </section>
+    <div class = "main-body">
+        <div class="separator">
+            <div class = "separator_title">panda piks  of the day</div>
+        </div>
+
+        <div class="container my-4">
+
+            <div class="row text-center">
+
+                <!--Grid column-->
+                <div class="col-md-3 mb-4" >
+
+                    <img id= "people1" class="rounded-circle people" style="max-height: 200px;max-width: 200px" alt="50x50" src="../static/mask.png"
+                         data-holder-rendered="true" data-toggle="tooltip" data-placement="top" data-html="true"
+                         title="Personally, I would pick my trusty <u><em> Hammer X-1291 </em></u> as the product of the day!
+                         It is just so reliable, you know?"
+                         >
+                    <blockquote class="blockquote text-center">
+                        <p class="mb-0">Hope Jacob</p>
+                        <footer class="blockquote-footer"><small>technician, 21 years old</small></footer>
+                    </blockquote>
+                </div>
+                <!--Grid column-->
+                <div class="col-md-3 mb-4">
+
+                    <img id= "people2" class="rounded-circle z-depth-2" style="max-height: 200px;max-width: 200px" alt="100x100" src="../static/mask2.png"
+                         data-holder-rendered="true" data-toggle="tooltip" data-placement="top" data-html="true"
+                         title="It would <u> definitely </u> be the <em><u>Hit 'em with a song</em></u> book I just purchased. The book is so intriguing!
+                            Purchasing on here means I get a free panda stuffing as well!" >
+                    <blockquote class="blockquote text-center">
+                        <p class="mb-0">Jack Poly</p>
+                        <footer class="blockquote-footer"><small>reader, 23 years old</small></footer>
+                    </blockquote>
+
+
+                </div>
+
+                <!--Grid column-->
+                <div class="col-md-3 mb-4">
+
+                    <img id="people3" class="rounded-circle z-depth-2" style="max-height: 200px;max-width: 200px" alt="100x100" src="../static/mask3.png"
+                         \data-holder-rendered="true" data-toggle="tooltip" data-placement="top" data-html="true"
+                         title="I wouldn't shut up about my new <em><u>Ukulele guitar</em></u> LOL! I have been following embedded tutorials sold together with
+                         the stuff! I love the sound, and I know I can always trust PandaPik platform to hand me the best stuff <3">
+                    <blockquote class="blockquote text-center">
+                        <p class="mb-0">Pam Melle</p>
+                        <footer class="blockquote-footer"><small>artist, 49 years old</small></footer>
+                    </blockquote>
+
+                </div>
+
+                <div class="col-md-3 mb-4">
+
+                    <img id="people4" class="rounded-circle z-depth-2" style="max-height: 200px;max-width: 200px" alt="100x100"
+                         src="../static/mask4.png"
+                          data-holder-rendered="true" data-toggle="tooltip" data-placement="top" data-html="true"
+                         title="Hmmm tough choice! But I guess I would pick the new <em><u>XY161 duster</u></em>. It is a breeze to do chores now! And it keeps
+                         my house spotless!!">
+                    <blockquote class="blockquote text-center">
+                        <p class="mb-0">Jollin Jade</p>
+                        <footer class="blockquote-footer"><small>housewife, 29 years old</small></footer>
+                    </blockquote>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
 
 
 </main>
@@ -150,8 +173,12 @@
 <!--Main layout-->
 </body>
 <!--<script src="home.js"></script>-->
+
 <script>
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
     $(document).ready(function() {
         load();
     });
@@ -161,8 +188,7 @@
     // Get the header
     var header = document.getElementById("myHeader");
 
-    // Get the offset position of the navbar
-    var sticky = header.offsetTop;
+
 
     // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
     function myFunction() {
@@ -197,6 +223,43 @@
     function logout(){
         $.post("http://localhost:8080/logout");
     }
+
+    $(function (){
+        $('#people1').hover(function (e){
+            $(this).attr('src', '../static/people1.jpg');
+        })
+
+        $('#people1').mouseleave(function (e){
+            $(this).attr('src', '../static/mask.png');
+        })
+
+
+        $('#people2').hover(function (e){
+            $(this).attr('src', '../static/people2.jpg');
+        })
+
+        $('#people2').mouseleave(function (e){
+            $(this).attr('src', '../static/mask2.png');
+        })
+
+        $('#people3').hover(function (e){
+            $(this).attr('src', '../static/people3.jpg');
+        })
+
+        $('#people3').mouseleave(function (e){
+            $(this).attr('src', '../static/mask3.png');
+        })
+
+        $('#people4').hover(function (e){
+            $(this).attr('src', '../static/people4.jpg');
+        })
+
+        $('#people4').mouseleave(function (e){
+            $(this).attr('src', '../static/mask4.png');
+        })
+
+    })
+
 
 </script>
 </html>
