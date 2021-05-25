@@ -1,21 +1,30 @@
+$(function(){
+    $("#header").load("header.html");
+});
+
+$(".my-login-validation").submit(function() {
+    var form = $(this);
+    if (form[0].checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    form.addClass('was-validated');
+});
+
 'use strict';
 
 $(function() {
     $("#submit").click(function(e){
-        // e.preventDefault();
+
         if(!($("#email").val()==="") && !($("#password").val()==="")){
-        $.post("http://localhost:8080/login", { username:$("#email").val(), password:$("#password").val()}, function (data) {
-            alert("Data: " + JSON.stringify(data));
+            $.post("http://localhost:8080/login", { username:$("#email").val(), password:$("#password").val()}, function (data) {
+                window.location.href = "home";
+            }).fail(function(xhr, textStatus, errorThrown){
+                $(".card-error").html("<p>Invalid email/password</p>")
+            });
 
-        }).fail(function(xhr, textStatus, errorThrown){
-            alert(xhr.responseText);
-
-        });
-        e.preventDefault();
+            e.preventDefault();
         }
-
-
-
     })
 
     $("input[type='password'][data-eye]").each(function(i) {
@@ -33,7 +42,7 @@ $(function() {
         });
         $this.after($("<div/>", {
             html: 'Show',
-            class: 'btn btn-primary btn-sm',
+            class: 'btn-primary btn-sm',
             id: 'passeye-toggle-'+i,
         }).css({
             position: 'absolute',

@@ -65,6 +65,35 @@ body.my-login-page {
 .row{
     justify-content: center!important;
 }
+
+.user i{
+    color: rgba(255,255,255,.5);
+}
+html,body {
+    height: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.row{
+    justify-content: center;
+}
+.btn{
+    border:0px;
+    margin:10px 0px;
+    box-shadow:none !important;
+}
+.user a{
+    text-decoration: none;
+    color: rgba(255,255,255,.5);
+}
+.user a:hover{
+    color: #f8f9fa;
+    text-decoration: none;
+}
+.dropdown-item:hover{
+    background-color: #007bff;
+}
 @media screen and (max-width: 425px) {
     .my-login-page .card-wrapper {
         width: 90%;

@@ -1,0 +1,42 @@
+.logout a:hover{
+    color: white;
+}
+#myHeader{
+    z-index: 500;
+}
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+.content {
+    padding: 16px;
+}
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+    padding-top: 102px;
+}
+.carousel .carousel-item {
+    height: 300px;
+}
+.carousel-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 300px;
+}
+.dropdown-menu{
+    transition: 0.4s;
+}
+.profile a, #user, #icon-user{
+    text-decoration: none;
+    color: white;
+}
+.displaycart a {
+    text-decoration: none;
+    color: rgba(255,255,255,.5);
+}
+.dropdown-item:hover{
+    background-color: #007bff;
+}

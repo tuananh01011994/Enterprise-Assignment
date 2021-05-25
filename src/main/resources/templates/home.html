@@ -5,21 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/home.css"/>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <script type="text/javascript" src="../static/home.js"></script>
+    <link rel="stylesheet" href="../static/home.css"/>
     <title>Home</title>
-    <script>
-        $(function(){
-            $("#header").load("header.html");
-        });
 
-    </script>
 </head>
 <body>
 <nav id="header"></nav>
@@ -137,7 +133,7 @@
                 <div class="col-md-3 mb-4">
 
                     <img id="people3" class="rounded-circle z-depth-2" style="max-height: 200px;max-width: 200px" alt="100x100" src="../static/mask3.png"
-                         data-holder-rendered="true" data-holder-rendered="true" data-toggle="tooltip" data-placement="top" data-html="true"
+                         data-holder-rendered="true" data-toggle="tooltip" data-placement="top" data-html="true"
                          title="I wouldn't shut up about my new <em><u>Ukulele guitar</em></u> LOL! I have been following embedded tutorials sold together with
                          the stuff! I love the sound, and I know I can always trust PandaPik platform to hand me the best stuff <3">
                     <blockquote class="blockquote text-center">
@@ -152,7 +148,7 @@
                     <img id="people4" class="rounded-circle z-depth-2" style="max-height: 200px;max-width: 200px" alt="100x100"
                          src="../static/mask4.png"
                          data-holder-rendered="true"
-                         data-holder-rendered="true" data-holder-rendered="true" data-toggle="tooltip" data-placement="top" data-html="true"
+                         data-toggle="tooltip" data-placement="top" data-html="true"
                          title="Hmmm tough choice! But I guess I would pick the new <em><u>XY161 duster</u></em>. It is a breeze to do chores now! And it keeps
                          my house spotless!!">
                     <blockquote class="blockquote text-center">
@@ -173,94 +169,5 @@
 <div style="height: 2000px"></div>
 <!--Main layout-->
 </body>
-<!--<script src="home.js"></script>-->
 
-<script>
-
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-    $(document).ready(function() {
-        load();
-    });
-    // When the user scrolls the page, execute myFunction
-    window.onscroll = function() {myFunction()};
-
-    // Get the header
-    var header = document.getElementById("myHeader");
-
-
-
-    // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-    function myFunction() {
-        if (window.pageYOffset > sticky) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
-    }
-
-    function load(){
-        $.get("http://localhost:8080/username",function (data){
-            const object = JSON.parse(data);
-            $(".username").html(object.username);
-            $(".username").html(object.name);
-            if(object.authenticated !== false){
-                $("#log-field").html("<a class=\"nav-link\" onclick='logout()' href=\"home\">Logout</a>");
-            }
-            else{
-                $("#log-field").html("<a class=\"nav-link\" href=\"login\">Login</a>");
-            }
-
-        })
-    }
-
-    function getUserId(){
-        $.get("http://localhost:8080/getID",function (data) {
-            alert(data)
-        })
-    }
-
-    function logout(){
-        $.post("http://localhost:8080/logout");
-    }
-
-    $(function (){
-        $('#people1').hover(function (e){
-            $(this).attr('src', '../static/people1.jpg');
-        })
-
-        $('#people1').mouseleave(function (e){
-            $(this).attr('src', '../static/mask.png');
-        })
-
-
-        $('#people2').hover(function (e){
-            $(this).attr('src', '../static/people2.jpg');
-        })
-
-        $('#people2').mouseleave(function (e){
-            $(this).attr('src', '../static/mask2.png');
-        })
-
-        $('#people3').hover(function (e){
-            $(this).attr('src', '../static/people3.jpg');
-        })
-
-        $('#people3').mouseleave(function (e){
-            $(this).attr('src', '../static/mask3.png');
-        })
-
-        $('#people4').hover(function (e){
-            $(this).attr('src', '../static/people4.jpg');
-        })
-
-        $('#people4').mouseleave(function (e){
-            $(this).attr('src', '../static/mask4.png');
-        })
-
-    })
-
-
-</script>
 </html>

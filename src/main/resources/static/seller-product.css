@@ -1,0 +1,31 @@
+#addform{
+    display: none;
+}
+
+.dropdown-menu{
+    transition: 0.4s;
+}
+.displaycart a, #user, #icon-user{
+    text-decoration: none;
+    color: white;
+}
+.profile a{
+    text-decoration: none;
+    color: rgba(255,255,255,.5);
+}
+.dropdown-item:hover{
+    background-color: #007bff;
+}
+
+.container {
+    padding: 2rem 0rem;
+}
+
+h4 {
+    margin: 2rem 0rem 1rem;
+}
+
+.table-image td, th{
+
+    vertical-align: middle;
+}

@@ -1,0 +1,91 @@
+
+.logout a:hover{
+    color: white;
+}
+.wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.wrapper:after {
+    content: '';
+    display: block;
+    padding-top: 100%;
+}
+
+.wrapper img {
+    width: auto;
+    height: 100%;
+    max-width: none;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
+html,body {
+    height: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+.content {
+    padding: 16px;
+}
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+    padding-top: 102px;
+}
+#myHeader{
+    z-index: 100;
+}
+.user a{
+    text-decoration: none;
+    color: rgba(255,255,255,.5);
+}
+.user a:hover{
+    color: #f8f9fa;
+    text-decoration: none;
+}
+.dropdown-item:hover{
+    background-color: #007bff;
+}
+#myHeader{
+    z-index: 500;
+}
+
+.user i{
+    color: rgba(255,255,255,.5);
+}
+.gallery-wrap .img-big-wrap img {
+
+    width: 100%;
+    display: inline-block;
+    cursor: zoom-in;
+}
+
+
+.gallery-wrap .img-small-wrap .item-gallery {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ddd;
+    margin: 7px 2px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.gallery-wrap .img-small-wrap {
+    text-align: center;
+}
+.gallery-wrap .img-small-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: zoom-in;
+}
