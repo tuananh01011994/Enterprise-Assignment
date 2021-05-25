@@ -127,7 +127,12 @@ public class LoginController {
         return "login";
     }
     @GetMapping("/home")
-    public String getHomePage(){ return "home"; }
+    public String getHomePage(){
+        if (isAdmin()){
+            return "redirect:admin";
+        }
+        return "home";
+    }
     private boolean isAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("WRITE_PRIVILEGE"))){
