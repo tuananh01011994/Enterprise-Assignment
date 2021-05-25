@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;100&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
 .logout a:hover{
     color: white;
 }
