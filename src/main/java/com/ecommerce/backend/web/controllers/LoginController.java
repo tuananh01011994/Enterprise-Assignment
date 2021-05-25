@@ -189,5 +189,10 @@ public class LoginController {
 
     }
 
+    @GetMapping("/")
+    public String access(){
+        return "redirect:home";
+    }
+
 
 }
