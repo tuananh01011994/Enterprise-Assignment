@@ -231,7 +231,7 @@ $(function(){
 
             } else if (elem.authority == "USER_PRIVILEGE"){
                 $(".list-group").append( "<li class=\"list-group-item\">My cart</li>");
-                $("#userAction").append("<a href=\"display-cart\" class=\"card-link\">See my cart</a>")
+                $("#userAction").append("<a href=\"cart\" class=\"card-link\">See my cart</a>")
                 $(".shop-name-block").hide();
 
 
