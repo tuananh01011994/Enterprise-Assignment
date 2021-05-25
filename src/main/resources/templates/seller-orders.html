@@ -98,7 +98,6 @@
     $.when($.get("http://localhost:8080/getID").then (function(data){
       $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore){
         $.when($.get("http://localhost:8080/api/orderGetByStore/" + listStore[0].id). then(function(listOrder){
-          alert(JSON.stringify(listOrder));
           var div = document.querySelector('#listOrder');
           listOrder.forEach((order)=> {
             div.innerHTML =
