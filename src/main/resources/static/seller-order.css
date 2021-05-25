@@ -7,7 +7,7 @@
 }
 .displaycart a, #user, #icon-user{
     text-decoration: none;
-    color: white;
+    color: rgba(255,255,255,.5);
 }
 .profile a{
     text-decoration: none;
