@@ -1,5 +1,6 @@
 $(function(){
     $("#header").load("header.html");
+    $("#footer").load("footer.html");
 });
 
 $(".my-login-validation").submit(function() {
