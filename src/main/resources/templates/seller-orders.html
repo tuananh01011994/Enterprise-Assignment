@@ -68,14 +68,15 @@
     <div class="col-12">
       <div class="table-responsive">
         <table class="table table-image" id="cart">
-
-          <th scope="col">User Email</th>
-          <th scope="col">Product Name</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Buyer Address</th>
-          <th scope="col">Bought Time</th>
-          <th> </th>
-          </tr>
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">User Email</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Product ID</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Buyer Address</th>
+              <th scope="col">Bought Time</th>
+            </tr>
           </thead>
           <tbody id="listOrder">
           </tbody>
@@ -96,17 +97,19 @@
   $(function (){
     $.when($.get("http://localhost:8080/getID").then (function(data){
       $.when($.get("http://localhost:8080/api/seller/storeGetByUser/" + data).then (function(listStore){
-        $.when($.get("http://http://localhost:8080/api/orderGetByStore/" + listStore[0].id). then(function(listOrder){
+        $.when($.get("http://localhost:8080/api/orderGetByStore/" + listStore[0].id). then(function(listOrder){
+          alert(JSON.stringify(listOrder));
           var div = document.querySelector('#listOrder');
           listOrder.forEach((order)=> {
             div.innerHTML =
                     div.innerHTML +
-                    `<tr id="${orders.id}">
-                        <td><input class="form-control userMail" type="text" value="${order.user.email}" /></td>
-                        <td><input class="form-control productName" type="text" value="${order.product.name}" /></td>
-                        <td><input class="form-control quantity" type="number" value="${order.quantity}" /></td>
-                        <td><input class="form-control address" type="text" value="${order.address}" /></td>
-                        <td><input class="form-control time" type="number" value="${order.time}" /></td>
+                    `<tr id="${listOrder.id}">
+                        <td class=" text-right userMail">${order.user.email}</td>
+                        <td class=" text-right productName">${order.product.productName}</td>
+                        <td class=" text-right productName">${order.product.id}</td>
+                        <td class="text-right  quantity">${order.quantity}</td>
+                        <td class=" text-right address" >${order.address}</td>
+                        <td class=" text-right time">${order.time}</td>
                     </tr>`;
 
           });
